@@ -40,6 +40,10 @@ All footer and contact social links must be displayed in this exact order:
 
 ## Current State
 
-- The portfolio foundation uses Vite, React, TypeScript, and `lucide-react`.
+- The portfolio uses Vite, React, TypeScript, and `lucide-react`.
 - Static assets are copied to `public/Profile.pdf` and `public/ahmed-darhous.png` for production builds.
 - The original root files `Profile.pdf` and `CE933E3B-D6AB-4FD6-A89B-651BD7022FB8.PNG` are preserved.
+- Git is initialized and connected to `https://github.com/Darhous/portofolio`.
+- GitHub Pages is deployed from the workflow at `https://darhous.github.io/portofolio/`.
+- Latest implementation commit: `e6038dc`.
+- Verification passed: `npm test`, `npm run typecheck`, `npm run build`, desktop/mobile browser QA, and production smoke test.

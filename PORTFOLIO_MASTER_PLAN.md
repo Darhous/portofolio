@@ -16,10 +16,10 @@ Last updated: 2026-07-09
 | 7 | Projects and case studies | Completed | GitHub/README/CV sourced project cards |
 | 8 | CV, contact, footer | Completed | Centralized links, CV download, shared footer |
 | 9 | Motion and responsive polish | Completed | CSS responsive rules and reduced motion |
-| 10 | Accessibility, SEO, performance | In Progress | Metadata, JSON-LD, sitemap, robots, semantic sections |
-| 11 | Automated testing and QA | In Progress | `npm test`, `npm run typecheck`, `npm run build` |
-| 12 | GitHub Pages deployment | In Progress | Workflow added; requires push and workflow completion |
-| 13 | Final audit and report | In Progress | `PORTFOLIO_FINAL_REPORT.md` to be finalized after deployment |
+| 10 | Accessibility, SEO, performance | Completed | Metadata, JSON-LD, sitemap, robots, semantic sections, browser checks |
+| 11 | Automated testing and QA | Completed | `npm test`, `npm run typecheck`, `npm run build`, browser QA |
+| 12 | GitHub Pages deployment | Completed | Workflow run `29044855746` succeeded |
+| 13 | Final audit and report | Completed | `PORTFOLIO_FINAL_REPORT.md` updated after deployment |
 
 ## Permanent Constraints
 
@@ -31,4 +31,4 @@ Last updated: 2026-07-09
 
 ## Next Action
 
-Run local verification, browser QA, commit the full implementation, push, enable/check GitHub Pages, then finalize the report.
+Future work should refine content depth and visual assets without breaking centralized identity, contact, footer, deployment, or social-order rules.

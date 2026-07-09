@@ -1,12 +1,17 @@
 # Ahmed Darhous Portfolio Final Report
 
-Status: In progress pending final push and GitHub Pages verification.
+Status: Completed and deployed on 2026-07-09.
 
 ## Links
 
 - GitHub: `https://github.com/Darhous/portofolio`
-- Expected live site: `https://darhous.github.io/portofolio/`
+- Live site: `https://darhous.github.io/portofolio/`
 - Branch: `main`
+
+## Commits
+
+- `4375289` - `feat: establish portfolio footer foundation`
+- `e6038dc` - `feat: build complete bilingual portfolio`
 
 ## Stack
 
@@ -30,11 +35,23 @@ Status: In progress pending final push and GitHub Pages verification.
 
 ## Verification
 
-To be finalized after:
+- `npm test` - passed.
+- `npm run typecheck` - passed.
+- `npm run build` - passed.
+- Desktop browser QA - passed.
+- Mobile browser QA - passed at 390px width.
+- Accessibility sanity check - passed.
+- GitHub Pages workflow run `29044855746` - success.
+- Live HTTP smoke test - `200`.
+- Production browser QA - passed.
 
-- `npm test`
-- `npm run typecheck`
-- `npm run build`
-- Browser QA
-- GitHub Actions deployment run
-- Live site smoke test
+## Confirmed
+
+- Intro works and has Skip/Replay plus reduced-motion fallback.
+- English/Arabic toggle works with RTL/LTR switching.
+- Portrait image loads in local and production builds.
+- CV download path is present.
+- Project cards are sourced from CV, GitHub metadata, or repository README evidence.
+- Contact links use the official permanent values.
+- Footer displays `Designed & Developed by Ahmed Darhous`.
+- Footer social order is Instagram, LinkedIn, Facebook, WhatsApp, GitHub.

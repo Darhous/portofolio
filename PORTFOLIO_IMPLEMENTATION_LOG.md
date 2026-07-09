@@ -33,17 +33,25 @@
 ### Verification Commands
 
 - `npm install`
-- `npm test`
-- `npm run typecheck`
-- `npm run build`
-- Browser QA pending after the full implementation rebuild.
+- `npm test` - passed
+- `npm run typecheck` - passed
+- `npm run build` - passed
+- Desktop browser QA - passed
+- Mobile browser QA at 390px width - passed after adding horizontal overflow guard
+- Accessibility sanity check - passed after adding skip link, focus offsets, and footer link target-size fix
+- Production browser QA - passed
+
+### Deployment
+
+- Commit `4375289` pushed initial footer/foundation work.
+- Commit `e6038dc` pushed full bilingual portfolio implementation and GitHub Pages workflow.
+- GitHub Actions run `29044855746` completed successfully.
+- Live URL verified with HTTP 200: `https://darhous.github.io/portofolio/`
 
 ### Current Problem
 
-- GitHub Pages workflow is added but must be pushed and verified.
+- No known blocking problem.
 
 ### Next Action
 
-- Run verification commands.
-- Browser-test local page at Vite URL.
-- Commit, push, enable/check Pages, then update `PORTFOLIO_FINAL_REPORT.md`.
+- Review the live site manually and continue future refinements from the current committed baseline.
