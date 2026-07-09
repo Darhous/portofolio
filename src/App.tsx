@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { AboutSection } from "./components/AboutSection";
+import { CaseStudiesSection } from "./components/CaseStudiesSection";
 import { ContactSection } from "./components/ContactSection";
+import { CVSection } from "./components/CVSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { ExpertiseSection } from "./components/ExpertiseSection";
 import { Footer } from "./components/Footer";
@@ -48,6 +50,8 @@ function App() {
         <ExpertiseSection locale={locale} />
         <ExperienceSection locale={locale} />
         <ProjectsSection locale={locale} />
+        <CaseStudiesSection locale={locale} />
+        <CVSection locale={locale} />
         <ContactSection locale={locale} />
       </main>
 

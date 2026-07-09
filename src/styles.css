@@ -349,9 +349,13 @@ h3 {
   content: "";
 }
 
-.portrait-lockup img {
+.portrait-lockup img,
+.portrait-lockup picture {
   display: block;
   width: 100%;
+}
+
+.portrait-lockup img {
   aspect-ratio: 4 / 5;
   border: 1px solid var(--line);
   object-fit: cover;
@@ -395,7 +399,8 @@ h3 {
 
 .about-grid,
 .expertise-grid,
-.projects-grid {
+.projects-grid,
+.case-grid {
   display: grid;
   gap: 16px;
 }
@@ -519,7 +524,8 @@ h3 {
   content: "■ ";
 }
 
-.projects-grid {
+.projects-grid,
+.case-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -557,6 +563,78 @@ h3 {
 .project-actions small {
   flex-basis: 100%;
   color: var(--dim);
+}
+
+.case-card,
+.cv-panel {
+  border: 1px solid var(--line);
+  background: rgba(23, 27, 27, 0.72);
+}
+
+.case-card {
+  padding: 24px;
+}
+
+.case-card > span {
+  display: inline-flex;
+  margin-bottom: 14px;
+  border: 1px solid rgba(212, 139, 93, 0.3);
+  padding: 5px 8px;
+  color: var(--copper);
+  font-size: 0.78rem;
+}
+
+.case-card dl {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0 0;
+}
+
+.case-card dt {
+  color: var(--cyan);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.case-card dd {
+  margin: 4px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.cv-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.cv-icon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 1px solid rgba(99, 212, 200, 0.35);
+  color: var(--cyan);
+}
+
+.cv-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.cv-panel p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.cv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
 .contact-section {
@@ -689,7 +767,8 @@ h3 {
 
 @media (max-width: 1040px) {
   .expertise-grid,
-  .projects-grid {
+  .projects-grid,
+  .case-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -718,7 +797,8 @@ h3 {
   .hero,
   .about-grid,
   .contact-grid,
-  .experience-card {
+  .experience-card,
+  .cv-panel {
     grid-template-columns: 1fr;
   }
 
@@ -732,7 +812,8 @@ h3 {
   }
 
   .expertise-grid,
-  .projects-grid {
+  .projects-grid,
+  .case-grid {
     grid-template-columns: 1fr;
   }
 
@@ -758,7 +839,12 @@ h3 {
   .footer-action,
   .contact-method,
   .project-actions a,
-  .project-actions span {
+  .project-actions span,
+  .cv-actions {
+    width: 100%;
+  }
+
+  .cv-actions a {
     width: 100%;
   }
 

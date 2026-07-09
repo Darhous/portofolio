@@ -5,6 +5,7 @@ export const navItems = [
   { href: "#expertise", label: { en: "Expertise", ar: "التخصصات" } },
   { href: "#experience", label: { en: "Experience", ar: "الخبرة" } },
   { href: "#projects", label: { en: "Projects", ar: "المشاريع" } },
+  { href: "#cv", label: { en: "CV", ar: "السيرة" } },
   { href: "#contact", label: { en: "Contact", ar: "تواصل" } },
 ] as const;
 
@@ -36,6 +37,18 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     projectsTitle: "Projects with source-backed descriptions.",
     projectsBody:
       "Public projects link to their repositories or live deployments. Private or CV-sourced systems are identified without inventing public links.",
+    caseStudiesKicker: "Case Study Signal",
+    caseStudiesTitle: "How the work translates into systems.",
+    cvKicker: "CV Center",
+    cvTitle: "Open, download, or audit the source profile.",
+    cvBody:
+      "The site content is grounded in the uploaded CV. The PDF remains available as the source-of-truth artifact for recruiters, collaborators, and reviewers.",
+    openCv: "Open CV",
+    downloadCv: "Download CV",
+    cvSource: "Source artifact",
+    problem: "Problem",
+    approach: "Approach",
+    result: "Result",
     source: "Source",
     privateProject: "Private / CV-sourced",
     liveProject: "Live",
@@ -75,6 +88,18 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     projectsTitle: "مشاريع بوصف مستند إلى مصادر.",
     projectsBody:
       "المشاريع العامة مرتبطة بمستودعاتها أو نسخها الحية. الأنظمة الخاصة أو المستخرجة من السيرة موضحة دون اختراع روابط عامة.",
+    caseStudiesKicker: "إشارة دراسة حالة",
+    caseStudiesTitle: "كيف يتحول العمل إلى أنظمة.",
+    cvKicker: "مركز السيرة الذاتية",
+    cvTitle: "افتح أو حمّل أو راجع ملف المصدر.",
+    cvBody:
+      "محتوى الموقع مبني على السيرة الذاتية المرفوعة. يظل ملف PDF متاحًا كوثيقة مصدر للجهات المهنية والمتعاونين والمراجعين.",
+    openCv: "فتح السيرة",
+    downloadCv: "تحميل السيرة",
+    cvSource: "وثيقة المصدر",
+    problem: "المشكلة",
+    approach: "النهج",
+    result: "النتيجة",
     source: "المصدر",
     privateProject: "خاص / مصدره السيرة",
     liveProject: "نسخة حية",

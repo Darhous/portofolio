@@ -19,6 +19,11 @@ export const siteConfig = {
   assets: {
     cv: assetPath("Profile.pdf"),
     portrait: assetPath("ahmed-darhous.png"),
+    portraitWebp: {
+      small: assetPath("ahmed-darhous-384.webp"),
+      medium: assetPath("ahmed-darhous-640.webp"),
+      large: assetPath("ahmed-darhous-960.webp"),
+    },
   },
   contact: {
     email: "mailto:ahmeddarhous@gmail.com",

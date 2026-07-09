@@ -37,7 +37,22 @@ export function Hero({ locale }: HeroProps) {
         <SocialLinks variant="labels" />
       </div>
       <div className="portrait-lockup" aria-label="Ahmed Darhous portrait">
-        <img src={siteConfig.assets.portrait} alt="Ahmed Darhous" />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={`${siteConfig.assets.portraitWebp.small} 384w, ${siteConfig.assets.portraitWebp.medium} 640w, ${siteConfig.assets.portraitWebp.large} 960w`}
+            sizes="(max-width: 820px) min(100vw, 430px), 36vw"
+          />
+          <img
+            src={siteConfig.assets.portrait}
+            alt="Ahmed Darhous"
+            width="1024"
+            height="1536"
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+          />
+        </picture>
         <div className="portrait-caption">
           <span>{profile.name}</span>
           <small>{profile.location[locale]}</small>
