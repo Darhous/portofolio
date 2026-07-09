@@ -20,6 +20,7 @@ Status: Completed and deployed on 2026-07-09.
 - TypeScript
 - Lucide React
 - GitHub Pages Actions
+- Deployment workflow: `.github/workflows/deploy.yml`
 
 ## Implemented
 
@@ -32,6 +33,7 @@ Status: Completed and deployed on 2026-07-09.
 - SEO metadata, JSON-LD, sitemap, robots.
 - Content identity verification script.
 - GitHub Pages deployment workflow.
+- Production URL verification inside the GitHub Actions deploy job.
 
 ## Verification
 
@@ -42,6 +44,7 @@ Status: Completed and deployed on 2026-07-09.
 - Mobile browser QA - passed at 390px width.
 - Accessibility sanity check - passed.
 - GitHub Pages workflow run `29044855746` - success.
+- Final deployment workflow includes Vite base path `/portofolio/` and production URL verification.
 - Live HTTP smoke test - `200`.
 - Production browser QA - passed.
 

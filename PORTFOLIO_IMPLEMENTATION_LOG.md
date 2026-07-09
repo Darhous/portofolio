@@ -47,6 +47,8 @@
 - Commit `e6038dc` pushed full bilingual portfolio implementation and GitHub Pages workflow.
 - GitHub Actions run `29044855746` completed successfully.
 - Live URL verified with HTTP 200: `https://darhous.github.io/portofolio/`
+- Deployment workflow updated to use GitHub Actions only, not Jekyll.
+- Workflow now verifies Vite base path `/portofolio/`, runs `typecheck`, optional `lint`, optional `test`, builds `dist`, deploys via `actions/deploy-pages`, and verifies the production URL after deployment.
 
 ### Current Problem
 

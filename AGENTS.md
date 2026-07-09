@@ -49,3 +49,11 @@ Display social links in this exact order in the footer and all contact sections:
 
 - Keep these rules documented in both `AGENTS.md` and `CODEX_MEMORY.md`.
 - Future changes must preserve the same footer identity, contact information, and social order unless Ahmed Darhous explicitly instructs otherwise.
+
+## Deployment
+
+- GitHub Pages source is GitHub Actions.
+- Do not use the suggested Jekyll workflow.
+- The deployment workflow must live at `.github/workflows/deploy.yml`.
+- The Vite base path must remain `/portofolio/`.
+- The workflow must install dependencies, run available checks, build `dist`, deploy with GitHub Pages Actions, and verify `https://darhous.github.io/portofolio/`.

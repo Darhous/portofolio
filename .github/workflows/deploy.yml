@@ -14,6 +14,11 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: 22
+  VITE_BASE_PATH: /portofolio/
+  PRODUCTION_URL: https://darhous.github.io/portofolio/
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,17 +29,29 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - name: Install
         run: npm ci
 
-      - name: Verify Identity Rules
-        run: npm test
+      - name: Verify Vite Base Path
+        run: grep -q 'base: "/portofolio/"' vite.config.ts
+
+      - name: Typecheck
+        run: npm run typecheck --if-present
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Test
+        run: npm run test --if-present
 
       - name: Build
         run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
@@ -51,3 +68,31 @@ jobs:
       - name: Deploy To GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify Production URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="${{ steps.deployment.outputs.page_url }}"
+          if [ -z "$url" ]; then
+            url="${PRODUCTION_URL}"
+          fi
+
+          if [ "$url" != "$PRODUCTION_URL" ]; then
+            echo "Unexpected Pages URL: $url"
+            echo "Expected: $PRODUCTION_URL"
+            exit 1
+          fi
+
+          for attempt in {1..12}; do
+            body="$(curl --fail --location --silent --show-error "$PRODUCTION_URL" || true)"
+            if echo "$body" | grep -q "Ahmed Darhous"; then
+              echo "Production URL verified: $PRODUCTION_URL"
+              exit 0
+            fi
+            echo "Production URL not ready yet. Attempt $attempt/12"
+            sleep 5
+          done
+
+          echo "Production URL verification failed: $PRODUCTION_URL"
+          exit 1
