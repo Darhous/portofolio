@@ -47,7 +47,19 @@ All footer and contact social links must be displayed in this exact order:
 - GitHub Pages is deployed from the workflow at `https://darhous.github.io/portofolio/`.
 - Latest implementation commit: `e6038dc`.
 - Latest deployment workflow commit: `69b16b1`.
+- Latest completion checkpoint commit: `8df1d8c`.
 - Verification passed: `npm test`, `npm run typecheck`, `npm run build`, desktop/mobile browser QA, and production smoke test.
 - Deployment source is GitHub Actions. Do not use Jekyll.
 - Workflow path is `.github/workflows/deploy.yml`; it deploys Vite `dist` with base path `/portofolio/` and verifies `https://darhous.github.io/portofolio/` after deployment.
 - Workflow run `29045398557` succeeded after fixing YAML quoting for the base-path check.
+- Completion additions:
+  - `docs/content/CV_ANALYSIS.md`
+  - `docs/content/PROJECT_DISCOVERY.md`
+  - `docs/content/CONTENT_INVENTORY.md`
+  - optimized WebP portrait variants under `public/`
+  - dedicated CV section
+  - featured case-study section
+  - `docs/qa/QA_REPORT.md`
+  - `docs/qa/screenshots/production-desktop.png`
+  - `docs/qa/screenshots/production-mobile.png`
+- Workflow run `29046773917` succeeded after QA screenshot artifacts.

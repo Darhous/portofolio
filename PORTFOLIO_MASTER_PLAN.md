@@ -21,6 +21,16 @@ Last updated: 2026-07-09
 | 12 | GitHub Pages deployment | Completed | Workflow run `29044855746` succeeded |
 | 13 | Final audit and report | Completed | `PORTFOLIO_FINAL_REPORT.md` updated after deployment |
 
+## Completion Addendum
+
+- Full CV analysis documented in `docs/content/CV_ANALYSIS.md`.
+- Visible GitHub project discovery documented in `docs/content/PROJECT_DISCOVERY.md`.
+- Content inventory documented in `docs/content/CONTENT_INVENTORY.md`.
+- Optimized portrait WebP variants added under `public/`.
+- Dedicated CV and case-study sections added.
+- Production QA screenshots and report added under `docs/qa`.
+- Latest verified deployment run after QA artifacts: `29046773917`.
+
 ## Permanent Constraints
 
 - Footer signature must be exactly `Designed & Developed by Ahmed Darhous`.

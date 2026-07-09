@@ -14,6 +14,12 @@ Status: Completed and deployed on 2026-07-09.
 - `e6038dc` - `feat: build complete bilingual portfolio`
 - `d51ada7` - `ci: harden vite pages deployment`
 - `69b16b1` - `fix: quote pages workflow base path check`
+- `5b0b54a` - `docs: add portfolio content inventory`
+- `e5cde73` - `feat: add optimized cv and case study sections`
+- `8458aa2` - `fix: polish hero responsive viewport`
+- `2cc6854` - `fix: fit hero headline in desktop viewport`
+- `a0a6c8a` - `fix: complete hero headline viewport fit`
+- `8df1d8c` - `test: add production qa screenshots`
 
 ## Stack
 
@@ -30,6 +36,10 @@ Status: Completed and deployed on 2026-07-09.
 - Cinematic intro with skip, replay, and reduced-motion fallback.
 - CV-backed hero, about, expertise, education, certifications, languages, and experience sections.
 - GitHub-backed project showcase.
+- Dedicated CV section with open/download actions.
+- Featured case-study section for source-backed projects.
+- Optimized WebP portrait variants with PNG fallback.
+- Full CV analysis, project discovery, and content inventory docs.
 - Official contact section.
 - Mandatory shared footer with exact signature and social order.
 - SEO metadata, JSON-LD, sitemap, robots.
@@ -50,13 +60,21 @@ Status: Completed and deployed on 2026-07-09.
 - GitHub Pages workflow run `29045398557` - success, including production URL verification.
 - Live HTTP smoke test - `200`.
 - Production browser QA - passed.
+- Production QA screenshots saved:
+  - `docs/qa/screenshots/production-desktop.png`
+  - `docs/qa/screenshots/production-mobile.png`
+- QA report saved: `docs/qa/QA_REPORT.md`
+- GitHub Pages workflow run `29046773917` - success, including production URL verification after QA artifacts.
 
 ## Confirmed
 
 - Intro works and has Skip/Replay plus reduced-motion fallback.
 - English/Arabic toggle works with RTL/LTR switching.
 - Portrait image loads in local and production builds.
+- Optimized WebP portrait is selected in production browser QA.
 - CV download path is present.
+- Dedicated CV section is present.
+- Case-study section is present.
 - Project cards are sourced from CV, GitHub metadata, or repository README evidence.
 - Contact links use the official permanent values.
 - Footer displays `Designed & Developed by Ahmed Darhous`.

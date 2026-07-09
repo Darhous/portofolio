@@ -27,6 +27,11 @@
 - Added shared Footer and SocialLinks components.
 - Added bilingual content data from CV and GitHub evidence.
 - Added Intro, Hero, About, Expertise, Experience, Projects, Contact, and Footer sections.
+- Added dedicated CV section.
+- Added featured case-study section.
+- Added optimized WebP portrait variants.
+- Added durable docs under `docs/content`.
+- Added production QA report and screenshots under `docs/qa`.
 - Added SEO metadata, JSON-LD, robots, sitemap, and GitHub Pages workflow.
 - Added automated content identity verification script.
 
@@ -40,6 +45,8 @@
 - Mobile browser QA at 390px width - passed after adding horizontal overflow guard
 - Accessibility sanity check - passed after adding skip link, focus offsets, and footer link target-size fix
 - Production browser QA - passed
+- Production QA screenshots captured for desktop and mobile
+- Production optimized portrait selection verified: `ahmed-darhous-640.webp`
 
 ### Deployment
 
@@ -52,6 +59,7 @@
 - Commit `d51ada7` pushed the stricter Vite Pages workflow.
 - Commit `69b16b1` fixed the YAML parser issue in the base-path verification step.
 - GitHub Actions run `29045398557` completed successfully, including `Verify Production URL`.
+- GitHub Actions run `29046773917` completed successfully after QA screenshot artifacts were committed.
 
 ### Current Problem
 
@@ -59,4 +67,4 @@
 
 ### Next Action
 
-- Review the live site manually and continue future refinements from the current committed baseline.
+- Current baseline includes content inventory docs, optimized portrait assets, CV section, case studies, QA screenshots, and verified GitHub Pages deployment.
