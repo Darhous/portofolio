@@ -3,3 +3,11 @@ dist/
 tmp/
 .codex-*.log
 .DS_Store
+
+# Original portrait — keep locally, do not track in public repo
+CE933E3B-D6AB-4FD6-A89B-651BD7022FB8.PNG
+
+# Environment variables
+.env
+.env.local
+.env.*.local
