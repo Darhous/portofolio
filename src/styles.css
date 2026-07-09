@@ -144,7 +144,7 @@ a:focus-visible {
 .intro-replay {
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  top: 84px;
   z-index: 9;
   padding: 0 14px;
   color: var(--cyan);
@@ -257,7 +257,7 @@ h2 {
 
 h1 {
   max-width: 860px;
-  font-size: clamp(3.1rem, 8.4vw, 7.8rem);
+  font-size: clamp(3rem, 7vw, 6.6rem);
 }
 
 h2 {
