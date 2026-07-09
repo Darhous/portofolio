@@ -36,7 +36,8 @@ jobs:
         run: npm ci
 
       - name: Verify Vite Base Path
-        run: grep -q 'base: "/portofolio/"' vite.config.ts
+        run: |
+          grep -q 'base: "/portofolio/"' vite.config.ts
 
       - name: Typecheck
         run: npm run typecheck --if-present
