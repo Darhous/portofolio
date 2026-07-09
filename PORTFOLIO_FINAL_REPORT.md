@@ -12,6 +12,8 @@ Status: Completed and deployed on 2026-07-09.
 
 - `4375289` - `feat: establish portfolio footer foundation`
 - `e6038dc` - `feat: build complete bilingual portfolio`
+- `d51ada7` - `ci: harden vite pages deployment`
+- `69b16b1` - `fix: quote pages workflow base path check`
 
 ## Stack
 
@@ -45,6 +47,7 @@ Status: Completed and deployed on 2026-07-09.
 - Accessibility sanity check - passed.
 - GitHub Pages workflow run `29044855746` - success.
 - Final deployment workflow includes Vite base path `/portofolio/` and production URL verification.
+- GitHub Pages workflow run `29045398557` - success, including production URL verification.
 - Live HTTP smoke test - `200`.
 - Production browser QA - passed.
 

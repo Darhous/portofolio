@@ -49,6 +49,9 @@
 - Live URL verified with HTTP 200: `https://darhous.github.io/portofolio/`
 - Deployment workflow updated to use GitHub Actions only, not Jekyll.
 - Workflow now verifies Vite base path `/portofolio/`, runs `typecheck`, optional `lint`, optional `test`, builds `dist`, deploys via `actions/deploy-pages`, and verifies the production URL after deployment.
+- Commit `d51ada7` pushed the stricter Vite Pages workflow.
+- Commit `69b16b1` fixed the YAML parser issue in the base-path verification step.
+- GitHub Actions run `29045398557` completed successfully, including `Verify Production URL`.
 
 ### Current Problem
 
