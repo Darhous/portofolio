@@ -1,0 +1,90 @@
+import type { Locale } from "./profile";
+
+export const navItems = [
+  { href: "#about", label: { en: "About", ar: "نبذة" } },
+  { href: "#expertise", label: { en: "Expertise", ar: "التخصصات" } },
+  { href: "#experience", label: { en: "Experience", ar: "الخبرة" } },
+  { href: "#projects", label: { en: "Projects", ar: "المشاريع" } },
+  { href: "#contact", label: { en: "Contact", ar: "تواصل" } },
+] as const;
+
+export const uiCopy: Record<Locale, Record<string, string>> = {
+  en: {
+    switchLanguage: "العربية",
+    introSkip: "Skip intro",
+    introReplay: "Replay intro",
+    introLineOne: "Law enforcement discipline",
+    introLineTwo: "Legal authority",
+    introLineThree: "AI-driven operations",
+    heroKicker: "Ahmed Darhous Portfolio",
+    heroTitle: "Security, law, and AI operations in one command surface.",
+    heroBody:
+      "A premium bilingual portfolio for an executive security profile that connects public-sector discipline, legal research, operational intelligence, and software product building.",
+    contactCta: "Contact",
+    repoCta: "View Repository",
+    aboutKicker: "Profile Evidence",
+    aboutTitle: "Built from the CV, not guesswork.",
+    aboutBody:
+      "The content model is grounded in Profile.pdf, live GitHub repository metadata, and the official contact identity supplied for this project.",
+    expertiseKicker: "Operating Map",
+    expertiseTitle: "Four domains, one operating logic.",
+    experienceKicker: "Command History",
+    experienceTitle: "Operational leadership under pressure.",
+    credentialsKicker: "Education & Credentials",
+    credentialsTitle: "Executive study, law, and field-readiness.",
+    projectsKicker: "Verified Work",
+    projectsTitle: "Projects with source-backed descriptions.",
+    projectsBody:
+      "Public projects link to their repositories or live deployments. Private or CV-sourced systems are identified without inventing public links.",
+    source: "Source",
+    privateProject: "Private / CV-sourced",
+    liveProject: "Live",
+    repository: "Repository",
+    contactKicker: "Open Channel",
+    contactTitle: "Build the next resilient system.",
+    contactBody:
+      "Use the official channels below for corporate security, legal-tech research, AI operations, automation, or product collaboration.",
+    skillsTitle: "Skills",
+    languagesTitle: "Languages",
+    certsTitle: "Certifications",
+  },
+  ar: {
+    switchLanguage: "English",
+    introSkip: "تجاوز المقدمة",
+    introReplay: "إعادة المقدمة",
+    introLineOne: "انضباط أمني",
+    introLineTwo: "سلطة قانونية",
+    introLineThree: "عمليات مدعومة بالذكاء الاصطناعي",
+    heroKicker: "بورتفوليو أحمد درهوس",
+    heroTitle: "الأمن والقانون وعمليات الذكاء الاصطناعي في واجهة قيادة واحدة.",
+    heroBody:
+      "بورتفوليو ثنائي اللغة لهوية أمنية تنفيذية تربط الانضباط المؤسسي، البحث القانوني، الذكاء التشغيلي، وبناء المنتجات البرمجية.",
+    contactCta: "تواصل",
+    repoCta: "عرض المستودع",
+    aboutKicker: "محتوى موثق",
+    aboutTitle: "مبني من السيرة الذاتية لا من التخمين.",
+    aboutBody:
+      "نموذج المحتوى مبني على Profile.pdf وبيانات مستودعات GitHub الحية وهوية التواصل الرسمية المحددة لهذا المشروع.",
+    expertiseKicker: "خريطة التشغيل",
+    expertiseTitle: "أربعة مجالات ومنطق تشغيل واحد.",
+    experienceKicker: "تاريخ القيادة",
+    experienceTitle: "قيادة تشغيلية تحت الضغط.",
+    credentialsKicker: "التعليم والاعتمادات",
+    credentialsTitle: "دراسة تنفيذية وقانون وجاهزية ميدانية.",
+    projectsKicker: "أعمال موثقة",
+    projectsTitle: "مشاريع بوصف مستند إلى مصادر.",
+    projectsBody:
+      "المشاريع العامة مرتبطة بمستودعاتها أو نسخها الحية. الأنظمة الخاصة أو المستخرجة من السيرة موضحة دون اختراع روابط عامة.",
+    source: "المصدر",
+    privateProject: "خاص / مصدره السيرة",
+    liveProject: "نسخة حية",
+    repository: "المستودع",
+    contactKicker: "قناة مفتوحة",
+    contactTitle: "ابن النظام المرن التالي.",
+    contactBody:
+      "استخدم قنوات التواصل الرسمية للأمن المؤسسي، البحث القانوني التقني، عمليات الذكاء الاصطناعي، الأتمتة، أو تعاون المنتجات.",
+    skillsTitle: "المهارات",
+    languagesTitle: "اللغات",
+    certsTitle: "الشهادات",
+  },
+};

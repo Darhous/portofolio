@@ -1,74 +1,54 @@
 import { useState } from "react";
-import { ExternalLink } from "./components/ExternalLink";
+import { AboutSection } from "./components/AboutSection";
 import { ContactSection } from "./components/ContactSection";
+import { ExperienceSection } from "./components/ExperienceSection";
+import { ExpertiseSection } from "./components/ExpertiseSection";
 import { Footer } from "./components/Footer";
-import { siteConfig } from "./config/site";
+import { Hero } from "./components/Hero";
+import { Intro } from "./components/Intro";
+import { ProjectsSection } from "./components/ProjectsSection";
+import { navItems, uiCopy } from "./data/content";
+import type { Locale } from "./data/profile";
 import "./styles.css";
-
-type Locale = "en" | "ar";
-
-const copy = {
-  en: {
-    language: "العربية",
-    eyebrow: "Law, security, AI, and systems",
-    title: "Ahmed Darhous builds disciplined digital operations.",
-    body:
-      "A bilingual portfolio foundation for a multidisciplinary profile spanning legal research, public security, automation, software products, and practical AI systems.",
-    cv: "Download CV",
-    repo: "Portfolio Repository",
-  },
-  ar: {
-    language: "English",
-    eyebrow: "القانون والأمن والذكاء الاصطناعي والأنظمة",
-    title: "أحمد درهوس يبني عمليات رقمية منضبطة.",
-    body:
-      "أساس بورتفوليو ثنائي اللغة لهوية مهنية متعددة التخصصات تجمع بين البحث القانوني، الأمن العام، الأتمتة، المنتجات البرمجية، وأنظمة الذكاء الاصطناعي العملية.",
-    cv: "تحميل السيرة الذاتية",
-    repo: "مستودع البورتفوليو",
-  },
-} as const;
 
 function App() {
   const [locale, setLocale] = useState<Locale>("en");
-  const content = copy[locale];
+  const content = uiCopy[locale];
   const direction = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <div className="app-shell" dir={direction} lang={locale}>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+      <Intro locale={locale} />
       <header className="topbar" id="top">
         <a className="brand" href="#top" aria-label="Ahmed Darhous home">
           AD
         </a>
+        <nav className="main-nav" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <a key={item.href} href={item.href}>
+              {item.label[locale]}
+            </a>
+          ))}
+        </nav>
         <button
           className="language-toggle"
           type="button"
           onClick={() => setLocale((current) => (current === "en" ? "ar" : "en"))}
         >
-          {content.language}
+          {content.switchLanguage}
         </button>
       </header>
 
-      <main>
-        <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <p className="eyebrow">{content.eyebrow}</p>
-            <h1 id="hero-title">{content.title}</h1>
-            <p>{content.body}</p>
-            <div className="hero-actions">
-              <a className="primary-action" href={siteConfig.assets.cv} download>
-                {content.cv}
-              </a>
-              <ExternalLink className="secondary-action" href={siteConfig.repository}>
-                {content.repo}
-              </ExternalLink>
-            </div>
-          </div>
-          <div className="portrait-lockup" aria-label="Ahmed Darhous portrait">
-            <img src={siteConfig.assets.portrait} alt="Ahmed Darhous" />
-          </div>
-        </section>
-
-        <ContactSection />
+      <main id="main-content">
+        <Hero locale={locale} />
+        <AboutSection locale={locale} />
+        <ExpertiseSection locale={locale} />
+        <ExperienceSection locale={locale} />
+        <ProjectsSection locale={locale} />
+        <ContactSection locale={locale} />
       </main>
 
       <Footer />

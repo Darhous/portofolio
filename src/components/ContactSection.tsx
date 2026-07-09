@@ -1,19 +1,24 @@
 import { Download, Mail, Phone } from "lucide-react";
 import { siteConfig } from "../config/site";
+import type { Locale } from "../data/profile";
+import { uiCopy } from "../data/content";
 import { ExternalLink } from "./ExternalLink";
 import { SocialLinks } from "./SocialLinks";
 
-export function ContactSection() {
+type ContactSectionProps = {
+  locale: Locale;
+};
+
+export function ContactSection({ locale }: ContactSectionProps) {
+  const copy = uiCopy[locale];
+
   return (
-    <section className="contact-section" id="contact" aria-labelledby="contact-title">
-      <div className="section-kicker">Open Channel</div>
+    <section className="page-section contact-section" id="contact" aria-labelledby="contact-title">
+      <div className="section-kicker">{copy.contactKicker}</div>
       <div className="contact-grid">
         <div>
-          <h2 id="contact-title">Contact Ahmed Darhous</h2>
-          <p>
-            For portfolio discussions, legal-tech research, product systems, automation, or
-            security-focused digital operations, use the official contact channels below.
-          </p>
+          <h2 id="contact-title">{copy.contactTitle}</h2>
+          <p>{copy.contactBody}</p>
         </div>
         <div className="contact-panel">
           <ExternalLink className="contact-method" href={siteConfig.contact.email}>

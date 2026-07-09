@@ -1,4 +1,5 @@
 node_modules/
 dist/
+tmp/
 .codex-*.log
 .DS_Store
