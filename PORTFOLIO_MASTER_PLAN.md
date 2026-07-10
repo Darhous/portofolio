@@ -24,6 +24,7 @@ Last updated: 2026-07-10
 | 15 | Multi-page architecture: project archive, per-project case-study pages, contact page, 404 page | Completed | `react-router-dom`, `src/pages/*`, `public/404.html` + `index.html` restore script, verified with a GitHub Pages 404-behavior mock server |
 | 16 | Command palette, hamburger mobile nav, structured contact form, per-route SEO/JSON-LD, sitemap | Completed | `src/components/CommandPalette.tsx`, `src/components/Header.tsx`, `src/components/ContactForm.tsx`, `src/hooks/usePageMeta.ts`, `public/sitemap.xml` |
 | 17 | Automated QA pass with real bug fix (mobile drawer containing-block bug) | Completed | `docs/qa/QA_REPORT.md` 2026-07-10 section, `docs/qa/screenshots/01`–`18` |
+| 18 | Full 33-item project inventory pass: second GitHub account discovered, catalog grown 16 → 30 | Completed | `docs/content/PROJECT_DISCOVERY.md` 2026-07-10 part 2 section; `docs/qa/screenshots/19`–`25` |
 
 ## Completion Addendum
 

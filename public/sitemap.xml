@@ -40,13 +40,13 @@
     <loc>https://darhous.github.io/portofolio/projects/store-master-template</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://darhous.github.io/portofolio/projects/darhous-automation-academy</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://darhous.github.io/portofolio/projects/darhous-career-hub</loc>
@@ -64,13 +64,13 @@
     <loc>https://darhous.github.io/portofolio/projects/guardian-nexus</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://darhous.github.io/portofolio/projects/almasa-lab-proposal</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://darhous.github.io/portofolio/projects/shemo-studio</loc>
@@ -100,18 +100,102 @@
     <loc>https://darhous.github.io/portofolio/projects/whatsapp-auto-poster</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://darhous.github.io/portofolio/projects/elfady</loc>
+    <loc>https://darhous.github.io/portofolio/projects/elfady-car-trading</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/automotive-catalog-intelligence-platform</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/elfady-native-android-app</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/nexalearn-ai-academy</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/english-language-assessment-platform</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/digital-transformation-exams-platform</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/nexalearn-career-hub</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/nexalearn-automation-academy</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/nexalearn-iot-lab</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/nano-banana-prompt-lab</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/ai-mentor</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/prompt-studio</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/claude-code-prompt-generator</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/nutribox-healthy-kitchen-os</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://darhous.github.io/portofolio/projects/fenrir-cybersecurity-projects</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://darhous.github.io/portofolio/projects/ahmed-darhous-portfolio</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
 </urlset>

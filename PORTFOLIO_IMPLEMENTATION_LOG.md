@@ -105,6 +105,63 @@
 
 - No known blocking problem. Bundle size grew to ~334 KB JS (~105 KB gzip) after adding routing/archive/case-study/contact/command-palette code; still a single chunk. Route-level code splitting is a reasonable future optimization, not required for correctness.
 
+## 2026-07-10 (part 2) — Full project inventory pass
+
+Ahmed sent a complete, detailed inventory of 33 projects with exact repo/live
+URLs for several. Cross-checked every item against GitHub rather than adding
+them at face value.
+
+### Discovery
+
+- Found a second GitHub account, `darhous2023`, not previously known to this
+  project. `Elfady Car Trading` lives there as `darhous2023/fady` — real,
+  89 commits, full README (Next.js 16, dual Postgres, Drizzle, Playwright) —
+  distinct from the empty `Darhous/elfady` placeholder found in the prior
+  pass. `darhous2023/flutter_test` (the Elfady Android app) exists but is
+  empty, same honest treatment as before.
+- Discovered this session's sandbox network policy blocks `vercel.app`
+  entirely (confirmed via the agent proxy status endpoint: policy 403, not a
+  site error) — no live Vercel URL, including the ones Ahmed provided
+  directly, could be opened from this environment. Documented this limit
+  and its handling in `docs/content/PROJECT_DISCOVERY.md`.
+- `career-ops`/`ATS Resume`, `Darhous Project Lab`, `NutriBox`, and `Fenrir`
+  were searched for again under both known accounts; only the
+  `career-ops`/`ATS Resume` mapping to `Darhous-career-hub-google` was
+  previously resolved. `Darhous Project Lab` remains not found. `NutriBox`
+  and `Fenrir` were added as `source: "Owner-provided"` entries using only
+  Ahmed's own description — no public repository exists for either under
+  any known account, and this is stated plainly on their case-study pages
+  rather than hidden or invented around.
+
+### Completed Work
+
+- Rewrote the NexaLearn (`darhous-ai-cloud-academy`) case study from a full
+  README re-read: 325+ commits, 144+ releases, all 6 core portals and all 8
+  AI Studio tools confirmed by name and route.
+- Added 7 new independent archive entries for NexaLearn's portals (AI
+  Academy, English Language Assessment, Digital Transformation Exams,
+  Career Hub, Automation Academy, IoT Lab, Nano Banana Prompt Lab), with
+  the Language Assessment and Digital Exams portals additionally marked
+  `featured: true` per Ahmed's explicit instruction.
+- Added 3 independent archive entries for the AI Studio tools Ahmed named as
+  strongest (AI Mentor, Prompt Studio, Claude Code Prompt Generator); the
+  other 11 AI Studio tools are described only inside the NexaLearn case
+  study's feature list, not as separate pages, per his display rule.
+- Rewrote the Elfady Car Trading entry with the real `darhous2023/fady`
+  evidence and marked it featured.
+- Added Automotive Catalog Intelligence Platform, Elfady Native Android App,
+  NutriBox Healthy Kitchen OS, and Fenrir Cybersecurity Projects.
+- Changed the generic "Private / CV-sourced" fallback copy to "No public
+  link available" (EN) / "لا يوجد رابط عام متاح" (AR) since it now covers
+  both genuinely private projects and simply-unverified ones honestly.
+- Regenerated `public/sitemap.xml` for all 30 project slugs.
+
+### Verification
+
+- `npm run typecheck`, `npm test` (30/30 slugs verified), `npm run build` — all passed.
+- Playwright re-run against the GitHub Pages mock server: 30-card archive count verified, category filter verified, NexaLearn/Elfady/Fenrir case studies verified, Arabic archive verified, no console errors, no overflow.
+- Caught and fixed a real data bug during this QA pass: "NexaLearn AI Academy" was accidentally marked `featured: true`, pushing the homepage to 11 featured cards instead of the intended 10. Fixed to `featured: false` and re-verified.
+
 ### Next Action
 
 - Committed and pushed to `claude/darhous-portfolio-rebuild-sxmb3n`. This

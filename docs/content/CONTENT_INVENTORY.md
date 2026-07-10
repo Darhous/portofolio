@@ -17,7 +17,7 @@ shared intro, header, footer, and command palette around an `<Outlet />`.
 | Route | Page component | Purpose |
 |---|---|---|
 | `/` | `src/pages/HomePage.tsx` | Hero, about, expertise, experience, featured projects, case-study teasers, CV, quick contact |
-| `/projects` | `src/pages/ProjectsArchivePage.tsx` | Full searchable/filterable archive of all 16 known projects |
+| `/projects` | `src/pages/ProjectsArchivePage.tsx` | Full searchable/filterable archive of all 30 known projects |
 | `/projects/:slug` | `src/pages/ProjectCaseStudyPage.tsx` | Full case study per project (context, problem, constraints, approach, features, challenges/solutions, results, status, lessons, related projects) |
 | `/contact` | `src/pages/ContactPage.tsx` | Structured compose form (mailto/WhatsApp) + direct channels |
 | `/404` and any unmatched path | `src/pages/NotFoundPage.tsx` | On-brand 404 with search/home CTAs |

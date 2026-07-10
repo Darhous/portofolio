@@ -1,10 +1,53 @@
 # Ahmed Darhous Portfolio Final Report
 
-Status: Multi-page rebuild completed and pushed on 2026-07-10. **Not yet
-merged to `main`**, so `https://darhous.github.io/portofolio/` still serves
-the 2026-07-09 single-page build until this branch is merged (GitHub Pages
-deploys only from `main`; this session's branch instructions require staying
-on the feature branch and not opening a PR unless asked).
+Status: Multi-page rebuild completed and pushed on 2026-07-10, followed by a
+full 33-item project inventory pass the same day that grew the catalog from
+16 to **30 projects** and discovered a second GitHub account
+(`darhous2023`). **Not yet merged to `main`**, so
+`https://darhous.github.io/portofolio/` still serves the 2026-07-09
+single-page build until this branch is merged (GitHub Pages deploys only
+from `main`; this session's branch instructions require staying on the
+feature branch and not opening a PR unless asked).
+
+## Update: Full Project Inventory Pass (2026-07-10, part 2)
+
+Ahmed provided a complete inventory of 33 projects with specific repo/live
+URLs. Every item was checked against GitHub rather than trusted at face
+value:
+
+- **Discovered a second GitHub account, `darhous2023`.** Elfady Car Trading
+  is real and lives there as `darhous2023/fady` (89 commits, a detailed
+  README matching Ahmed's description almost exactly) — not the empty
+  `Darhous/elfady` repo found in the first discovery pass. Now featured
+  with a full case study.
+- **This session cannot reach `vercel.app` at all** — confirmed as an
+  explicit network-policy denial (403 from the agent proxy), not a
+  site-side issue. Every live Vercel URL in the portfolio (Elfady, NexaLearn
+  and its sub-routes) is included on the strength of Ahmed's direct
+  statement and README self-references, not independent verification —
+  stated plainly wherever relevant.
+- `career-ops`/`ATS Resume`, `Darhous Project Lab`, `NutriBox Healthy
+  Kitchen OS`, and `Fenrir Cybersecurity Projects` were re-searched under
+  both known accounts. `Darhous Project Lab` remains completely
+  unevidenced and was not added. `NutriBox` and `Fenrir` were added as
+  honestly-labeled `Owner-provided` entries (Ahmed's own description, no
+  invented repo/screenshots/metrics) since he is directly attesting to
+  their existence even though no public repository could be found.
+- NexaLearn's README was re-read in full: confirmed 325+ commits, 144+
+  releases, 6 of Ahmed's 7 named portals and all 8 AI Studio tools by name
+  and route. Restructured per Ahmed's explicit display rules: NexaLearn
+  itself stays the one featured umbrella case study; its 7 portals became
+  independent archive entries (with English Language Assessment and
+  Digital Transformation Exams additionally featured, as instructed); only
+  the 3 AI Studio tools Ahmed named as strongest (AI Mentor, Prompt Studio,
+  Claude Code Prompt Generator) got independent entries, with the other 11
+  folded into NexaLearn's case-study feature list instead of given separate
+  pages.
+- Full resolution table for every named item: `docs/content/PROJECT_DISCOVERY.md`.
+- Caught and fixed a real bug during this pass's QA: "NexaLearn AI Academy"
+  was mistakenly marked `featured: true`, which would have pushed the
+  homepage to 11 featured cards instead of the intended 10 — fixed and
+  re-verified.
 
 ## Links
 
@@ -38,7 +81,7 @@ for a medical laboratory — now featured), `darhous-assessment`,
 `Exams_Platform`, `darhous-marketing-social-hub`, `whatsapp-auto-poster`.
 Full sourcing detail: `docs/content/PROJECT_DISCOVERY.md`.
 
-The project catalog grew from 9 to **16 projects**, 7 of them featured.
+The project catalog grew from 9 to 16 projects in this pass, then to **30 projects** (10 featured) in the follow-up inventory pass described above.
 
 ### Architecture
 
@@ -100,9 +143,11 @@ document.body)`. Verified fixed with before/after screenshots.
 
 ## Confirmed
 
-- All 16 projects are real and sourced from GitHub metadata/READMEs or the
-  CV — nothing invented, nothing shown as complete when it isn't (`elfady`
-  is explicitly marked "Early" with no fabricated features).
+- All 30 projects are real and sourced from GitHub metadata/READMEs, the CV,
+  or Ahmed's own direct description (clearly labeled `Owner-provided` where
+  no public repository exists) — nothing invented, nothing shown as
+  complete when it isn't (`elfady-native-android-app` is explicitly marked
+  "Early" with no fabricated features).
 - Footer displays `Designed & Developed by Ahmed Darhous`, links to
   `mailto:ahmeddarhous@gmail.com`, social order Instagram → LinkedIn →
   Facebook → WhatsApp → GitHub — unchanged and still enforced by `npm test`.

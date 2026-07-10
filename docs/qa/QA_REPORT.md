@@ -1,6 +1,44 @@
 # QA Report
 
-## 2026-07-10 — Multi-page rebuild (routing, archive, case studies, contact, command palette)
+## 2026-07-10 (part 2) — Full project inventory expansion (16 → 30 projects)
+
+Branch: `claude/darhous-portfolio-rebuild-sxmb3n` (still not merged to `main`).
+
+### Commands
+
+```bash
+npm run typecheck   # passed
+npm test            # passed — 30/30 project slugs verified in sitemap.xml
+npm run build       # passed (JS ~366.8 KB / ~113.4 KB gzip)
+```
+
+### What changed
+
+Verified and added Ahmed's full 33-item project list against GitHub,
+discovering a second GitHub account (`darhous2023`) in the process. Full
+resolution table in `docs/content/PROJECT_DISCOVERY.md`. Notably: this
+session's network policy blocks the `vercel.app` domain outright (confirmed
+via the agent proxy status endpoint), so no live Vercel URL in this
+inventory — including the ones Ahmed gave directly — could be independently
+opened from this environment. Their inclusion rests on Ahmed's direct
+statement and, where available, the project's own README self-referencing
+that URL as its production deployment.
+
+### Automated re-verification (Playwright, Chromium, against the GitHub Pages mock server)
+
+- Project archive renders exactly 30 project cards.
+- Category filter ("AI Tools") narrows to exactly the 4 expected cards (AI Mentor, Prompt Studio, Claude Code Prompt Generator, Nano Banana Prompt Lab).
+- NexaLearn case study (`/projects/darhous-ai-cloud-academy`) renders correctly with the expanded README-sourced content.
+- Elfady Car Trading case study (`/projects/elfady-car-trading`) renders correctly with the full rewritten case study.
+- Fenrir case study (an "Owner-provided," no-public-repo entry) correctly shows the updated "No public link available" copy instead of a broken or misleading link.
+- Arabic archive page — RTL, no overflow, new copy renders correctly.
+- Homepage featured section — corrected from an unintended 11 down to the intended 10 featured cards (a `featured: true` typo on "NexaLearn AI Academy" was caught and fixed during this QA pass — it should not have been featured per Ahmed's own display rule and is now archive-only).
+
+No console errors, no unexpected 404s, no horizontal overflow across any of the above. Screenshots `19`–`25` added to `docs/qa/screenshots/`.
+
+---
+
+## 2026-07-10 (part 1) — Multi-page rebuild (routing, archive, case studies, contact, command palette)
 
 Branch: `claude/darhous-portfolio-rebuild-sxmb3n` (not yet merged to `main` —
 `https://darhous.github.io/portofolio/` still serves the 2026-07-09 build

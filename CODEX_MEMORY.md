@@ -74,3 +74,15 @@ All footer and contact social links must be displayed in this exact order:
 - Added real projects that were missing from the previous inventory: `almasa-lab-proposal` (featured — a client digital-transformation proposal for a medical laboratory, built as an interactive decision log), `Shemo-Studio`, `darhous-assessment`, `Exams_Platform`, `darhous-marketing-social-hub`, `whatsapp-auto-poster`.
 - `scripts/verify-content.mjs` now also checks that every project `slug` in `src/data/projects.ts` has a matching URL in `public/sitemap.xml` (16/16 passing).
 - Latest verification: `npm ci`, `npm run typecheck`, `npm test`, `npm run build` all pass. Playwright QA covered desktop/mobile/tablet, EN/AR, command palette, archive search/filter, a real deep-link reload through the GitHub Pages 404 trick, contact form validation, 404, and reduced motion — no console errors, no horizontal overflow.
+
+## 2026-07-10 Update, Part 2 (33-item inventory pass)
+
+- **Ahmed has two GitHub accounts.** `Darhous` (used for all prior discovery) and `darhous2023` (newly discovered). Always check both before saying a project "was not found."
+- `Elfady Car Trading` is real and lives at `darhous2023/fady` (89 commits, live at `fady-delta.vercel.app` per its own README) — NOT the empty `Darhous/elfady` repo found earlier. Now featured with a full case study.
+- `darhous2023/flutter_test` (Elfady's Android app) and `Darhous/elfady` both exist but are empty — listed honestly as early-stage, not invented.
+- **This session's network policy blocks `vercel.app` entirely.** Every live Vercel URL in the portfolio (Elfady, NexaLearn and all its sub-routes) could not be opened directly from this environment — confirmed via the agent proxy status endpoint (403 policy denial, not a site error). Their live links are included on the strength of Ahmed's direct statement and, where possible, README self-references — not independent verification by this session. Do not assume a future session can re-verify these without a different network policy.
+- `career-ops` / `ATS Resume` — still no separate repo; maps to `Darhous-career-hub-google`'s ATS Resume Analyzer feature.
+- `Darhous Project Lab`, `NutriBox Healthy Kitchen OS`, `Fenrir Cybersecurity Projects` — not found under either known GitHub account. `NutriBox` and `Fenrir` were added anyway as `source: "Owner-provided"` entries using only Ahmed's direct description (no invented repo, screenshots, or metrics). `Darhous Project Lab` was not added at all — still zero evidence of any kind.
+- NexaLearn (`darhous-ai-cloud-academy`) is now the umbrella brand: 7 portals (AI Academy, Language Assessment [featured], Digital Exams [featured], Career Hub, Automation Academy, IoT Lab, Nano Banana Prompt Lab) each get their own archive entry per Ahmed's display rule; only AI Mentor, Prompt Studio, and Claude Code Prompt Generator get independent AI-Studio-tool entries — the rest of the 14 AI Studio tools live only inside the NexaLearn case study's feature list.
+- Project catalog: 30 total, 10 featured. Full resolution table: `docs/content/PROJECT_DISCOVERY.md`.
+- Still not merged to `main` — same branch constraint as before.
