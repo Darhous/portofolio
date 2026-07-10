@@ -107,4 +107,10 @@
 
 ### Next Action
 
-- Commit and push this session's work, confirm the GitHub Actions deployment succeeds, and spot-check the live production URL.
+- Committed and pushed to `claude/darhous-portfolio-rebuild-sxmb3n`. This
+  branch has **not** been merged to `main`, per this session's explicit
+  instruction to stay on the feature branch and not open a pull request
+  unless asked — so the GitHub Actions Pages deployment (which only
+  triggers on pushes to `main`) has not run for this work, and
+  `https://darhous.github.io/portofolio/` still serves the 2026-07-09
+  build. Merging or opening a PR is the next decision for Ahmed.

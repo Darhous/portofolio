@@ -2,8 +2,10 @@
 
 ## 2026-07-10 — Multi-page rebuild (routing, archive, case studies, contact, command palette)
 
-Production URL: `https://darhous.github.io/portofolio/`
-Branch: `claude/darhous-portfolio-rebuild-sxmb3n`
+Branch: `claude/darhous-portfolio-rebuild-sxmb3n` (not yet merged to `main` —
+`https://darhous.github.io/portofolio/` still serves the 2026-07-09 build
+until this branch is merged; all QA below ran against local builds of this
+branch, not against the live production URL).
 
 ### Commands
 
