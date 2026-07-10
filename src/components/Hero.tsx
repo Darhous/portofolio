@@ -34,6 +34,20 @@ export function Hero({ locale }: HeroProps) {
             <span>{copy.repoCta}</span>
           </ExternalLink>
         </div>
+        <dl className="hero-stats">
+          <div>
+            <dt>{copy.heroStat1Value}</dt>
+            <dd>{copy.heroStat1Label}</dd>
+          </div>
+          <div>
+            <dt>{copy.heroStat2Value}</dt>
+            <dd>{copy.heroStat2Label}</dd>
+          </div>
+          <div>
+            <dt>{copy.heroStat3Value}</dt>
+            <dd>{copy.heroStat3Label}</dd>
+          </div>
+        </dl>
         <SocialLinks variant="labels" />
       </div>
       <div className="portrait-lockup" aria-label="Ahmed Darhous portrait">

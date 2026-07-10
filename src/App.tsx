@@ -1,62 +1,32 @@
 import { useState } from "react";
-import { AboutSection } from "./components/AboutSection";
-import { CaseStudiesSection } from "./components/CaseStudiesSection";
-import { ContactSection } from "./components/ContactSection";
-import { CVSection } from "./components/CVSection";
-import { ExperienceSection } from "./components/ExperienceSection";
-import { ExpertiseSection } from "./components/ExpertiseSection";
-import { Footer } from "./components/Footer";
-import { Hero } from "./components/Hero";
-import { Intro } from "./components/Intro";
-import { ProjectsSection } from "./components/ProjectsSection";
-import { navItems, uiCopy } from "./data/content";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { RootLayout } from "./layouts/RootLayout";
+import { HomePage } from "./pages/HomePage";
+import { ProjectsArchivePage } from "./pages/ProjectsArchivePage";
+import { ProjectCaseStudyPage } from "./pages/ProjectCaseStudyPage";
+import { ContactPage } from "./pages/ContactPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import type { Locale } from "./data/profile";
 import "./styles.css";
 
 function App() {
   const [locale, setLocale] = useState<Locale>("en");
-  const content = uiCopy[locale];
-  const direction = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <div className="app-shell" dir={direction} lang={locale}>
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
-      <Intro locale={locale} />
-      <header className="topbar" id="top">
-        <a className="brand" href="#top" aria-label="Ahmed Darhous home">
-          AD
-        </a>
-        <nav className="main-nav" aria-label="Primary navigation">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label[locale]}
-            </a>
-          ))}
-        </nav>
-        <button
-          className="language-toggle"
-          type="button"
-          onClick={() => setLocale((current) => (current === "en" ? "ar" : "en"))}
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <Routes>
+        <Route
+          element={<RootLayout locale={locale} onToggleLocale={() => setLocale((current) => (current === "en" ? "ar" : "en"))} />}
         >
-          {content.switchLanguage}
-        </button>
-      </header>
-
-      <main id="main-content">
-        <Hero locale={locale} />
-        <AboutSection locale={locale} />
-        <ExpertiseSection locale={locale} />
-        <ExperienceSection locale={locale} />
-        <ProjectsSection locale={locale} />
-        <CaseStudiesSection locale={locale} />
-        <CVSection locale={locale} />
-        <ContactSection locale={locale} />
-      </main>
-
-      <Footer />
-    </div>
+          <Route index element={<HomePage />} />
+          <Route path="projects" element={<ProjectsArchivePage />} />
+          <Route path="projects/:slug" element={<ProjectCaseStudyPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="404" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

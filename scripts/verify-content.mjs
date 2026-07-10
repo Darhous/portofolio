@@ -43,4 +43,21 @@ if (!social.includes("socialLinks.map")) {
   throw new Error("SocialLinks must render centralized ordered social links.");
 }
 
+const projectsSource = readFileSync("src/data/projects.ts", "utf8");
+const sitemap = readFileSync("public/sitemap.xml", "utf8");
+
+const slugMatches = [...projectsSource.matchAll(/slug:\s*"([a-z0-9-]+)"/g)].map((match) => match[1]);
+
+if (slugMatches.length === 0) {
+  throw new Error("No project slugs found in src/data/projects.ts.");
+}
+
+for (const slug of slugMatches) {
+  const path = `/projects/${slug}`;
+  if (!sitemap.includes(path)) {
+    throw new Error(`Project slug missing from sitemap.xml: ${path}`);
+  }
+}
+
+console.log(`Verified ${slugMatches.length} project slugs are present in sitemap.xml.`);
 console.log("Content identity verification passed.");

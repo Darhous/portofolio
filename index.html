@@ -3,20 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      // Restores the real route from the 404.html redirect query string
+      // before React Router mounts, so deep links and reloads work.
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(null, "", l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
     <meta
       name="description"
-      content="Ahmed Darhous premium bilingual portfolio for technology, law, AI, security, and digital operations."
+      content="Ahmed Darhous portfolio: corporate security and risk governance, legal research, AI-driven operations, and software products."
     />
     <meta name="theme-color" content="#101211" />
-    <meta property="og:title" content="Ahmed Darhous | Premium Portfolio" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Ahmed Darhous | Corporate Security, Legal-Tech & AI Operations" />
     <meta
       property="og:description"
-      content="Security, law, and AI operations portfolio for Ahmed Darhous."
+      content="Corporate security and risk governance, legal research, AI-driven operations, and software products."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://darhous.github.io/portofolio/" />
     <meta property="og:image" content="https://darhous.github.io/portofolio/ahmed-darhous.png" />
-    <title>Ahmed Darhous | Premium Portfolio</title>
+    <title>Ahmed Darhous | Corporate Security, Legal-Tech & AI Operations</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

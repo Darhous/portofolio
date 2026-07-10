@@ -1,10 +1,117 @@
 # QA Report
 
-Date: 2026-07-09  
-Production URL: `https://darhous.github.io/portofolio/`  
+## 2026-07-10 — Multi-page rebuild (routing, archive, case studies, contact, command palette)
+
+Production URL: `https://darhous.github.io/portofolio/`
+Branch: `claude/darhous-portfolio-rebuild-sxmb3n`
+
+### Commands
+
+```bash
+npm ci
+npm run typecheck
+npm test
+npm run build
+```
+
+All four passed with no errors. `npm test` additionally verifies every project
+`slug` in `src/data/projects.ts` has a matching entry in `public/sitemap.xml`
+(16/16 verified).
+
+### Automated browser QA (Playwright, Chromium)
+
+A GitHub Pages simulation server was written for this QA pass
+(`gh-pages-mock-server`, not committed) that serves `dist/` under the
+`/portofolio/` base path and returns a real HTTP 404 with the contents of
+`dist/404.html` for any unmatched path — the same behavior GitHub Pages
+uses in production. All checks below ran against that server, not against
+`vite preview` (which has its own SPA fallback and would not have caught the
+routing bug described below).
+
+Scenarios covered, 1440x900 unless noted:
+
+- Home, English — no console errors, no horizontal overflow.
+- Home, Arabic (`dir="rtl"` verified on `.app-shell`) — no console errors, no overflow.
+- Home, mobile (390x844) — no overflow; hamburger drawer opens correctly.
+- Home, mobile Arabic (390x844) — no overflow.
+- Home, small mobile (360x640) — no overflow.
+- Home, tablet (820x1180) — no overflow.
+- Command palette: opens on `Ctrl/Cmd+K`, search filters results, closes on `Escape`, focus returns to trigger.
+- Projects archive (`/projects`): search and category filters both verified.
+- **Direct deep link** to `/projects/arabic-legal-research-skill` through the real 404-redirect chain — confirmed the correct case-study heading rendered and the URL was restored to the clean path (this is the GitHub Pages "reload on a nested route" scenario).
+- Case study page, mobile (390x844) — no overflow.
+- Contact page: empty-submit validation error state, then filled fields — no overflow.
+- Contact page, mobile (390x844) — no overflow.
+- 404 page via an unmatched route — confirmed redirect to `/404` and correct copy.
+- `prefers-reduced-motion: reduce` — intro overlay is skipped entirely, no overflow.
+
+Exactly one HTTP 404 was observed per direct/deep-link navigation in every
+scenario above, and it was always the initial document request that the
+GitHub Pages SPA-redirect trick depends on (`public/404.html` →
+`window.location.replace` → `index.html` restore script →
+`history.replaceState`). No unexpected 404s (missing assets, fonts, images)
+were found on any page.
+
+Screenshots saved under `docs/qa/screenshots/` (`01-` through `18-`).
+
+### Bug found and fixed during this QA pass
+
+The mobile hamburger drawer (`.mobile-nav-overlay`, `position: fixed; inset: 0`)
+was rendered as a DOM child of `<header class="topbar">`, and `.topbar` has
+`backdrop-filter: blur(16px)`. A `backdrop-filter` on an ancestor creates a
+new containing block for `position: fixed` descendants, so the drawer's
+`inset: 0` was resolving against the ~72px-tall header box instead of the
+viewport — the drawer rendered squashed at the top of the page instead of as
+a full-height side panel. Fixed by rendering the drawer through
+`createPortal(..., document.body)` in `src/components/Header.tsx`, so it is
+no longer a descendant of any filtered/transformed ancestor. Verified fixed
+with a before/after screenshot.
+
+### Accessibility
+
+- Skip link present and functional.
+- All interactive drawer/palette overlays trap focus and restore it to the trigger on close (`useFocusTrap`).
+- `Escape` closes both the mobile drawer and the command palette.
+- Single `h1` per page (verified on home, archive, case study, contact, 404).
+- Reduced motion removes the intro overlay and disables transition/animation durations globally.
+- Logical CSS properties (`inset-inline-*`) used throughout new components so RTL mirrors automatically without duplicated rules.
+
+### Footer identity checks (unchanged, still enforced by `npm test`)
+
+- Exact signature: `Designed & Developed by Ahmed Darhous`.
+- `Ahmed Darhous` links to `mailto:ahmeddarhous@gmail.com`.
+- Social order: Instagram, LinkedIn, Facebook, WhatsApp, GitHub.
+- External links use `target="_blank"` and `rel="noopener noreferrer"`.
+
+### Performance notes
+
+Production build output:
+
+- HTML: ~2.5 KB
+- CSS: ~17.8 KB (~4.5 KB gzip)
+- JavaScript: ~334 KB (~105 KB gzip) — grew from the previous build after adding `react-router-dom`, the command palette, the project archive/search, and the case-study/contact pages. Still a single JS chunk; code-splitting per route was not added in this pass and is a reasonable follow-up if bundle size becomes a concern.
+
+### Known, accepted limitations
+
+- No headless Lighthouse run was performed in this environment (no network
+  path to a Lighthouse CI runner was set up); the manual Playwright checks
+  above cover the functional equivalents (console errors, overflow,
+  accessibility basics, reduced motion). A future session with Lighthouse
+  CI access should run it against the production URL.
+- The contact "form" intentionally has no backend: it builds a `mailto:` /
+  `wa.me` link client-side. This is correct for a static GitHub Pages site,
+  but it means an inquiry only actually sends once the visitor's own email
+  client or WhatsApp completes the send — there is no server-side delivery
+  confirmation.
+
+---
+
+## 2026-07-09 — Initial bilingual portfolio build (prior session)
+
+Production URL: `https://darhous.github.io/portofolio/`
 Latest tested deployment run: `29046650767`
 
-## Commands
+### Commands
 
 ```powershell
 npm run typecheck --if-present
@@ -14,29 +121,27 @@ npm run build
 
 All commands passed.
 
-## Browser QA
+### Browser QA
 
 Tested with the in-app browser against production.
 
-### Desktop Viewport
+#### Desktop Viewport
 
 - Viewport: 1440 x 1000
-- Screenshot: `docs/qa/screenshots/production-desktop.png`
 - Horizontal overflow: none
 - Hero headline fits inside the tested first viewport
 - Hero image served as WebP: `ahmed-darhous-640.webp`
 - Console errors: none
 
-### Mobile Viewport
+#### Mobile Viewport
 
 - Viewport: 390 x 844
-- Screenshot: `docs/qa/screenshots/production-mobile.png`
 - Horizontal overflow: none
 - Replay intro button moved away from bottom copy area
 - Hero image served as WebP: `ahmed-darhous-640.webp`
 - Console errors: none
 
-## Accessibility Checks
+### Accessibility Checks
 
 - Single `h1`.
 - Semantic `main`, `section`, `nav`, and `footer` structure.
@@ -49,36 +154,7 @@ Tested with the in-app browser against production.
 - Reduced-motion fallback exists for cinematic intro and transitions.
 - RTL/LTR switching exists at app shell level.
 
-## Footer Identity Checks
-
-- Exact signature exists: `Designed & Developed by Ahmed Darhous`.
-- `Ahmed Darhous` in the footer points to `mailto:ahmeddarhous@gmail.com`.
-- Footer social order verified:
-  1. Instagram
-  2. LinkedIn
-  3. Facebook
-  4. WhatsApp
-  5. GitHub
-- External contact/social links have `target="_blank"` and `rel="noopener noreferrer"`.
-
-## Performance Notes
-
-Built asset sizes from local production build:
-
-- HTML: about 1.65 KB
-- CSS: about 11 KB
-- JavaScript: about 238 KB
-- Gzipped JavaScript from Vite output: about 74 KB
-
-Optimized portrait variants:
-
-- `ahmed-darhous-384.webp`: about 12.6 KB
-- `ahmed-darhous-640.webp`: about 23.4 KB
-- `ahmed-darhous-960.webp`: about 38.8 KB
-
-The original PNG remains as fallback, but browser QA confirmed WebP is selected in production.
-
-## Deployment QA
+### Deployment QA
 
 - GitHub Pages source: GitHub Actions
 - Workflow: `.github/workflows/deploy.yml`
