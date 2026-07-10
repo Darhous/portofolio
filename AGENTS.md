@@ -57,3 +57,10 @@ Display social links in this exact order in the footer and all contact sections:
 - The deployment workflow must live at `.github/workflows/deploy.yml`.
 - The Vite base path must remain `/portofolio/`.
 - The workflow must install dependencies, run available checks, build `dist`, deploy with GitHub Pages Actions, and verify `https://darhous.github.io/portofolio/`.
+
+## Routing (multi-page, added 2026-07-10)
+
+- The site is a `react-router-dom` `BrowserRouter` app, not a single anchored page. Routes: `/`, `/projects`, `/projects/:slug`, `/contact`, `/404`, with any unmatched path redirected to `/404`.
+- GitHub Pages has no server-side rewrites, so deep links and reloads rely on the standard `rafgraph/spa-github-pages` trick: `public/404.html` redirects through a query string, and a restore script at the very top of `index.html`'s `<head>` calls `history.replaceState` before React mounts. Both files must stay in sync with `pathSegmentsToKeep = 1` (the `portofolio` path segment) if the base path ever changes.
+- Do not remove or "simplify" `public/404.html` or the restore script in `index.html` — doing so breaks every deep link and every page reload except `/`.
+- New project entries in `src/data/projects.ts` must include a unique `slug`; `npm test` verifies every slug also appears in `public/sitemap.xml`.

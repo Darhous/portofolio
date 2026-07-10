@@ -1,4 +1,5 @@
-import { Download, Mail, Phone } from "lucide-react";
+import { ArrowRight, Download, Mail, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 import { siteConfig } from "../config/site";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
@@ -33,6 +34,10 @@ export function ContactSection({ locale }: ContactSectionProps) {
             <Download aria-hidden="true" />
             <span>Download CV</span>
           </a>
+          <Link className="contact-method contact-method--cta" to="/contact">
+            <span>{copy.contactFormLink}</span>
+            <ArrowRight aria-hidden="true" />
+          </Link>
         </div>
       </div>
       <SocialLinks variant="labels" />

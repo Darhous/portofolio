@@ -16,6 +16,9 @@ export function CVSection({ locale }: CVSectionProps) {
   return (
     <section className="page-section cv-section" id="cv" aria-labelledby="cv-title">
       <SectionHeader kicker={copy.cvKicker} title={copy.cvTitle} body={copy.cvBody} />
+
+      <p className="cv-summary">{profile.summary[locale]}</p>
+
       <div className="cv-panel">
         <div className="cv-icon" aria-hidden="true">
           <FileText />
@@ -28,11 +31,11 @@ export function CVSection({ locale }: CVSectionProps) {
         </div>
         <div className="cv-actions">
           <ExternalLink className="secondary-action" href={siteConfig.assets.cv}>
-            <ExternalLinkIcon aria-hidden="true" size={18} />
+            <ExternalLinkIcon aria-hidden="true" size={17} />
             <span>{copy.openCv}</span>
           </ExternalLink>
           <a className="primary-action" href={siteConfig.assets.cv} download>
-            <Download aria-hidden="true" size={18} />
+            <Download aria-hidden="true" size={17} />
             <span>{copy.downloadCv}</span>
           </a>
         </div>

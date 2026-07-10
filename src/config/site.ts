@@ -20,9 +20,10 @@ export const siteConfig = {
     cv: assetPath("Profile.pdf"),
     portrait: assetPath("ahmed-darhous.png"),
     portraitWebp: {
-      small: assetPath("ahmed-darhous-384.webp"),
+      small: assetPath("ahmed-darhous-420.webp"),
       medium: assetPath("ahmed-darhous-640.webp"),
-      large: assetPath("ahmed-darhous-960.webp"),
+      large: assetPath("ahmed-darhous-900.webp"),
+      xlarge: assetPath("ahmed-darhous-1200.webp"),
     },
   },
   contact: {

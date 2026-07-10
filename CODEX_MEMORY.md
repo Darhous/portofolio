@@ -63,3 +63,52 @@ All footer and contact social links must be displayed in this exact order:
   - `docs/qa/screenshots/production-desktop.png`
   - `docs/qa/screenshots/production-mobile.png`
 - Workflow run `29046773917` succeeded after QA screenshot artifacts.
+
+## 2026-07-10 Update (multi-page rebuild)
+
+- The single-page site was extended into a multi-page `react-router-dom` app: `/`, `/projects` (searchable/filterable archive of all 16 known projects), `/projects/:slug` (full case study pages), `/contact` (structured mailto/WhatsApp compose form), and `/404`.
+- GitHub Pages SPA routing is handled by `public/404.html` + a restore script in `index.html` (the standard `rafgraph/spa-github-pages` pattern). Verified end-to-end with a local mock server that replicates GitHub Pages' real 404 behavior — direct navigation and reload on nested routes both work.
+- Added a `Ctrl/Cmd+K` command palette (`src/components/CommandPalette.tsx`) and replaced the old horizontal-scroll mobile nav with a real hamburger drawer (`src/components/Header.tsx`).
+- Found and fixed a real bug during QA: the mobile drawer was a DOM child of `<header class="topbar">`, which has `backdrop-filter`; that creates a containing block for `position: fixed` descendants, so the full-screen drawer overlay was sizing itself to the header's box instead of the viewport. Fixed with `createPortal(..., document.body)`.
+- Re-verified the specific project names the owner listed as "known real projects": `career-ops` and `atsresume` do not exist as separate GitHub repos — the real, working ATS feature lives inside `Darhous-career-hub-google` and the portfolio now titles that project "Darhous Career Hub — ATS Resume Analyzer" to match. `elfady` exists but is an empty public repo, listed honestly as early-stage. `Darhous Project Lab`, `Fenrir`, and `AI Memory Vault` were not found under the `Darhous` GitHub account and were not invented. Full detail in `docs/content/PROJECT_DISCOVERY.md`.
+- Added real projects that were missing from the previous inventory: `almasa-lab-proposal` (featured — a client digital-transformation proposal for a medical laboratory, built as an interactive decision log), `Shemo-Studio`, `darhous-assessment`, `Exams_Platform`, `darhous-marketing-social-hub`, `whatsapp-auto-poster`.
+- `scripts/verify-content.mjs` now also checks that every project `slug` in `src/data/projects.ts` has a matching URL in `public/sitemap.xml` (16/16 passing).
+- Latest verification: `npm ci`, `npm run typecheck`, `npm test`, `npm run build` all pass. Playwright QA covered desktop/mobile/tablet, EN/AR, command palette, archive search/filter, a real deep-link reload through the GitHub Pages 404 trick, contact form validation, 404, and reduced motion — no console errors, no horizontal overflow.
+
+## 2026-07-10 Update, Part 2 (33-item inventory pass)
+
+- **Ahmed has two GitHub accounts.** `Darhous` (used for all prior discovery) and `darhous2023` (newly discovered). Always check both before saying a project "was not found."
+- `Elfady Car Trading` is real and lives at `darhous2023/fady` (89 commits, live at `fady-delta.vercel.app` per its own README) — NOT the empty `Darhous/elfady` repo found earlier. Now featured with a full case study.
+- `darhous2023/flutter_test` (Elfady's Android app) and `Darhous/elfady` both exist but are empty — listed honestly as early-stage, not invented.
+- **This session's network policy blocks `vercel.app` entirely.** Every live Vercel URL in the portfolio (Elfady, NexaLearn and all its sub-routes) could not be opened directly from this environment — confirmed via the agent proxy status endpoint (403 policy denial, not a site error). Their live links are included on the strength of Ahmed's direct statement and, where possible, README self-references — not independent verification by this session. Do not assume a future session can re-verify these without a different network policy.
+- `career-ops` / `ATS Resume` — still no separate repo; maps to `Darhous-career-hub-google`'s ATS Resume Analyzer feature.
+- `Darhous Project Lab`, `NutriBox Healthy Kitchen OS`, `Fenrir Cybersecurity Projects` — not found under either known GitHub account. `NutriBox` and `Fenrir` were added anyway as `source: "Owner-provided"` entries using only Ahmed's direct description (no invented repo, screenshots, or metrics). `Darhous Project Lab` was not added at all — still zero evidence of any kind.
+- NexaLearn (`darhous-ai-cloud-academy`) is now the umbrella brand: 7 portals (AI Academy, Language Assessment [featured], Digital Exams [featured], Career Hub, Automation Academy, IoT Lab, Nano Banana Prompt Lab) each get their own archive entry per Ahmed's display rule; only AI Mentor, Prompt Studio, and Claude Code Prompt Generator get independent AI-Studio-tool entries — the rest of the 14 AI Studio tools live only inside the NexaLearn case study's feature list.
+- Project catalog: 30 total, 10 featured. Full resolution table: `docs/content/PROJECT_DISCOVERY.md`.
+- Still not merged to `main` — same branch constraint as before.
+
+## 2026-07-10 Update, Part 3 (premium editorial visual rebrand)
+
+- **The CV in `src/data/profile.ts` now reflects `Ahmed_Darhous_CV.docx`
+  (uploaded 2026-07-10), not the earlier `Profile.pdf`.** Job titles are
+  "Senior Liaison & External Relations Officer" / "Operations & Deployment
+  Coordinator" / "Criminal Investigation Officer," all at "Ministry of
+  Interior." There is no OSINT/LLM/AI-operations content in this CV —
+  technical skills are VB, HTML, Java, and admin-report scripting only. If
+  a future CV update reintroduces AI/security-engineering claims, reconcile
+  carefully rather than assuming the older framing still applies.
+- The uploaded portrait is the same photo as before (verified by MD5) —
+  don't assume a new upload means new photo content without checking.
+- **LibreOffice headless docx→PDF conversion does not work in this sandbox**
+  ("source file could not be loaded" regardless of input). `public/Profile.pdf`
+  is generated directly from CV content with Python `fpdf2`
+  (see the CV rebuild for the script pattern) — do not assume `soffice
+  --convert-to pdf` will work here.
+- Visual identity is now "premium editorial," not "command surface" — deep
+  matte black, Fraunces serif + Inter body, one accent color per project
+  category (`src/data/accents.ts`), no neon/glow/glass. Full detail in
+  `DESIGN_SYSTEM.md`. Do not reintroduce the old cyan/copper/olive palette
+  or the boot-sequence intro unless explicitly asked.
+- Hero intentionally has no stat counters (years/personnel/project-count) —
+  this was in an earlier version and was explicitly removed per Ahmed's
+  "no unnecessary statistics" instruction. Don't re-add them.

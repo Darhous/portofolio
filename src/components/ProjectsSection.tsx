@@ -1,6 +1,10 @@
-import { ExternalLink } from "./ExternalLink";
+import type { CSSProperties } from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
-import { projects } from "../data/projects";
+import { ExternalLink } from "./ExternalLink";
+import { featuredProjects } from "../data/projects";
+import { getAccent } from "../data/accents";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
 
@@ -8,37 +12,72 @@ type ProjectsSectionProps = {
   locale: Locale;
 };
 
+function monogram(name: string): string {
+  const words = name.split(/\s+/).filter(Boolean);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return `${words[0][0]}${words[1][0]}`.toUpperCase();
+}
+
 export function ProjectsSection({ locale }: ProjectsSectionProps) {
   const copy = uiCopy[locale];
 
   return (
     <section className="page-section projects-section" id="projects" aria-labelledby="projects-title">
-      <SectionHeader kicker={copy.projectsKicker} title={copy.projectsTitle} body={copy.projectsBody} />
-      <div className="projects-grid">
-        {projects.map((project) => (
-          <article className="project-card" key={project.name}>
-            <div className="project-card__meta">
-              <span>{project.category}</span>
-              <span>{project.status}</span>
+      <SectionHeader kicker={copy.projectsKicker} title={copy.projectsTitle} body={copy.projectsBody}>
+        <Link className="secondary-action section-header__cta" to="/projects">
+          {copy.viewAllProjects}
+        </Link>
+      </SectionHeader>
+
+      <div className="feature-list">
+        {featuredProjects.map((project, index) => (
+          <article
+            className="feature-row"
+            key={project.id}
+            style={{ "--accent": getAccent(project.category) } as CSSProperties}
+          >
+            <div className="feature-row__visual" aria-hidden="true">
+              <span className="feature-row__index">{String(index + 1).padStart(2, "0")}</span>
+              <span className="feature-row__monogram">{monogram(project.name)}</span>
             </div>
-            <h3>{project.name}</h3>
-            <p>{project.description[locale]}</p>
-            <p className="project-impact">{project.impact[locale]}</p>
-            <div className="tag-cloud tag-cloud--small">
-              {project.tech.map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
-            </div>
-            <div className="project-actions">
-              {project.repo ? (
-                <ExternalLink href={project.repo}>{copy.repository}</ExternalLink>
-              ) : (
-                <span>{copy.privateProject}</span>
-              )}
-              {project.live ? <ExternalLink href={project.live}>{copy.liveProject}</ExternalLink> : null}
-              <small>
-                {copy.source}: {project.source}
-              </small>
+
+            <div className="feature-row__content">
+              <div className="feature-row__meta">
+                <span>{project.category}</span>
+                <span>{project.status}</span>
+                <span>{project.year}</span>
+              </div>
+              <h3>
+                <Link to={`/projects/${project.slug}`}>{project.name}</Link>
+              </h3>
+              <p>{project.description[locale]}</p>
+              <p className="feature-row__impact">{project.impact[locale]}</p>
+
+              {project.tech.length > 0 ? (
+                <div className="tag-cloud tag-cloud--small">
+                  {project.tech.slice(0, 5).map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
+                </div>
+              ) : null}
+
+              <div className="feature-row__actions">
+                <Link className="text-link" to={`/projects/${project.slug}`}>
+                  {copy.viewCaseStudy}
+                  <ArrowUpRight aria-hidden="true" size={15} />
+                </Link>
+                {project.repo ? (
+                  <ExternalLink className="text-link" href={project.repo}>
+                    {copy.repository}
+                  </ExternalLink>
+                ) : null}
+                {project.live ? (
+                  <ExternalLink className="text-link" href={project.live}>
+                    {copy.liveProject}
+                  </ExternalLink>
+                ) : null}
+                {!project.repo && !project.live ? <span className="text-link text-link--muted">{copy.privateProject}</span> : null}
+              </div>
             </div>
           </article>
         ))}
