@@ -162,6 +162,68 @@ them at face value.
 - Playwright re-run against the GitHub Pages mock server: 30-card archive count verified, category filter verified, NexaLearn/Elfady/Fenrir case studies verified, Arabic archive verified, no console errors, no overflow.
 - Caught and fixed a real data bug during this QA pass: "NexaLearn AI Academy" was accidentally marked `featured: true`, pushing the homepage to 11 featured cards instead of the intended 10. Fixed to `featured: false` and re-verified.
 
+## 2026-07-10 (part 3) — Premium editorial visual rebrand
+
+Ahmed sent a new portrait and a new CV (`Ahmed_Darhous_CV.docx`) with
+explicit instructions to completely redesign the visual identity around
+them — not a feature/content change, a visual rebrand away from the
+"command surface" concept toward a luxury-editorial identity (Apple,
+Leica, Aesop, Linear, Stripe Press references; explicitly no neon,
+glassmorphism, hacker aesthetics, or stat-counter hero clutter).
+
+### Discovery
+
+- The uploaded portrait is byte-identical (same MD5) to the one already in
+  the repo — same photo, not a new one. Reprocessed it anyway with a real
+  editorial crop, filmic grade, and vignette, since the raw corporate
+  headshot wasn't previously retouched.
+- The new CV is materially different from the CV data already in the
+  repo: new job titles (Senior Liaison & External Relations Officer,
+  Operations & Deployment Coordinator, Criminal Investigation Officer, all
+  at "Ministry of Interior"), no more OSINT/LLM/AI-operations claims, and
+  a much more modest technical-skills section (VB, HTML, Java, admin
+  report scripting) than the previous CV-derived content implied.
+  Rewrote `src/data/profile.ts` entirely from the new document rather
+  than blending old and new.
+- LibreOffice's headless docx→PDF conversion is broken in this sandbox
+  ("source file could not be loaded" regardless of file/profile
+  location). Generated the CV PDF directly from the new content with
+  `fpdf2` instead.
+
+### Completed Work
+
+- New design tokens: deep matte black / graphite / titanium-hairline
+  surfaces, warm white / silver gray text, Fraunces (serif display) +
+  Inter (body) via self-hosted `@fontsource` packages.
+- New per-category accent system (`src/data/accents.ts`, 17 categories,
+  applied via inline `--accent` custom property) — used only in small
+  details (card top hairline, category labels), never as a background.
+- Hero rebuilt to the "magazine cover" brief: large portrait, large serif
+  name, small subtitle, one short statement, two CTAs only — removed the
+  stat-counter row (years/personnel/project-count) that a prior session
+  had added, since the new brief explicitly forbids it.
+- Intro rebuilt: a short wordmark reveal instead of the old three-line
+  "boot sequence."
+- Experience section restyled as an editorial timeline (`resume-block`/
+  `resume-role`) instead of a side-by-side card grid; the CV section
+  kept slim (open/download the PDF) rather than duplicating the full
+  experience listing a second time.
+- Rewrote `index.html` and the HomePage SEO meta to match the new,
+  CV-accurate positioning.
+- Fixed a real RTL bug found during this pass: the hero portrait's
+  decorative frame used physical `inset` offsets, so it didn't mirror
+  correctly in Arabic — switched to `inset-inline`/`inset-block` logical
+  properties.
+
+### Verification
+
+- `npm ci`, `npm run typecheck`, `npm test`, `npm run build` — all passed.
+- Playwright: command palette, a deep-link route through the GitHub Pages
+  404-redirect chain, the 404 page, `prefers-reduced-motion`, contact-form
+  validation, and a full viewport sweep (360/390/414/768/820/1024/1440px)
+  across home/archive/a case study/contact — zero console errors, zero
+  horizontal overflow at any width.
+
 ### Next Action
 
 - Committed and pushed to `claude/darhous-portfolio-rebuild-sxmb3n`. This

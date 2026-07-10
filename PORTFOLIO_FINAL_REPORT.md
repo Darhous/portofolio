@@ -1,13 +1,53 @@
 # Ahmed Darhous Portfolio Final Report
 
-Status: Multi-page rebuild completed and pushed on 2026-07-10, followed by a
-full 33-item project inventory pass the same day that grew the catalog from
-16 to **30 projects** and discovered a second GitHub account
-(`darhous2023`). **Not yet merged to `main`**, so
-`https://darhous.github.io/portofolio/` still serves the 2026-07-09
-single-page build until this branch is merged (GitHub Pages deploys only
-from `main`; this session's branch instructions require staying on the
-feature branch and not opening a PR unless asked).
+Status: Multi-page rebuild completed and pushed on 2026-07-10, followed the
+same day by a full 33-item project inventory pass (catalog grown from 16 to
+**30 projects**, second GitHub account `darhous2023` discovered) and then a
+complete premium-editorial visual rebrand built around a new CV and portrait.
+Latest commit on the branch: `20b0c87`. **Not yet merged to `main`**, so
+`https://darhous.github.io/portofolio/` still serves the pre-2026-07-10
+build until this branch is merged (GitHub Pages deploys only from `main`;
+this session's branch instructions require staying on the feature branch
+and not opening a PR unless asked).
+
+## Update: Premium Editorial Visual Rebrand (2026-07-10, part 3)
+
+Ahmed asked for a complete visual identity rebuild (not a content change)
+built around a new portrait and a new CV, explicitly moving away from the
+earlier "command surface" concept toward a luxury-editorial identity
+(Apple/Leica/Aesop/Linear/Stripe Press references, no neon/glassmorphism/
+hacker aesthetics).
+
+- The new CV (`Ahmed_Darhous_CV.docx`) is materially different from the CV
+  data previously in the repo — new job titles, all at "Ministry of
+  Interior," and no OSINT/LLM/AI-operations claims. `src/data/profile.ts`
+  was rewritten entirely from the new document (headline, summary, all
+  three roles, education, certifications, technical skills).
+- The uploaded portrait is byte-identical (verified by MD5) to the one
+  already in the repo — same photo. It was reprocessed with a real
+  editorial crop, grade, and vignette rather than left as a plain
+  corporate headshot.
+- New design tokens: deep matte black / graphite / titanium-hairline
+  surfaces, Fraunces serif display + Inter body (self-hosted, no external
+  font CDN call), and a 17-category accent-color system that only ever
+  appears in small details (never a background).
+- Hero rebuilt to spec: large portrait, large serif name, small subtitle,
+  one short statement, two CTAs only — the stat-counter row from the
+  prior session was removed per Ahmed's explicit "no unnecessary
+  statistics" instruction.
+- Intro rebuilt as a short wordmark reveal instead of a line-by-line "boot
+  sequence." Experience section restyled as an editorial timeline.
+- LibreOffice's headless docx→PDF conversion does not work in this
+  sandbox; the CV PDF was generated directly from the new content with
+  Python's `fpdf2`.
+- Fixed a real RTL bug found during QA: the hero portrait's decorative
+  frame used physical CSS `inset` offsets and didn't mirror correctly in
+  Arabic — switched to logical `inset-inline`/`inset-block` properties.
+- Verified with `npm run typecheck`/`test`/`build` and a Playwright sweep:
+  command palette, a deep-link route through the GitHub Pages 404 chain,
+  the 404 page, reduced motion, contact validation, and a full viewport
+  sweep (360-1440px) across four key pages — zero console errors, zero
+  horizontal overflow. Full detail in `DESIGN_SYSTEM.md`.
 
 ## Update: Full Project Inventory Pass (2026-07-10, part 2)
 

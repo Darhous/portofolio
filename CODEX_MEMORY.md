@@ -86,3 +86,29 @@ All footer and contact social links must be displayed in this exact order:
 - NexaLearn (`darhous-ai-cloud-academy`) is now the umbrella brand: 7 portals (AI Academy, Language Assessment [featured], Digital Exams [featured], Career Hub, Automation Academy, IoT Lab, Nano Banana Prompt Lab) each get their own archive entry per Ahmed's display rule; only AI Mentor, Prompt Studio, and Claude Code Prompt Generator get independent AI-Studio-tool entries — the rest of the 14 AI Studio tools live only inside the NexaLearn case study's feature list.
 - Project catalog: 30 total, 10 featured. Full resolution table: `docs/content/PROJECT_DISCOVERY.md`.
 - Still not merged to `main` — same branch constraint as before.
+
+## 2026-07-10 Update, Part 3 (premium editorial visual rebrand)
+
+- **The CV in `src/data/profile.ts` now reflects `Ahmed_Darhous_CV.docx`
+  (uploaded 2026-07-10), not the earlier `Profile.pdf`.** Job titles are
+  "Senior Liaison & External Relations Officer" / "Operations & Deployment
+  Coordinator" / "Criminal Investigation Officer," all at "Ministry of
+  Interior." There is no OSINT/LLM/AI-operations content in this CV —
+  technical skills are VB, HTML, Java, and admin-report scripting only. If
+  a future CV update reintroduces AI/security-engineering claims, reconcile
+  carefully rather than assuming the older framing still applies.
+- The uploaded portrait is the same photo as before (verified by MD5) —
+  don't assume a new upload means new photo content without checking.
+- **LibreOffice headless docx→PDF conversion does not work in this sandbox**
+  ("source file could not be loaded" regardless of input). `public/Profile.pdf`
+  is generated directly from CV content with Python `fpdf2`
+  (see the CV rebuild for the script pattern) — do not assume `soffice
+  --convert-to pdf` will work here.
+- Visual identity is now "premium editorial," not "command surface" — deep
+  matte black, Fraunces serif + Inter body, one accent color per project
+  category (`src/data/accents.ts`), no neon/glow/glass. Full detail in
+  `DESIGN_SYSTEM.md`. Do not reintroduce the old cyan/copper/olive palette
+  or the boot-sequence intro unless explicitly asked.
+- Hero intentionally has no stat counters (years/personnel/project-count) —
+  this was in an earlier version and was explicitly removed per Ahmed's
+  "no unnecessary statistics" instruction. Don't re-add them.
