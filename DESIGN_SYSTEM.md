@@ -83,6 +83,39 @@ were explicitly removed from this version.
   timeline — role/org/date header over a hairline rule, bullets below —
   used for the Experience section rather than a side-by-side card grid.
 
+## Featured project presentation (2026-07-10, phase 2)
+
+Featured projects on the homepage are deliberately **not** cards. A
+uniform grid read as generic and templated on review, so the "Selected
+Work" section was rebuilt as an alternating editorial spread
+(`src/components/ProjectsSection.tsx`, `.feature-list`/`.feature-row` in
+`styles.css`):
+
+- Each row alternates visual-left/content-right and content-left/visual-
+  right, giving the page rhythm instead of a repeating pattern.
+- The "visual" side has no real photography (none exists for most
+  projects) — instead it's an abstract cover treatment: a large outlined
+  serif monogram (derived from the project name) plus a low-opacity
+  radial glow in the project's accent color, on a graphite panel with a
+  hairline border. This stays honest (no fake screenshots) while still
+  feeling like a designed object rather than a placeholder.
+- Actions are understated text links with an arrow glyph
+  (`.text-link`), not boxed buttons — matches the "everything should
+  breathe" brief better than another row of bordered CTAs.
+- The full archive (`/projects`) intentionally stays a denser grid
+  (`ProjectCard`) since it's a search/filter utility over 30 items, not
+  a curated showcase — the editorial spread treatment is reserved for
+  the homepage's featured selection.
+
+## Resume as a reading experience (2026-07-10, phase 2)
+
+`CVSection` previously was only a slim "open/download the PDF" strip.
+It now opens with `profile.summary` set in large Fraunces italic
+(`.cv-summary`) — an actual reading moment before the document controls
+— so the online version feels like the start of a dossier rather than a
+file-download UI. The PDF download/open actions remain unchanged below
+it.
+
 ## Accessibility
 
 - Semantic sections and headings; a single `h1` per page.

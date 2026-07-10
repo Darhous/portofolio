@@ -16,6 +16,9 @@ export function CVSection({ locale }: CVSectionProps) {
   return (
     <section className="page-section cv-section" id="cv" aria-labelledby="cv-title">
       <SectionHeader kicker={copy.cvKicker} title={copy.cvTitle} body={copy.cvBody} />
+
+      <p className="cv-summary">{profile.summary[locale]}</p>
+
       <div className="cv-panel">
         <div className="cv-icon" aria-hidden="true">
           <FileText />

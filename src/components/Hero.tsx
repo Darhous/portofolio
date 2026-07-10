@@ -28,23 +28,25 @@ export function Hero({ locale }: HeroProps) {
           </Link>
         </div>
       </div>
-      <div className="portrait-lockup" aria-label="Ahmed Darhous portrait">
-        <picture>
-          <source
-            type="image/webp"
-            srcSet={`${siteConfig.assets.portraitWebp.small} 420w, ${siteConfig.assets.portraitWebp.medium} 640w, ${siteConfig.assets.portraitWebp.large} 900w, ${siteConfig.assets.portraitWebp.xlarge} 1200w`}
-            sizes="(max-width: 820px) min(100vw, 440px), 42vw"
-          />
-          <img
-            src={siteConfig.assets.portrait}
-            alt="Ahmed Darhous"
-            width="820"
-            height="1025"
-            loading="eager"
-            decoding="sync"
-            fetchPriority="high"
-          />
-        </picture>
+      <div className="hero-visual">
+        <div className="portrait-lockup" aria-label="Ahmed Darhous portrait">
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${siteConfig.assets.portraitWebp.small} 420w, ${siteConfig.assets.portraitWebp.medium} 640w, ${siteConfig.assets.portraitWebp.large} 900w, ${siteConfig.assets.portraitWebp.xlarge} 1200w`}
+              sizes="(max-width: 820px) min(100vw, 440px), 42vw"
+            />
+            <img
+              src={siteConfig.assets.portrait}
+              alt="Ahmed Darhous"
+              width="820"
+              height="1025"
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+            />
+          </picture>
+        </div>
         <div className="portrait-caption">
           <span>{profile.name}</span>
           <small>{profile.location[locale]}</small>
