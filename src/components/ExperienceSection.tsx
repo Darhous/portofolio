@@ -13,20 +13,20 @@ export function ExperienceSection({ locale }: ExperienceSectionProps) {
   return (
     <section className="page-section" id="experience" aria-labelledby="experience-title">
       <SectionHeader kicker={copy.experienceKicker} title={copy.experienceTitle} />
-      <div className="experience-list">
+      <div className="resume-block">
         {experience.map((item) => (
-          <article className="experience-card" key={`${item.role.en}-${item.period.en}`}>
-            <div>
+          <div className="resume-role" key={`${item.role.en}-${item.period.en}`}>
+            <div className="resume-role__head">
               <h3>{item.role[locale]}</h3>
-              <p>{item.organization[locale]}</p>
-              <small>{item.period[locale]}</small>
+              <time>{item.period[locale]}</time>
             </div>
-            <ul>
+            <p className="resume-role__org">{item.organization[locale]}</p>
+            <ul className="clean-list clean-list--single">
               {item.highlights[locale].map((highlight) => (
                 <li key={highlight}>{highlight}</li>
               ))}
             </ul>
-          </article>
+          </div>
         ))}
       </div>
     </section>

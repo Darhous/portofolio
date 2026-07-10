@@ -11,20 +11,24 @@ export const profile = {
     ar: "القاهرة، مصر",
   },
   headline: {
-    en: "Executive Leader | MBA Candidate (AUC) | Corporate Security & Risk Governance | AI-Driven Operations & Intelligence | Legal Expert",
-    ar: "قائد تنفيذي | مرشح MBA في الجامعة الأمريكية بالقاهرة | حوكمة المخاطر والأمن المؤسسي | عمليات وذكاء مدعوم بالذكاء الاصطناعي | خبير قانوني",
+    en: "Security Operations Manager, Crisis Management Specialist, and MBA Candidate.",
+    ar: "مدير عمليات أمنية، أخصائي إدارة أزمات، ومرشح ماجستير إدارة أعمال.",
   },
   shortTitle: {
-    en: "Risk Governance, Corporate Security, Legal-Tech, and AI Operations",
-    ar: "حوكمة المخاطر، الأمن المؤسسي، التقنية القانونية، وعمليات الذكاء الاصطناعي",
+    en: "Security Operations, Crisis Management & Strategic Leadership",
+    ar: "العمليات الأمنية، إدارة الأزمات، والقيادة الاستراتيجية",
   },
   summary: {
-    en: "Ahmed Darhous operates at the intersection of law enforcement discipline, legal authority, and AI-powered intelligence. With 9+ years as a commissioned police officer, he has led crisis deployments exceeding 200 personnel, sensitive investigations, enterprise risk work, and operational intelligence initiatives.",
-    ar: "يعمل أحمد درهوس عند تقاطع الانضباط الأمني، السلطة القانونية، والذكاء التشغيلي المدعوم بالذكاء الاصطناعي. يمتلك خبرة تتجاوز 9 سنوات كضابط شرطة، قاد خلالها انتشارًا ميدانيًا لأكثر من 200 فرد، وتحقيقات حساسة، وأعمال مخاطر مؤسسية، ومبادرات ذكاء تشغيلي.",
+    en: "Ahmed Darhous is a strategic operations and security professional with 8+ years of leadership experience in law enforcement, crisis management, and logistics. He is currently pursuing an MBA at The American University in Cairo, pairing a legal and security background with business acumen and hands-on automation skills. His work spans complex field operations, stakeholder relations, and personnel administration, with a consistent focus on risk mitigation and operational efficiency.",
+    ar: "أحمد درهوس محترف عمليات وأمن استراتيجي يمتلك خبرة قيادية تتجاوز 8 سنوات في إنفاذ القانون وإدارة الأزمات واللوجستيات. يواصل حاليًا دراسة الماجستير في إدارة الأعمال بالجامعة الأمريكية بالقاهرة، جامعًا بين خلفية قانونية وأمنية وحس تجاري ومهارات عملية في الأتمتة. يمتد عمله ليشمل العمليات الميدانية المعقدة وعلاقات أصحاب المصلحة وإدارة شؤون الأفراد، مع تركيز ثابت على تخفيف المخاطر وكفاءة التشغيل.",
+  },
+  tagline: {
+    en: "Leading security operations and crisis response with law-enforcement discipline and an MBA-level strategic lens.",
+    ar: "قيادة العمليات الأمنية والاستجابة للأزمات بانضباط إنفاذ القانون ورؤية استراتيجية على مستوى الماجستير في إدارة الأعمال.",
   },
   principle: {
-    en: "Security is no longer a function. It is a strategic advantage.",
-    ar: "الأمن لم يعد وظيفة مستقلة. الأمن أصبح ميزة استراتيجية.",
+    en: "Discipline under pressure is a strategic advantage, not a job description.",
+    ar: "الانضباط تحت الضغط ميزة استراتيجية، لا مجرد وصف وظيفي.",
   },
   cta: {
     primary: {
@@ -32,8 +36,8 @@ export const profile = {
       ar: "تحميل السيرة الذاتية",
     },
     secondary: {
-      en: "Start a Conversation",
-      ar: "ابدأ التواصل",
+      en: "Get in Touch",
+      ar: "تواصل معي",
     },
   },
   contacts: siteConfig.contact,
@@ -41,31 +45,31 @@ export const profile = {
 
 export const expertise = [
   {
-    title: { en: "Corporate Security & Risk Governance", ar: "الأمن المؤسسي وحوكمة المخاطر" },
+    title: { en: "Security Operations & Field Leadership", ar: "العمليات الأمنية والقيادة الميدانية" },
     body: {
-      en: "Critical-asset protection, compliance frameworks, executive security coordination, crisis response, and operational resilience in high-risk environments.",
-      ar: "حماية الأصول الحرجة، أطر الامتثال، تنسيق أمن القيادات، الاستجابة للأزمات، ومرونة التشغيل في البيئات عالية المخاطر.",
+      en: "Deployment planning, resource allocation, and field-readiness for personnel operating under mission-critical pressure.",
+      ar: "تخطيط الانتشار، توزيع الموارد، وجاهزية الفرق الميدانية العاملة تحت ضغط المهام الحرجة.",
     },
   },
   {
-    title: { en: "Legal Authority & Criminal Law", ar: "السلطة القانونية والقانون الجنائي" },
+    title: { en: "Crisis & Risk Management", ar: "إدارة الأزمات والمخاطر" },
     body: {
-      en: "Bachelor of Law and Police Sciences, postgraduate legal study, criminal investigation practice, evidence workflows, and current research around deepfake crimes and criminal liability.",
-      ar: "ليسانس القانون وعلوم الشرطة، دراسات قانونية عليا، خبرة تحقيق جنائي، مسارات الأدلة، وبحث قائم حول جرائم التزييف العميق والمسؤولية الجنائية.",
+      en: "NEBOSH-certified risk assessment, incident command, and emergency response, developed through structured HSE and crisis-management training.",
+      ar: "تقييم مخاطر معتمد من NEBOSH، وقيادة الحوادث، والاستجابة للطوارئ، مبنية على تدريب منظم في الصحة والسلامة المهنية وإدارة الأزمات.",
     },
   },
   {
-    title: { en: "AI & Intelligence Engineering", ar: "هندسة الذكاء الاصطناعي والذكاء التشغيلي" },
+    title: { en: "Legal & Investigative Foundation", ar: "الأساس القانوني والتحقيقي" },
     body: {
-      en: "Python automation, OSINT monitoring, LLM workflows, prompt engineering, AI-assisted analysis, and Guardian-Nexus HR and Security ERP architecture.",
-      ar: "أتمتة Python، مراقبة المصادر المفتوحة، مسارات LLM، هندسة الأوامر، التحليل المدعوم بالذكاء الاصطناعي، ومعمارية Guardian-Nexus للموارد البشرية والأمن.",
+      en: "A Bachelor of Law and Police Sciences plus a postgraduate diploma in general law, applied through years of criminal investigation and legal reporting.",
+      ar: "ليسانس الحقوق وعلوم الشرطة إلى جانب دبلوم دراسات عليا في القانون العام، مطبقة عبر سنوات من التحقيق الجنائي والتقارير القانونية.",
     },
   },
   {
-    title: { en: "Digital Products & Bilingual Systems", ar: "المنتجات الرقمية والأنظمة ثنائية اللغة" },
+    title: { en: "Strategic Business & Operations", ar: "الأعمال الاستراتيجية والعمليات" },
     body: {
-      en: "React, Next.js, TypeScript, Python, Arabic-first platforms, RTL interfaces, learning systems, legal-research tools, and operational dashboards.",
-      ar: "React وNext.js وTypeScript وPython، منصات عربية أولًا، واجهات RTL، أنظمة تعليم، أدوات بحث قانوني، ولوحات تشغيل.",
+      en: "MBA studies at AUC combined with hands-on scripting and automation for administrative reporting and data analysis.",
+      ar: "دراسة ماجستير إدارة الأعمال في الجامعة الأمريكية بالقاهرة، مقترنة بخبرة عملية في البرمجة النصية وأتمتة التقارير الإدارية وتحليل البيانات.",
     },
   },
 ] as const;
@@ -73,79 +77,79 @@ export const expertise = [
 export const experience = [
   {
     role: {
-      en: "Executive Office Manager & Security Liaison",
-      ar: "مدير مكتب تنفيذي ومنسق أمني",
+      en: "Senior Liaison & External Relations Officer",
+      ar: "ضابط أول اتصال وعلاقات خارجية",
     },
     organization: {
-      en: "Government Security Organization (Egypt)",
-      ar: "جهة أمنية حكومية - مصر",
+      en: "Ministry of Interior",
+      ar: "وزارة الداخلية",
     },
     period: {
-      en: "August 2025 - Present",
-      ar: "أغسطس 2025 - حتى الآن",
+      en: "July 2025 - Present",
+      ar: "يوليو 2025 - حتى الآن",
     },
     highlights: {
       en: [
-        "Managed confidential governance workflows and inter-departmental intelligence coordination.",
-        "Architected Guardian-Nexus, an AI-integrated HR and Security ERP concept for 200+ staff.",
-        "Built AI-driven intelligence pipelines using Python automation, LLMs, and OSINT monitoring.",
+        "Primary focal point for strategic coordination between the Ministry and external governmental and non-governmental entities.",
+        "Managed personnel affairs, ensuring seamless communication on staff requirements, administrative compliance, and resource planning.",
+        "Facilitated cross-functional cooperation to streamline administrative processes and resolve inter-departmental challenges.",
       ],
       ar: [
-        "إدارة مسارات حوكمة سرية وتنسيق معلوماتي بين الإدارات.",
-        "تصميم Guardian-Nexus كنظام ERP للموارد البشرية والأمن مدعوم بالذكاء الاصطناعي لأكثر من 200 فرد.",
-        "بناء مسارات ذكاء تشغيلي باستخدام Python وLLMs ومراقبة OSINT.",
+        "نقطة الاتصال الرئيسية للتنسيق الاستراتيجي بين الوزارة والجهات الحكومية وغير الحكومية الخارجية.",
+        "إدارة شؤون الأفراد وضمان تواصل سلس حول احتياجات الموظفين والامتثال الإداري وتخطيط الموارد.",
+        "تسهيل التعاون بين الإدارات لتبسيط العمليات الإدارية وحل التحديات المشتركة بين الأقسام.",
       ],
     },
   },
   {
     role: {
-      en: "Operations & Security Planning Lead",
-      ar: "قائد تخطيط العمليات والأمن",
+      en: "Operations & Deployment Coordinator",
+      ar: "منسق العمليات والانتشار",
     },
     organization: {
-      en: "Government Security Organization (Egypt)",
-      ar: "جهة أمنية حكومية - مصر",
+      en: "Ministry of Interior",
+      ar: "وزارة الداخلية",
     },
     period: {
-      en: "August 2023 - August 2025",
-      ar: "أغسطس 2023 - أغسطس 2025",
+      en: "2023 - July 2025",
+      ar: "2023 - يوليو 2025",
     },
     highlights: {
       en: [
-        "Orchestrated deployments of 200+ personnel across multi-jurisdictional operations.",
-        "Developed crisis response playbooks and improved inter-agency coordination.",
-        "Integrated OSINT alerts and AI-powered media analysis into intelligence workflows.",
+        "Directed daily operational plans and managed deployment rosters for officers across multiple sectors.",
+        "Coordinated field operations, ensuring readiness for mission-critical tasks and routine patrols.",
+        "Monitored operational performance with data-driven insights to improve response times and efficiency.",
       ],
       ar: [
-        "تنسيق انتشار أكثر من 200 فرد في عمليات متعددة النطاقات.",
-        "تطوير أدلة استجابة للأزمات وتحسين التنسيق بين الجهات.",
-        "دمج تنبيهات OSINT وتحليل الوسائط بالذكاء الاصطناعي داخل مسارات الذكاء.",
+        "توجيه الخطط التشغيلية اليومية وإدارة جداول انتشار الضباط عبر قطاعات متعددة.",
+        "تنسيق العمليات الميدانية لضمان الجاهزية للمهام الحرجة والدوريات الروتينية.",
+        "متابعة الأداء التشغيلي عبر رؤى مبنية على البيانات لتحسين أوقات الاستجابة والكفاءة.",
       ],
     },
   },
   {
     role: {
-      en: "Senior Risk Mitigation & Investigation Officer",
-      ar: "ضابط أول تخفيف مخاطر وتحقيقات",
+      en: "Criminal Investigation Officer",
+      ar: "ضابط تحقيق جنائي",
     },
     organization: {
-      en: "Government Security Organization (Egypt)",
-      ar: "جهة أمنية حكومية - مصر",
+      en: "Ministry of Interior",
+      ar: "وزارة الداخلية",
     },
     period: {
-      en: "July 2018 - July 2023",
-      ar: "يوليو 2018 - يوليو 2023",
+      en: "2018 - 2023",
+      ar: "2018 - 2023",
     },
     highlights: {
       en: [
-        "Conducted 150+ enterprise-level risk assessments and compliance audits.",
-        "Led complex internal investigations involving fraud, misconduct, and security breaches.",
-        "Delivered investigative best-practice and risk-awareness training to officer teams.",
+        "Conducted high-level investigations, gathering intelligence and evidence for legal proceedings and risk assessments.",
+        "Managed crisis situations and high-stress field operations focused on public safety and asset protection.",
+        "Prepared detailed technical and legal reports on security incidents, crime trends, and mitigation strategies.",
       ],
       ar: [
-        "تنفيذ أكثر من 150 تقييم مخاطر وتدقيق امتثال على مستوى مؤسسي.",
-        "قيادة تحقيقات داخلية معقدة في الاحتيال والمخالفات والثغرات الأمنية.",
-        "تقديم تدريب على أفضل ممارسات التحقيق والوعي بالمخاطر لفرق الضباط.",
+        "إجراء تحقيقات رفيعة المستوى وجمع المعلومات والأدلة للإجراءات القانونية وتقييمات المخاطر.",
+        "إدارة الأزمات والعمليات الميدانية عالية الضغط بتركيز على السلامة العامة وحماية الأصول.",
+        "إعداد تقارير فنية وقانونية مفصلة حول الحوادث الأمنية واتجاهات الجريمة واستراتيجيات التخفيف.",
       ],
     },
   },
@@ -153,67 +157,117 @@ export const experience = [
 
 export const education = [
   {
-    school: "The American University in Cairo",
+    school: "The American University in Cairo (AUC)",
     credential: {
-      en: "MBA, Business Administration and Management",
-      ar: "ماجستير إدارة الأعمال MBA، إدارة الأعمال",
+      en: "Master of Business Administration (MBA) - Strategic Management & Business Operations",
+      ar: "ماجستير إدارة الأعمال (MBA) - التركيز: الإدارة الاستراتيجية وعمليات الأعمال",
     },
-    period: "May 2024 - July 2027",
+    period: "2024 - Present",
   },
   {
-    school: "South Valley University",
+    school: "Police Academy",
     credential: {
-      en: "Master's Degree, Criminal Law and Criminal Justice",
-      ar: "ماجستير في القانون الجنائي والعدالة الجنائية",
+      en: "Postgraduate Diploma in General Law",
+      ar: "دبلوم دراسات عليا في القانون العام",
     },
-    period: "August 2025 - October 2026",
+    period: "2022",
   },
   {
-    school: "Police Academy of Egypt",
+    school: "Police Academy",
     credential: {
-      en: "Diploma in Egyptian General Law",
-      ar: "دبلوم في القانون العام المصري",
+      en: "Bachelor of Law & Police Sciences",
+      ar: "ليسانس الحقوق وعلوم الشرطة",
     },
-    period: "October 2021 - October 2022",
-  },
-  {
-    school: "Institut Français d'Egypte",
-    credential: {
-      en: "French legal/language study",
-      ar: "دراسة قانونية ولغوية فرنسية",
-    },
-    period: "Documented in CV",
+    period: "2017",
   },
 ] as const;
 
-export const skills = [
-  "Fraud Investigations",
-  "Environment, Health, and Safety (EHS)",
-  "Blockchain",
-  "Python",
-  "React",
-  "Next.js",
-  "TypeScript",
-  "OSINT",
-  "LLM Workflows",
-  "Prompt Engineering",
-  "Arabic RTL Interfaces",
-  "Legal Research",
-] as const;
+export type CertificationGroup = {
+  category: Localized<string>;
+  items: Localized<string>[];
+};
+
+export const certificationGroups: CertificationGroup[] = [
+  {
+    category: { en: "Health, Safety & Environment", ar: "الصحة والسلامة والبيئة" },
+    items: [
+      {
+        en: "NEBOSH International General Certificate (IGC), 2023",
+        ar: "شهادة NEBOSH الدولية العامة (IGC)، 2023",
+      },
+      { en: "First Aid Certification, Police Academy, 2024", ar: "شهادة الإسعافات الأولية، أكاديمية الشرطة، 2024" },
+      {
+        en: "Firefighting & Civil Protection, Police Academy, 2016",
+        ar: "مكافحة الحرائق والحماية المدنية، أكاديمية الشرطة، 2016",
+      },
+    ],
+  },
+  {
+    category: { en: "Management & Operations", ar: "الإدارة والعمليات" },
+    items: [
+      {
+        en: "Crisis & Disaster Management Workshop, AUC, 2025",
+        ar: "ورشة إدارة الأزمات والكوارث، الجامعة الأمريكية بالقاهرة، 2025",
+      },
+      {
+        en: "Logistics & Supply Chain Management, Police Academy, 2025",
+        ar: "إدارة اللوجستيات وسلسلة الإمداد، أكاديمية الشرطة، 2025",
+      },
+      {
+        en: "Human Resources Management (HRM), Police Academy, 2024",
+        ar: "إدارة الموارد البشرية، أكاديمية الشرطة، 2024",
+      },
+      { en: "Crisis & Disaster Management, Police Academy, 2024", ar: "إدارة الأزمات والكوارث، أكاديمية الشرطة، 2024" },
+      {
+        en: "Behavioral Skills & Stress Management, Police Academy, 2024",
+        ar: "المهارات السلوكية وإدارة الضغوط، أكاديمية الشرطة، 2024",
+      },
+    ],
+  },
+  {
+    category: { en: "Specialized Security Training", ar: "تدريب أمني متخصص" },
+    items: [
+      {
+        en: "Criminal Investigation Techniques, General Security Institute, 2018",
+        ar: "تقنيات التحقيق الجنائي، معهد الأمن العام، 2018",
+      },
+    ],
+  },
+];
 
 export const languages = [
-  { name: { en: "Arabic", ar: "العربية" }, level: { en: "Native or bilingual", ar: "لغة أم أو ثنائية" } },
-  { name: { en: "English", ar: "الإنجليزية" }, level: { en: "Full professional", ar: "إجادة مهنية كاملة" } },
-  { name: { en: "French", ar: "الفرنسية" }, level: { en: "Professional working", ar: "إجادة مهنية" } },
+  { name: { en: "Arabic", ar: "العربية" }, level: { en: "Native", ar: "لغة أم" } },
+  {
+    name: { en: "English", ar: "الإنجليزية" },
+    level: { en: "Advanced (C1) - AUC & Armed Forces Language Institute", ar: "متقدم (C1) - الجامعة الأمريكية ومعهد لغات القوات المسلحة" },
+  },
+  { name: { en: "French", ar: "الفرنسية" }, level: { en: "Intermediate - Institut Français d'Égypte", ar: "متوسط - المعهد الفرنسي بمصر" } },
 ] as const;
 
-export const certifications = [
-  { en: "Logistics and Stores Management", ar: "إدارة اللوجستيات والمخازن" },
-  { en: "First Aid Certification", ar: "شهادة الإسعافات الأولية" },
-  { en: "Crisis and Disaster Management", ar: "إدارة الأزمات والكوارث" },
-  { en: "Criminal Investigation Specialist Course", ar: "دورة متخصص تحقيق جنائي" },
+export type CompetencyGroup = {
+  title: Localized<string>;
+  items: string[];
+};
+
+export const competencyGroups: CompetencyGroup[] = [
   {
-    en: "Behavioral Skills Development & Coping with Work Stress",
-    ar: "تنمية المهارات السلوكية والتعامل مع ضغوط العمل",
+    title: { en: "Operational Management", ar: "الإدارة التشغيلية" },
+    items: ["Logistics Planning", "Fleet Management", "Resource Allocation"],
   },
-] as const;
+  {
+    title: { en: "Risk & Safety", ar: "المخاطر والسلامة" },
+    items: ["Crisis Management", "Risk Assessment", "Incident Command", "Emergency Response"],
+  },
+  {
+    title: { en: "Administration", ar: "الإدارة" },
+    items: ["HR Management", "Stakeholder Relations", "Regulatory Compliance", "Legal Reporting"],
+  },
+  {
+    title: { en: "Technical & Automation", ar: "التقنية والأتمتة" },
+    items: ["Visual Basic (VB)", "HTML", "Java", "Process Scripting", "Data Analysis"],
+  },
+  {
+    title: { en: "Leadership", ar: "القيادة" },
+    items: ["Problem-Solving", "Negotiation", "Time Management", "Adaptability"],
+  },
+];

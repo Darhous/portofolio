@@ -7,6 +7,7 @@ import { ProjectCaseStudyPage } from "./pages/ProjectCaseStudyPage";
 import { ContactPage } from "./pages/ContactPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import type { Locale } from "./data/profile";
+import "./fonts.css";
 import "./styles.css";
 
 function App() {

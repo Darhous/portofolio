@@ -12,14 +12,14 @@ import type { OutletContext } from "../layouts/RootLayout";
 
 const META = {
   en: {
-    title: "Ahmed Darhous | Corporate Security, Legal-Tech & AI Operations",
+    title: "Ahmed Darhous | Security Operations & Crisis Management",
     description:
-      "Ahmed Darhous portfolio: corporate security and risk governance, legal research, AI-driven operations, and software products, built from CV and GitHub evidence.",
+      "Ahmed Darhous: Security Operations Manager, Crisis Management Specialist, and MBA Candidate. Portfolio built from his CV and verified GitHub project evidence.",
   },
   ar: {
-    title: "أحمد درهوس | الأمن المؤسسي والتقنية القانونية وعمليات الذكاء الاصطناعي",
+    title: "أحمد درهوس | العمليات الأمنية وإدارة الأزمات",
     description:
-      "بورتفوليو أحمد درهوس: الأمن المؤسسي وحوكمة المخاطر، البحث القانوني، عمليات مدعومة بالذكاء الاصطناعي، ومنتجات برمجية، مبني على أدلة من السيرة الذاتية وGitHub.",
+      "أحمد درهوس: مدير عمليات أمنية، أخصائي إدارة أزمات، ومرشح ماجستير إدارة أعمال. بورتفوليو مبني على سيرته الذاتية وأدلة موثقة من GitHub.",
   },
 };
 

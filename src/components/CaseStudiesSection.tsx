@@ -1,7 +1,9 @@
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { projects } from "../data/projects";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
+import { getAccent } from "../data/accents";
 import { SectionHeader } from "./SectionHeader";
 
 type CaseStudiesSectionProps = {
@@ -17,7 +19,11 @@ export function CaseStudiesSection({ locale }: CaseStudiesSectionProps) {
       <SectionHeader kicker={copy.caseStudiesKicker} title={copy.caseStudiesTitle} />
       <div className="case-grid">
         {caseStudies.map((project) => (
-          <article className="case-card" key={project.id}>
+          <article
+            className="case-card"
+            key={project.id}
+            style={{ "--accent": getAccent(project.category) } as CSSProperties}
+          >
             <span>{project.category}</span>
             <h3>
               <Link to={`/projects/${project.slug}`}>{project.name}</Link>

@@ -9,13 +9,13 @@ type IntroProps = {
 export function Intro({ locale }: IntroProps) {
   const [visible, setVisible] = useState(() => {
     if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : true;
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   });
   const copy = uiCopy[locale];
 
   useEffect(() => {
     if (!visible) return;
-    const timer = window.setTimeout(() => setVisible(false), 4200);
+    const timer = window.setTimeout(() => setVisible(false), 2000);
     return () => window.clearTimeout(timer);
   }, [visible]);
 
@@ -28,14 +28,13 @@ export function Intro({ locale }: IntroProps) {
   }
 
   return (
-    <div className="intro" role="dialog" aria-label="Portfolio intro">
+    <div className="intro" role="dialog" aria-label="Ahmed Darhous - Portfolio intro">
       <button className="intro-skip" type="button" onClick={() => setVisible(false)}>
         {copy.introSkip}
       </button>
-      <div className="intro-lines" aria-hidden="true">
-        <span>{copy.introLineOne}</span>
-        <span>{copy.introLineTwo}</span>
-        <span>{copy.introLineThree}</span>
+      <div className="intro-wordmark">
+        <span>{copy.introEyebrow}</span>
+        <strong>Ahmed Darhous</strong>
       </div>
     </div>
   );

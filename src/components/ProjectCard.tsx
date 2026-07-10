@@ -1,8 +1,10 @@
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink } from "./ExternalLink";
 import type { Project } from "../data/projects";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
+import { getAccent } from "../data/accents";
 
 type ProjectCardProps = {
   project: Project;
@@ -13,7 +15,7 @@ export function ProjectCard({ project, locale }: ProjectCardProps) {
   const copy = uiCopy[locale];
 
   return (
-    <article className="project-card">
+    <article className="project-card" style={{ "--accent": getAccent(project.category) } as CSSProperties}>
       <div className="project-card__meta">
         <span>{project.category}</span>
         <span>{project.status}</span>

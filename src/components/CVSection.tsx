@@ -28,11 +28,11 @@ export function CVSection({ locale }: CVSectionProps) {
         </div>
         <div className="cv-actions">
           <ExternalLink className="secondary-action" href={siteConfig.assets.cv}>
-            <ExternalLinkIcon aria-hidden="true" size={18} />
+            <ExternalLinkIcon aria-hidden="true" size={17} />
             <span>{copy.openCv}</span>
           </ExternalLink>
           <a className="primary-action" href={siteConfig.assets.cv} download>
-            <Download aria-hidden="true" size={18} />
+            <Download aria-hidden="true" size={17} />
             <span>{copy.downloadCv}</span>
           </a>
         </div>

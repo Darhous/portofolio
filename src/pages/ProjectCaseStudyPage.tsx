@@ -1,7 +1,9 @@
+import type { CSSProperties } from "react";
 import { Link, Navigate, useOutletContext, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getProjectBySlug, projects } from "../data/projects";
 import { uiCopy } from "../data/content";
+import { getAccent } from "../data/accents";
 import { ExternalLink } from "../components/ExternalLink";
 import { usePageMeta, injectJsonLd, removeJsonLd, siteOrigin } from "../hooks/usePageMeta";
 import type { OutletContext } from "../layouts/RootLayout";
@@ -60,7 +62,10 @@ export function ProjectCaseStudyPage() {
     .slice(0, 3);
 
   return (
-    <article className="page-section case-detail">
+    <article
+      className="page-section case-detail"
+      style={{ "--accent": getAccent(project.category) } as CSSProperties}
+    >
       <Link className="case-detail__back" to="/projects">
         &larr; {copy.backToArchive}
       </Link>
