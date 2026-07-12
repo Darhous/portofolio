@@ -4,7 +4,6 @@ import { siteConfig } from "../config/site";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
 import { ExternalLink } from "./ExternalLink";
-import { SocialLinks } from "./SocialLinks";
 
 type ContactSectionProps = {
   locale: Locale;
@@ -40,7 +39,6 @@ export function ContactSection({ locale }: ContactSectionProps) {
           </Link>
         </div>
       </div>
-      <SocialLinks variant="labels" />
     </section>
   );
 }

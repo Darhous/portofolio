@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Hero } from "../components/Hero";
 import { AboutSection } from "../components/AboutSection";
-import { ExpertiseSection } from "../components/ExpertiseSection";
 import { TechStackSection } from "../components/TechStackSection";
 import { ExperienceSection } from "../components/ExperienceSection";
 import { ProjectsSection } from "../components/ProjectsSection";
@@ -17,6 +16,7 @@ import type { OutletContext } from "../layouts/RootLayout";
 // the initial hero render, so keeping them out of the main chunk avoids
 // shipping animation-library weight to every visitor up front.
 const ScrollMarquee = lazy(() => import("../components/motion/ScrollMarquee").then((m) => ({ default: m.ScrollMarquee })));
+const ExpertiseSection = lazy(() => import("../components/ExpertiseSection").then((m) => ({ default: m.ExpertiseSection })));
 const FlagshipProjects = lazy(() => import("../components/FlagshipProjects").then((m) => ({ default: m.FlagshipProjects })));
 const CVSection = lazy(() => import("../components/CVSection").then((m) => ({ default: m.CVSection })));
 
@@ -46,7 +46,9 @@ export function HomePage() {
         <ScrollMarquee projects={projects} />
       </Suspense>
       <AboutSection locale={locale} />
-      <ExpertiseSection locale={locale} />
+      <Suspense fallback={null}>
+        <ExpertiseSection locale={locale} />
+      </Suspense>
       <TechStackSection locale={locale} />
       <ExperienceSection locale={locale} />
       <Suspense fallback={null}>

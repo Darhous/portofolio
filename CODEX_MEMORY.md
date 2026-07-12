@@ -172,3 +172,42 @@ All footer and contact social links must be displayed in this exact order:
   `projects[].tech`; no manual maintenance needed.
 - All 30 project descriptions were verified complete (EN+AR) before this
   pass — none were missing or thin, so none needed invented copy.
+
+## 2026-07-12 Update, Part 3 (reversed the "calm colors" decision)
+
+- **Ahmed explicitly reversed the earlier "structural ideas only, same
+  calm colors" decision.** After seeing the calm monochrome system live,
+  he said the colors were "very very very bad" and asked for the full
+  color/effects/animation treatment from the heavier "Jack 3D Creator"
+  brief — explicitly scoped to colors, effects, and motion, not
+  typography (Fraunces/Inter stayed; he never asked to change fonts).
+  **The "no gradients/no glow" rule from the 2026-07-10 visual rebrand is
+  no longer in effect — don't reintroduce the old monochrome palette
+  without him asking again.**
+- New token system in `styles.css` `:root`: `--night:#0c0c0c`,
+  `--ink:#d7e2ea` (cool light blue-gray, replacing the old warm cream),
+  `--gradient-heading: linear-gradient(180deg,#646973 0%,#bbccd7 100%)`
+  applied to `h1` and every `.section-header h2` via `background-clip:
+  text`, `--gradient-cta` (purple/magenta/orange) + `--glow-cta` applied
+  to `.primary-action`, `--radius-card: 32px` applied to all card
+  shells (`.stack-card`, `.feature-row`, `.project-card`,
+  `.statement-panel`, `.compact-panel`).
+- `ExpertiseSection` is now a white-background "Services"-style numbered
+  list (`.expertise-panel`, rounded-top pulled up over the previous dark
+  section) instead of a dark bordered-card grid — the one place on the
+  site with light text-on-white. It's now lazy-loaded since it uses
+  `FadeIn` (framer-motion) for a staggered per-row reveal.
+- Wired the previously-unused `FadeIn` component's *effect* into the
+  Hero via plain CSS `@keyframes` (not the framer-motion component
+  itself) so Hero stays framer-motion-free and out of the critical
+  bundle: `.topbar` fades down, `h1`/subtitle/lede/actions/portrait fade
+  up with staggered `animation-delay`, respecting
+  `prefers-reduced-motion`.
+- `AnimatedText` (`src/components/motion/AnimatedText.tsx`) is now true
+  character-by-character (was word-by-word) to match the brief exactly —
+  confirmed fine performance-wise even at 600+ characters (the CV
+  summary paragraph).
+- Fixed a real duplicate-content bug Ahmed found: `ContactSection` (home
+  page) and `Footer` (global, renders right after it) both rendered
+  `<SocialLinks />` — removed it from `ContactSection` since `Footer`
+  already shows it on every page.
