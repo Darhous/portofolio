@@ -320,3 +320,72 @@ Tailwind migration, no Kanit, no metallic gradients, no glowing button.
   merged, and what to do about the Guardian-Nexus project's description,
   which still reflects the old CV's AI/OSINT framing rather than the new
   CV's Ministry of Interior framing.
+
+## Phase 4 — Merge to main, builder-story content pass (2026-07-12)
+
+### Context
+
+Ahmed asked to merge the feature branch into `main` and, from this point
+on, develop and push directly to `main` (no more feature-branch/PR
+workflow) so he can see changes live immediately. He also re-read the
+site and pushed back hard on the copy: every CV-grounded sentence framed
+him as only a security/law-enforcement officer, with the 30-project
+GitHub portfolio — the actual bulk of the site — never mentioned in the
+narrative. His words: he's not just an officer, he's a creative officer,
+and he wanted that said somewhere in the profile, forcefully.
+
+### Completed Work
+
+- Merged `claude/darhous-portfolio-rebuild-sxmb3n` into `main` (clean
+  merge, no conflicts — the branch's two post-PR commits sat cleanly on
+  top of what was already merged) and pushed. Continuing directly on
+  `main` from here per Ahmed's instruction.
+- Re-extracted `Ahmed-Darhous-CV-source.docx` directly with
+  `python-docx` to re-verify every fact against `src/data/profile.ts`
+  from the source document itself, not the older `CV_ANALYSIS.md` (which
+  was written against a different, earlier PDF). Confirmed experience,
+  education, certifications, languages, and core competencies already
+  matched the current CV faithfully; found one small gap (the CV's "IT
+  Operations: Operating Systems Development and software lifecycles"
+  line wasn't in the Technical & Automation competency list) and added
+  it.
+- Rewrote `profile.summary` (used in both the CV reading-moment and the
+  About statement panel) around the dual-identity thesis instead of a
+  security-only bio — closing line: "He is not just an officer. He is an
+  officer who builds." / Arabic: "فهو ليس مجرد ضابط، بل ضابط مبدع يبني."
+- Added a fifth `expertise` domain, Applied Software Engineering &
+  Automation, next to the four CV-derived domains — grounded in the CV's
+  own Technical Skills section (Udemy-certified VB/HTML/Java) plus the
+  real technology range visible across the shipped projects.
+- Replaced the About section's flat "Built from the CV, not guesswork."
+  disclaimer with "Two careers. One standard of proof." — same honesty
+  claim, stated as the section's actual thesis instead of a footnote.
+- Added a new Shipped Stack section (`TechStackSection.tsx`,
+  `src/data/techStack.ts`): technology tags aggregated and ranked by
+  real frequency across all 30 projects' `tech[]` arrays — concrete,
+  computed evidence of the programming breadth rather than a claimed
+  skills list. Added a `Stack` nav/command-palette entry for it.
+- Verified before touching project copy: all 30 projects already had
+  real EN/AR descriptions (checked programmatically) — none needed
+  invented text, so none were rewritten.
+- `.expertise-grid` changed from a fixed 4-column grid to `auto-fit,
+  minmax(240px, 1fr)` so a fifth card doesn't leave an awkward orphan
+  column at any viewport.
+
+### Verification
+
+- `npm run typecheck`, `npm test`, `npm run build` — all pass.
+- Playwright screenshot pass (desktop EN + AR) over About, Expertise,
+  the new Stack section, and CV — confirmed the new copy renders
+  correctly, the fifth expertise card and stack tag list lay out
+  cleanly, and Arabic RTL mirrors the tag counts/labels correctly with
+  no overflow.
+
+### Next Action
+
+- Committed and pushed directly to `main` (commit `99487ee`), which
+  triggers the GitHub Pages deploy workflow automatically. Still open
+  from earlier: what to do about the Guardian-Nexus project description,
+  which still reflects the old CV's AI/OSINT framing rather than the new
+  CV's Ministry of Interior framing — flagged to Ahmed, not yet
+  resolved, not changed without his input.

@@ -141,3 +141,34 @@ All footer and contact social links must be displayed in this exact order:
   branch to `main`, and what to do about Guardian-Nexus's description
   still reflecting the old CV's AI/OSINT framing instead of the new CV's
   Ministry of Interior framing. Don't silently resolve either — ask.
+
+## 2026-07-12 Update, Part 2 (merged to main; workflow changed)
+
+- **Ahmed explicitly asked to merge the feature branch into `main` and to
+  develop directly on `main` from now on** — no more feature-branch/PR
+  workflow, push straight to `main` so he can see changes live
+  immediately. This branch was merged (`aae6b3a`), and this and all
+  subsequent work is committed and pushed straight to `main`. Don't
+  revert to a feature-branch workflow unless he asks for one again.
+- Re-verified `src/data/profile.ts` against a fresh `python-docx`
+  extraction of `Ahmed-Darhous-CV-source.docx` itself (not the older
+  `CV_ANALYSIS.md`, which documents a different, earlier PDF and is
+  stale — don't treat it as current). Everything already matched except
+  one missing Technical & Automation item ("Operating Systems & Software
+  Lifecycle"), now added.
+- Ahmed pushed back hard: the site's copy talked about him only as a
+  security/law-enforcement officer and never mentioned the 30-project
+  GitHub portfolio that is the actual bulk of the site. He wants it
+  clear he's "not just an officer, but a creative officer" — this is now
+  the closing line of `profile.summary`: "He is not just an officer. He
+  is an officer who builds." Don't walk this framing back to a
+  security-only bio without him asking.
+- Added a 5th `expertise` domain (Applied Software Engineering &
+  Automation) and a new "Shipped Stack" section
+  (`src/components/TechStackSection.tsx` + `src/data/techStack.ts`) that
+  computes real technology-usage frequency across all 30 projects — real
+  computed evidence, not a hand-written skills list. If new projects are
+  added later, this section updates itself automatically from
+  `projects[].tech`; no manual maintenance needed.
+- All 30 project descriptions were verified complete (EN+AR) before this
+  pass — none were missing or thin, so none needed invented copy.

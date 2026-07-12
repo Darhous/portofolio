@@ -156,3 +156,18 @@ palette:
 - Every motion component has a `prefers-reduced-motion` fallback; the
   marquee and stack also fall back to static markup under 640px
   (`useNarrowViewport`, `src/hooks/useReducedMotion.ts`).
+
+## Shipped Stack section (2026-07-12, phase 4)
+
+Added one new content section, `TechStackSection.tsx`, using existing
+tokens only — no new visual language:
+
+- Technology tags reuse the `.tech-stack-item` treatment: a hairline
+  border on `--panel`, `var(--ink-dim)` label, and a small count badge
+  in `var(--muted)` on a 1px `--line` border — visually a sibling of the
+  existing `.tag-cloud` pattern used elsewhere in the About panel, not a
+  new component language.
+- `.expertise-grid` moved from a fixed `repeat(4, 1fr)` to `repeat(auto-fit,
+  minmax(240px, 1fr))` so a 5th expertise card (added the same day) wraps
+  onto its own row cleanly at any width instead of leaving an orphan gap
+  in a fixed 4-column layout.
