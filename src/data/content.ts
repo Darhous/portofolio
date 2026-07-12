@@ -133,6 +133,11 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     contactFormBudgetLarge: "$5,000+",
     contactFormBudgetUnsure: "Not sure yet",
     quickContactTitle: "Direct Channels",
+    tabHome: "Home",
+    tabProjects: "Projects",
+    tabCv: "CV",
+    tabContact: "Contact",
+    tabWhatsapp: "WhatsApp",
   },
   ar: {
     switchLanguage: "English",
@@ -246,5 +251,10 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     contactFormBudgetLarge: "أكثر من 5,000 دولار",
     contactFormBudgetUnsure: "غير محدد بعد",
     quickContactTitle: "قنوات مباشرة",
+    tabHome: "الرئيسية",
+    tabProjects: "المشاريع",
+    tabCv: "السيرة",
+    tabContact: "تواصل",
+    tabWhatsapp: "واتساب",
   },
 };

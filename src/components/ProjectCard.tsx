@@ -1,5 +1,5 @@
-import type { CSSProperties } from "react";
-import { Link } from "react-router-dom";
+import type { CSSProperties, MouseEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ExternalLink } from "./ExternalLink";
 import type { Project } from "../data/projects";
 import type { Locale } from "../data/profile";
@@ -7,6 +7,9 @@ import { uiCopy } from "../data/content";
 import { getAccent } from "../data/accents";
 import { getProjectImage } from "../data/projectImages";
 import { useInView } from "../hooks/useInView";
+import { useTilt } from "../hooks/useTilt";
+import { useViewTransitionName } from "../hooks/useViewTransitionName";
+import { withViewTransition } from "../lib/viewTransition";
 
 type ProjectCardProps = {
   project: Project;
@@ -15,16 +18,28 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project, locale }: ProjectCardProps) {
   const copy = uiCopy[locale];
-  const { ref, inView } = useInView<HTMLElement>();
+  const { ref: inViewRef, inView } = useInView<HTMLElement>();
+  const tiltRef = useTilt<HTMLElement>(6);
+  const visualRef = useViewTransitionName<HTMLImageElement>(`project-visual-${project.slug}`);
+  const navigate = useNavigate();
+
+  function openCaseStudy(event: MouseEvent) {
+    event.preventDefault();
+    withViewTransition(() => navigate(`/projects/${project.slug}`));
+  }
 
   return (
     <article
       className={`project-card${inView ? " is-visible" : ""}`}
-      ref={ref}
+      ref={(node) => {
+        inViewRef.current = node;
+        tiltRef.current = node;
+      }}
       style={{ "--accent": getAccent(project.category) } as CSSProperties}
     >
+      <div className="project-card__sheen" aria-hidden="true" />
       <div className="project-card__visual" aria-hidden="true">
-        <img src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
+        <img ref={visualRef} src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
       </div>
       <div className="project-card__meta">
         <span>{project.category}</span>
@@ -32,7 +47,9 @@ export function ProjectCard({ project, locale }: ProjectCardProps) {
         <span>{project.year}</span>
       </div>
       <h3>
-        <Link to={`/projects/${project.slug}`}>{project.name}</Link>
+        <Link to={`/projects/${project.slug}`} onClick={openCaseStudy}>
+          {project.name}
+        </Link>
       </h3>
       <p>{project.description[locale]}</p>
       <p className="project-impact">{project.impact[locale]}</p>
@@ -46,7 +63,7 @@ export function ProjectCard({ project, locale }: ProjectCardProps) {
         </div>
       ) : null}
       <div className="project-actions">
-        <Link to={`/projects/${project.slug}`} className="project-actions__case">
+        <Link to={`/projects/${project.slug}`} className="project-actions__case" onClick={openCaseStudy}>
           {copy.viewCaseStudy}
         </Link>
         {project.repo ? <ExternalLink href={project.repo}>{copy.repository}</ExternalLink> : null}

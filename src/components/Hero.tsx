@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { siteConfig } from "../config/site";
@@ -5,6 +6,7 @@ import { profile } from "../data/profile";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
 import { MagneticElement } from "./motion/MagneticElement";
+import { useSpotlight } from "../hooks/useSpotlight";
 
 type HeroProps = {
   locale: Locale;
@@ -12,21 +14,34 @@ type HeroProps = {
 
 export function Hero({ locale }: HeroProps) {
   const copy = uiCopy[locale];
+  const spotlightRef = useSpotlight<HTMLElement>();
 
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" aria-labelledby="hero-title" ref={spotlightRef}>
+      <div className="hero-spotlight" aria-hidden="true" />
       <div className="hero-copy">
-        <h1 id="hero-title">{profile.name}</h1>
+        <h1 id="hero-title">
+          {profile.name.split(" ").map((word, index) => (
+            <span key={word} className="kinetic-word" style={{ "--word-index": index } as CSSProperties}>
+              {word}
+              {index < profile.name.split(" ").length - 1 ? " " : ""}
+            </span>
+          ))}
+        </h1>
         <p className="hero-subtitle">{profile.headline[locale]}</p>
         <p className="hero-lede">{profile.tagline[locale]}</p>
         <div className="hero-actions">
-          <a className="primary-action" href={siteConfig.assets.cv} download>
-            <Download aria-hidden="true" size={17} />
-            <span>{profile.cta.primary[locale]}</span>
-          </a>
-          <Link className="secondary-action" to="/contact">
-            <span>{profile.cta.secondary[locale]}</span>
-          </Link>
+          <MagneticElement padding={30} strength={22}>
+            <a className="primary-action" href={siteConfig.assets.cv} download>
+              <Download aria-hidden="true" size={17} />
+              <span>{profile.cta.primary[locale]}</span>
+            </a>
+          </MagneticElement>
+          <MagneticElement padding={30} strength={22}>
+            <Link className="secondary-action" to="/contact">
+              <span>{profile.cta.secondary[locale]}</span>
+            </Link>
+          </MagneticElement>
         </div>
       </div>
       <div className="hero-visual">

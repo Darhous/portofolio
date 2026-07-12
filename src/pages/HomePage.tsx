@@ -10,6 +10,7 @@ import { ProjectsSection } from "../components/ProjectsSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { ContactSection } from "../components/ContactSection";
 import { usePageMeta } from "../hooks/usePageMeta";
+import { useIdentityShift } from "../hooks/useIdentityShift";
 import { featuredProjects, projects } from "../data/projects";
 import { FLAGSHIP_COUNT } from "../data/flagship";
 import { uiCopy } from "../data/content";
@@ -40,33 +41,48 @@ export function HomePage() {
   const { locale } = useOutletContext<OutletContext>();
   const copy = uiCopy[locale];
   usePageMeta({ ...META[locale], path: "/" });
+  useIdentityShift();
 
   const remainingFeatured = featuredProjects.slice(FLAGSHIP_COUNT);
 
   return (
     <>
-      <Hero locale={locale} />
-      <CareerTimeline locale={locale} />
-      <div className="page-section marquee-intro">
-        <SectionHeader kicker={copy.marqueeKicker} title={copy.marqueeTitle} />
+      <div data-identity="officer">
+        <Hero locale={locale} />
+        <CareerTimeline locale={locale} />
       </div>
-      <Suspense fallback={null}>
-        <ScrollMarquee projects={projects} />
-      </Suspense>
+      <div data-identity="builder">
+        <div className="page-section marquee-intro">
+          <SectionHeader kicker={copy.marqueeKicker} title={copy.marqueeTitle} />
+        </div>
+        <Suspense fallback={null}>
+          <ScrollMarquee projects={projects} />
+        </Suspense>
+      </div>
       <AboutSection locale={locale} />
-      <Suspense fallback={null}>
-        <ExpertiseSection locale={locale} />
-      </Suspense>
-      <TechStackSection locale={locale} />
-      <ExperienceSection locale={locale} />
-      <Suspense fallback={null}>
-        <FlagshipProjects locale={locale} />
-      </Suspense>
-      <ProjectsSection locale={locale} projects={remainingFeatured} startIndex={FLAGSHIP_COUNT} showHeader={false} />
-      <CaseStudiesSection locale={locale} />
-      <Suspense fallback={null}>
-        <CVSection locale={locale} />
-      </Suspense>
+      <div data-identity="officer">
+        <Suspense fallback={null}>
+          <ExpertiseSection locale={locale} />
+        </Suspense>
+      </div>
+      <div data-identity="builder">
+        <TechStackSection locale={locale} />
+      </div>
+      <div data-identity="officer">
+        <ExperienceSection locale={locale} />
+      </div>
+      <div data-identity="builder">
+        <Suspense fallback={null}>
+          <FlagshipProjects locale={locale} />
+        </Suspense>
+        <ProjectsSection locale={locale} projects={remainingFeatured} startIndex={FLAGSHIP_COUNT} showHeader={false} />
+        <CaseStudiesSection locale={locale} />
+      </div>
+      <div data-identity="officer">
+        <Suspense fallback={null}>
+          <CVSection locale={locale} />
+        </Suspense>
+      </div>
       <ContactSection locale={locale} />
     </>
   );

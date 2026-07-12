@@ -5,7 +5,14 @@
    panel for the operating-map section.
    ========================================================================== */
 
+@property --identity-hue {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #b600a8;
+}
+
 :root {
+  transition: --identity-hue 1400ms var(--ease-standard);
   color: #d7e2ea;
   background: #0c0c0c;
   font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -33,6 +40,14 @@
   /* Default accent (overridden per-project via inline --accent) */
   --accent: #b600a8;
   --accent-soft: rgba(182, 0, 168, 0.14);
+
+  /* The two-tone brand identity: magenta/violet = "officer" (discipline,
+     process, the CTA gradient), teal/cyan = "builder" (hands-on technical
+     work). Used for the scroll-linked identity shift and anywhere the site
+     wants to nod at one half of the duality specifically. */
+  --identity-officer: #b600a8;
+  --identity-builder: #2dd4bf;
+  --identity-hue: var(--identity-officer);
 
   /* Gradient heading + primary-action gradient */
   --gradient-heading: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
@@ -96,7 +111,7 @@ body {
   min-height: 100vh;
   overflow-x: clip;
   background:
-    radial-gradient(ellipse 60rem 40rem at 12% -8%, rgba(182, 0, 168, 0.09), transparent 60%),
+    radial-gradient(ellipse 60rem 40rem at 12% -8%, color-mix(in srgb, var(--identity-hue) 22%, transparent), transparent 60%),
     radial-gradient(ellipse 50rem 36rem at 92% 8%, rgba(187, 204, 215, 0.05), transparent 55%),
     var(--night);
   transition:
@@ -106,7 +121,7 @@ body {
 
 :root[data-theme="light"] body {
   background:
-    radial-gradient(ellipse 60rem 40rem at 12% -8%, rgba(182, 0, 168, 0.05), transparent 60%),
+    radial-gradient(ellipse 60rem 40rem at 12% -8%, color-mix(in srgb, var(--identity-hue) 14%, transparent), transparent 60%),
     radial-gradient(ellipse 50rem 36rem at 92% 8%, rgba(20, 24, 27, 0.035), transparent 55%),
     var(--night);
 }
@@ -566,7 +581,21 @@ p {
   padding: 0 26px;
 }
 
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes liquid-border-spin {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
 .primary-action {
+  position: relative;
+  z-index: 0;
   border-color: transparent;
   background: var(--gradient-cta);
   box-shadow: var(--glow-cta);
@@ -574,6 +603,24 @@ p {
   outline-offset: -3px;
   color: #fff;
   font-weight: 600;
+}
+
+.primary-action::before {
+  position: absolute;
+  inset: -4px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(from var(--border-angle), #b600a8, #7621b0, #be4c00, #b600a8);
+  animation: liquid-border-spin 4s linear infinite;
+  filter: blur(3px);
+  opacity: 0.75;
+  content: "";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primary-action::before {
+    animation: none;
+  }
 }
 
 .primary-action:hover {
@@ -607,12 +654,36 @@ p {
 /* ---- Hero ------------------------------------------------------------------ */
 
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.86fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: center;
   min-height: calc(100vh - 88px);
   padding: 56px 0 88px;
+}
+
+.hero-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    480px circle at var(--spotlight-x, 50%) var(--spotlight-y, 20%),
+    color-mix(in srgb, var(--identity-hue) 16%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 400ms var(--ease-standard);
+}
+
+.hero:hover .hero-spotlight {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .hero-spotlight {
+    display: none;
+  }
 }
 
 /* ---- Entrance animation (staggered fade-up), CSS-only so the hero stays
@@ -640,12 +711,27 @@ p {
   }
 }
 
+@keyframes kinetic-word-in {
+  from {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
 .topbar {
   animation: fade-down-in 700ms var(--ease-premium) both;
 }
 
-.hero-copy h1 {
-  animation: fade-up-in 700ms var(--ease-premium) 150ms both;
+.kinetic-word {
+  display: inline-block;
+  animation: kinetic-word-in 900ms var(--ease-premium) both;
+  animation-delay: calc(var(--word-index, 0) * 130ms + 150ms);
 }
 
 .hero-subtitle {
@@ -666,7 +752,7 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .topbar,
-  .hero-copy h1,
+  .kinetic-word,
   .hero-subtitle,
   .hero-lede,
   .hero-actions,
@@ -1066,6 +1152,35 @@ p {
   border-color: var(--line-strong);
   box-shadow: var(--shadow-soft);
   transform: translateY(-2px);
+  transition:
+    border-color 260ms var(--ease-standard),
+    box-shadow 260ms var(--ease-standard),
+    transform 80ms linear;
+}
+
+.project-card__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--tilt-x, 50%) var(--tilt-y, 50%),
+    color-mix(in srgb, var(--accent) 30%, white 20%),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 220ms var(--ease-standard);
+  pointer-events: none;
+}
+
+.project-card:hover .project-card__sheen {
+  opacity: 0.16;
+}
+
+@media (hover: none) {
+  .project-card__sheen {
+    display: none;
+  }
 }
 
 .project-card__visual {
@@ -1802,18 +1917,33 @@ p {
 
 .stat-chip {
   display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 140px;
+  border: 1px solid var(--line-strong);
+  padding: 10px 16px 10px 10px;
+}
+
+.stat-chip__ring {
+  flex-shrink: 0;
+}
+
+.stat-chip__ring circle:last-child {
+  transition: stroke-dashoffset 100ms linear;
+}
+
+.stat-chip__text {
+  display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 108px;
-  border: 1px solid var(--line-strong);
-  padding: 12px 18px;
 }
 
 .stat-chip strong {
   color: var(--accent);
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
   line-height: 1.1;
 }
 
@@ -2117,6 +2247,7 @@ p {
 }
 
 .career-timeline {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
@@ -2126,12 +2257,35 @@ p {
   border-top: 1px solid var(--line);
 }
 
+.career-timeline__pulse {
+  position: absolute;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  margin-inline-start: -4px;
+  border-radius: 50%;
+  background: var(--accent, var(--ink));
+  box-shadow: 0 0 12px 2px color-mix(in srgb, var(--accent, var(--ink)) 70%, transparent);
+  transition: left 120ms linear;
+}
+
 .career-timeline__item {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding-top: 20px;
+  opacity: 0;
+  transform: translateY(16px) scale(0.92);
+  transition:
+    opacity 500ms var(--ease-standard),
+    transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(var(--index, 0) * 90ms);
+}
+
+.career-timeline__item.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .career-timeline__item::before {
@@ -2185,6 +2339,7 @@ p {
 }
 
 .marquee-row {
+  padding: 10px 0;
   overflow: hidden;
 }
 
@@ -2211,6 +2366,21 @@ p {
   background: var(--panel);
   padding: 14px;
   text-align: start;
+  transition:
+    transform 240ms var(--ease-standard),
+    box-shadow 240ms var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .marquee-tile:hover {
+    z-index: 2;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4);
+    transform: scale(1.08);
+  }
+
+  .marquee-row__track:has(.marquee-tile:hover) .marquee-tile:not(:hover) {
+    transform: scale(0.94);
+  }
 }
 
 .marquee-tile img {
@@ -2596,4 +2766,99 @@ p {
   .case-detail__block {
     break-inside: avoid;
   }
+}
+
+/* ---- Mobile touch ergonomics ------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .archive-filters button {
+    min-height: 40px;
+    padding: 0 16px;
+  }
+
+  .icon-button,
+  .theme-toggle,
+  .hamburger,
+  .social-link,
+  .language-toggle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (hover: none) {
+  .primary-action:active,
+  .secondary-action:active,
+  .footer-action:active,
+  .project-card:active,
+  .stack-card:active,
+  .archive-filters button:active,
+  .tag-cloud a:active,
+  .social-link:active,
+  .icon-button:active,
+  .theme-toggle:active,
+  .hamburger:active,
+  .language-toggle:active,
+  .marquee-tile:active {
+    transform: scale(0.96);
+    transition: transform 100ms ease;
+  }
+}
+
+/* ---- Mobile tab bar (thumb-reachable quick nav + WhatsApp) ------------------------------- */
+
+.mobile-tabbar {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .mobile-tabbar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: var(--surface-blur);
+    backdrop-filter: blur(14px);
+  }
+
+  .app-shell {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+}
+
+.mobile-tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 4px 6px;
+  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.mobile-tabbar__item.is-active {
+  color: var(--ink);
+}
+
+.mobile-tabbar__whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  margin-top: -26px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #25d366;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
 }

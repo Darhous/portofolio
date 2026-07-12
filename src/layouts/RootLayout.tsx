@@ -4,6 +4,7 @@ import { Intro } from "../components/Intro";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { CommandPalette } from "../components/CommandPalette";
+import { MobileTabBar } from "../components/MobileTabBar";
 import { useHashScroll } from "../hooks/useHashScroll";
 import { useCommandPaletteShortcut } from "../hooks/useCommandPaletteShortcut";
 import { trackPageview } from "../lib/analytics";
@@ -50,6 +51,7 @@ export function RootLayout({ locale, onToggleLocale, theme, onToggleTheme }: Roo
       </main>
 
       <Footer />
+      <MobileTabBar locale={locale} />
 
       <CommandPalette
         locale={locale}

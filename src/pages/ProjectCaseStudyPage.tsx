@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
-import { Link, Navigate, useOutletContext, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, Navigate, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useCallback, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { getProjectBySlug, projects } from "../data/projects";
 import { uiCopy } from "../data/content";
@@ -8,7 +8,11 @@ import { getAccent } from "../data/accents";
 import { getProjectImage } from "../data/projectImages";
 import { ExternalLink } from "../components/ExternalLink";
 import { ReadingProgress } from "../components/ReadingProgress";
+import { StatChip } from "../components/StatChip";
 import { usePageMeta, injectJsonLd, removeJsonLd, siteOrigin } from "../hooks/usePageMeta";
+import { useSwipeNavigation } from "../hooks/useSwipeNavigation";
+import { useViewTransitionName } from "../hooks/useViewTransitionName";
+import { withViewTransition } from "../lib/viewTransition";
 import type { OutletContext } from "../layouts/RootLayout";
 
 function CaseStudyList({ title, items }: { title: string; items?: string[] }) {
@@ -30,10 +34,26 @@ export function ProjectCaseStudyPage() {
   const copy = uiCopy[locale];
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
+  const navigate = useNavigate();
 
   const title = project ? `${project.name} | Ahmed Darhous` : "Not found";
   const description = project ? project.description[locale] : "";
   usePageMeta({ title, description, path: `/projects/${slug ?? ""}` });
+
+  const currentIndex = project ? projects.findIndex((item) => item.id === project.id) : -1;
+  const nextProject = currentIndex >= 0 ? projects[(currentIndex + 1) % projects.length] : undefined;
+  const prevProject = currentIndex >= 0 ? projects[(currentIndex - 1 + projects.length) % projects.length] : undefined;
+
+  const goNext = useCallback(() => {
+    if (nextProject) navigate(`/projects/${nextProject.slug}`);
+  }, [navigate, nextProject]);
+  const goPrev = useCallback(() => {
+    if (prevProject) navigate(`/projects/${prevProject.slug}`);
+  }, [navigate, prevProject]);
+  useSwipeNavigation(goNext, goPrev);
+  const bannerRef = useViewTransitionName<HTMLImageElement>(
+    project ? `project-visual-${project.slug}` : "project-visual-none",
+  );
 
   useEffect(() => {
     if (!project) return;
@@ -63,8 +83,8 @@ export function ProjectCaseStudyPage() {
   const related = projects
     .filter((item) => item.id !== project.id && item.category === project.category)
     .slice(0, 3);
-  const currentIndex = projects.findIndex((item) => item.id === project.id);
-  const nextProject = projects[(currentIndex + 1) % projects.length];
+  // Guaranteed defined here: currentIndex >= 0 whenever `project` resolved.
+  const nextProjectSafe = nextProject!;
 
   return (
     <article
@@ -77,7 +97,7 @@ export function ProjectCaseStudyPage() {
       </Link>
 
       <div className="case-detail__banner">
-        <img src={getProjectImage(project.slug)} alt="" loading="eager" width="1200" height="1500" />
+        <img ref={bannerRef} src={getProjectImage(project.slug)} alt="" loading="eager" width="1200" height="1500" />
       </div>
 
       <header className="case-detail__header">
@@ -93,10 +113,7 @@ export function ProjectCaseStudyPage() {
         {project.stats && project.stats.length > 0 ? (
           <div className="stat-chips">
             {project.stats.map((stat) => (
-              <div key={stat.label[locale]} className="stat-chip">
-                <strong>{stat.value}</strong>
-                <span>{stat.label[locale]}</span>
-              </div>
+              <StatChip key={stat.label[locale]} value={stat.value} label={stat.label[locale]} />
             ))}
           </div>
         ) : null}
@@ -181,7 +198,13 @@ export function ProjectCaseStudyPage() {
           <ul className="clean-list">
             {related.map((item) => (
               <li key={item.id}>
-                <Link to={`/projects/${item.slug}`}>
+                <Link
+                  to={`/projects/${item.slug}`}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    withViewTransition(() => navigate(`/projects/${item.slug}`));
+                  }}
+                >
                   <strong>{item.name}</strong>
                 </Link>
                 <span>{item.description[locale]}</span>
@@ -191,10 +214,17 @@ export function ProjectCaseStudyPage() {
         </div>
       ) : null}
 
-      <Link className="case-detail__next" to={`/projects/${nextProject.slug}`}>
+      <Link
+        className="case-detail__next"
+        to={`/projects/${nextProjectSafe.slug}`}
+        onClick={(event) => {
+          event.preventDefault();
+          withViewTransition(goNext);
+        }}
+      >
         <span className="section-kicker">{copy.nextProject}</span>
         <span className="case-detail__next-name">
-          {nextProject.name}
+          {nextProjectSafe.name}
           <ArrowRight aria-hidden="true" size={20} />
         </span>
       </Link>

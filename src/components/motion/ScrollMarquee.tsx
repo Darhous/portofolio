@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { getAccent } from "../../data/accents";
 import { getProjectImage } from "../../data/projectImages";
 import type { Project } from "../../data/projects";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useNarrowViewport, useReducedMotion } from "../../hooks/useReducedMotion";
 
 type ScrollMarqueeProps = {
   projects: Project[];
@@ -15,13 +15,14 @@ function monogram(name: string): string {
   return `${words[0][0]}${words[1][0]}`.toUpperCase();
 }
 
-function MarqueeRow({ projects, direction }: { projects: Project[]; direction: 1 | -1 }) {
+function MarqueeRow({ projects, direction, narrow }: { projects: Project[]; direction: 1 | -1; narrow: boolean }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: rowRef,
     offset: ["start end", "end start"],
   });
-  const x = useTransform(scrollYProgress, [0, 1], [`${direction * -8}%`, `${direction * 8}%`]);
+  const reach = narrow ? 3 : 8;
+  const x = useTransform(scrollYProgress, [0, 1], [`${direction * -reach}%`, `${direction * reach}%`]);
   const doubled = [...projects, ...projects];
 
   return (
@@ -45,6 +46,7 @@ function MarqueeRow({ projects, direction }: { projects: Project[]; direction: 1
 
 export function ScrollMarquee({ projects }: ScrollMarqueeProps) {
   const reducedMotion = useReducedMotion();
+  const narrow = useNarrowViewport();
   const rowA = projects.filter((_, index) => index % 2 === 0);
   const rowB = projects.filter((_, index) => index % 2 === 1);
 
@@ -62,8 +64,8 @@ export function ScrollMarquee({ projects }: ScrollMarqueeProps) {
 
   return (
     <div className="marquee" aria-hidden="true">
-      <MarqueeRow projects={rowA} direction={1} />
-      <MarqueeRow projects={rowB} direction={-1} />
+      <MarqueeRow projects={rowA} direction={1} narrow={narrow} />
+      <MarqueeRow projects={rowB} direction={-1} narrow={narrow} />
     </div>
   );
 }

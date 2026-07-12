@@ -1,6 +1,6 @@
-import { useRef, type CSSProperties } from "react";
+import { useRef, type CSSProperties, type MouseEvent } from "react";
 import { motion, useScroll, useTransform, type MotionStyle } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { ExternalLink } from "../ExternalLink";
 import { getAccent } from "../../data/accents";
@@ -8,7 +8,9 @@ import { getProjectImage } from "../../data/projectImages";
 import type { Project } from "../../data/projects";
 import type { Locale } from "../../data/profile";
 import { uiCopy } from "../../data/content";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useNarrowViewport, useReducedMotion } from "../../hooks/useReducedMotion";
+import { useViewTransitionName } from "../../hooks/useViewTransitionName";
+import { withViewTransition } from "../../lib/viewTransition";
 
 type StickyProjectStackProps = {
   projects: Project[];
@@ -18,12 +20,19 @@ type StickyProjectStackProps = {
 function StackCard({ project, index, total, locale }: { project: Project; index: number; total: number; locale: Locale }) {
   const copy = uiCopy[locale];
   const cardRef = useRef<HTMLDivElement>(null);
+  const visualRef = useViewTransitionName<HTMLImageElement>(`project-visual-${project.slug}`);
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start start", "end start"],
   });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1 - (total - index) * 0.035]);
   const opacity = useTransform(scrollYProgress, [0, 0.9, 1], [1, 1, 0.6]);
+
+  function openCaseStudy(event: MouseEvent) {
+    event.preventDefault();
+    withViewTransition(() => navigate(`/projects/${project.slug}`));
+  }
 
   return (
     <div className="stack-card-wrapper" ref={cardRef} style={{ top: `${6 + index * 1.5}rem`, zIndex: index + 1 }}>
@@ -35,7 +44,7 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
           {String(index + 1).padStart(2, "0")}
         </div>
         <div className="stack-card__visual">
-          <img src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
+          <img ref={visualRef} src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
         </div>
         <div className="stack-card__body">
           <div className="feature-row__meta">
@@ -44,7 +53,9 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
             <span>{project.year}</span>
           </div>
           <h3>
-            <Link to={`/projects/${project.slug}`}>{project.name}</Link>
+            <Link to={`/projects/${project.slug}`} onClick={openCaseStudy}>
+              {project.name}
+            </Link>
           </h3>
           <p>{project.description[locale]}</p>
           <p className="feature-row__impact">{project.impact[locale]}</p>
@@ -58,7 +69,7 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
             </div>
           ) : null}
           <div className="feature-row__actions">
-            <Link className="text-link" to={`/projects/${project.slug}`}>
+            <Link className="text-link" to={`/projects/${project.slug}`} onClick={openCaseStudy}>
               {copy.viewCaseStudy}
               <ArrowUpRight aria-hidden="true" size={15} />
             </Link>
@@ -81,6 +92,7 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
 
 export function StickyProjectStack({ projects, locale }: StickyProjectStackProps) {
   const reducedMotion = useReducedMotion();
+  const narrow = useNarrowViewport();
 
   if (reducedMotion) {
     return (
@@ -92,8 +104,14 @@ export function StickyProjectStack({ projects, locale }: StickyProjectStackProps
     );
   }
 
+  // Pin-and-scale scroll effects cost more scroll distance per card than a
+  // phone screen can spare (and iOS Safari's address-bar resize makes long
+  // pinned sections feel unstable) — keep the effect but shorten it a lot
+  // on narrow viewports instead of dropping it entirely.
+  const vhPerCard = narrow ? 58 : 90;
+
   return (
-    <div className="stack-container" style={{ height: `${projects.length * 90}vh` }}>
+    <div className="stack-container" style={{ height: `${projects.length * vhPerCard}vh` }}>
       {projects.map((project, index) => (
         <StackCard key={project.id} project={project} index={index} total={projects.length} locale={locale} />
       ))}

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useNarrowViewport, useReducedMotion } from "../../hooks/useReducedMotion";
 
 type AnimatedTextProps = {
   text: string;
@@ -27,9 +27,13 @@ function Char({ char, range, progress }: CharProps) {
 export function AnimatedText({ text, className }: AnimatedTextProps) {
   const containerRef = useRef<HTMLParagraphElement>(null);
   const reducedMotion = useReducedMotion();
+  const narrow = useNarrowViewport();
+  // On phones the same paragraph wraps into far more lines, so the natural
+  // scroll-through span is much longer; tighten the reveal window so it
+  // doesn't take forever to finish scrolling past.
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.8", "end 0.2"],
+    offset: narrow ? ["start 0.9", "end 0.45"] : ["start 0.8", "end 0.2"],
   });
 
   if (reducedMotion) {
