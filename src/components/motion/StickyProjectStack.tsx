@@ -51,7 +51,9 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
           {project.tech.length > 0 ? (
             <div className="tag-cloud tag-cloud--small">
               {project.tech.slice(0, 5).map((tech) => (
-                <span key={tech}>{tech}</span>
+                <Link key={tech} to={`/projects?q=${encodeURIComponent(tech)}`}>
+                  {tech}
+                </Link>
               ))}
             </div>
           ) : null}

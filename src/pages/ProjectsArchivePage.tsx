@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
 import { SectionHeader } from "../components/SectionHeader";
 import { ProjectCard } from "../components/ProjectCard";
@@ -26,8 +26,14 @@ export function ProjectsArchivePage() {
   const copy = uiCopy[locale];
   usePageMeta({ ...META[locale], path: "/projects" });
 
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
   const [category, setCategory] = useState<string>("all");
+
+  function handleQueryChange(value: string) {
+    setQuery(value);
+    setSearchParams(value ? { q: value } : {}, { replace: true });
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -57,7 +63,7 @@ export function ProjectsArchivePage() {
           <input
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => handleQueryChange(event.target.value)}
             placeholder={copy.searchPlaceholder}
             aria-label={copy.searchPlaceholder}
           />

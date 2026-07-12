@@ -44,6 +44,11 @@ export type CaseStudy = {
   lessons?: Localized<string>;
 };
 
+export type ProjectStat = {
+  value: string;
+  label: Localized<string>;
+};
+
 export type Project = {
   id: string;
   slug: string;
@@ -61,6 +66,8 @@ export type Project = {
   live?: string;
   private?: boolean;
   caseStudy?: CaseStudy;
+  /** Sourced, numeric highlights pulled verbatim from the project's own README/impact copy — never invented. */
+  stats?: ProjectStat[];
 };
 
 export const projects: Project[] = [
@@ -87,6 +94,11 @@ export const projects: Project[] = [
     },
     tech: ["Python", "Ruff", "GitHub Actions", "DOCX", "JSON Schema", "CLI", "Arabic RTL"],
     repo: "https://github.com/Darhous/arabic-legal-research-skill",
+    stats: [
+      { value: "233", label: { en: "passing tests", ar: "اختبار ناجح" } },
+      { value: "96.12%", label: { en: "code coverage", ar: "تغطية الكود" } },
+      { value: "95%", label: { en: "minimum gate", ar: "الحد الأدنى المطلوب" } },
+    ],
     caseStudy: {
       context: {
         en: "AI tools produce fluent Arabic legal writing, but fluency is not the same as academically valid, citable, verifiable research.",
@@ -198,6 +210,12 @@ export const projects: Project[] = [
     ],
     repo: "https://github.com/Darhous/darhous-ai-cloud-academy",
     live: "https://darhous-ai-cloud-academy.vercel.app",
+    stats: [
+      { value: "325+", label: { en: "commits", ar: "عملية إيداع" } },
+      { value: "144+", label: { en: "releases", ar: "إصدار" } },
+      { value: "7", label: { en: "learning portals", ar: "بوابة تعليمية" } },
+      { value: "8", label: { en: "AI Studio tools", ar: "أداة AI Studio" } },
+    ],
     caseStudy: {
       context: {
         en: "Arabic-speaking learners often have to piece together AI, cloud, automation, and career-readiness knowledge from disconnected English-first sources, each with its own account, certificate format, and design language.",

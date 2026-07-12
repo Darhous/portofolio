@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Hero } from "../components/Hero";
+import { CareerTimeline } from "../components/CareerTimeline";
 import { SectionHeader } from "../components/SectionHeader";
 import { AboutSection } from "../components/AboutSection";
 import { TechStackSection } from "../components/TechStackSection";
@@ -45,6 +46,7 @@ export function HomePage() {
   return (
     <>
       <Hero locale={locale} />
+      <CareerTimeline locale={locale} />
       <div className="page-section marquee-intro">
         <SectionHeader kicker={copy.marqueeKicker} title={copy.marqueeTitle} />
       </div>

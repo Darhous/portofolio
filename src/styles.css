@@ -704,12 +704,17 @@ p {
   isolation: isolate;
 }
 
+/* Ambient bloom in the site's own CTA gradient colors, blurred behind the
+   portrait, so the photo reads as part of the page's color system rather
+   than a stock photo pasted into a box. */
 .portrait-lockup::before {
   position: absolute;
-  inset-block: 5% -6%;
-  inset-inline: 9% -6%;
+  inset: -14% -16%;
   z-index: -1;
-  border: 1px solid var(--line-strong);
+  background: var(--gradient-cta);
+  border-radius: 44%;
+  filter: blur(64px);
+  opacity: 0.32;
   content: "";
 }
 
@@ -724,16 +729,18 @@ p {
   border: 1px solid var(--line);
   object-fit: cover;
   object-position: center 14%;
-  box-shadow: var(--shadow-lift);
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
 }
 
 .portrait-caption {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: -10px;
   padding-top: 14px;
-  border-top: 1px solid var(--line);
 }
 
 .portrait-caption span {
@@ -842,7 +849,8 @@ p {
   margin-top: 16px;
 }
 
-.tag-cloud span {
+.tag-cloud span,
+.tag-cloud a {
   display: inline-flex;
   min-height: 30px;
   align-items: center;
@@ -852,7 +860,20 @@ p {
   font-size: 0.82rem;
 }
 
-.tag-cloud--small span {
+.tag-cloud a {
+  cursor: pointer;
+  transition:
+    border-color 200ms var(--ease-standard),
+    color 200ms var(--ease-standard);
+}
+
+.tag-cloud a:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.tag-cloud--small span,
+.tag-cloud--small a {
   min-height: 27px;
   font-size: 0.76rem;
 }
@@ -1722,6 +1743,23 @@ p {
 
 /* ---- Case study detail page ------------------------------------------------------------ */
 
+.reading-progress {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 30;
+  height: 3px;
+  background: var(--line);
+}
+
+.reading-progress__bar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  background: var(--gradient-cta);
+  transform: scaleX(0);
+}
+
 .case-detail__back {
   display: inline-flex;
   margin-bottom: 28px;
@@ -1753,6 +1791,36 @@ p {
 
 .case-detail__header h1 {
   margin: 12px 0 18px;
+}
+
+.stat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 108px;
+  border: 1px solid var(--line-strong);
+  padding: 12px 18px;
+}
+
+.stat-chip strong {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.stat-chip span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
 }
 
 .case-detail__meta-row {
@@ -1817,6 +1885,34 @@ p {
 }
 
 .case-detail__related a:hover {
+  color: var(--accent);
+}
+
+.case-detail__next {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+  transition: opacity 220ms var(--ease-standard);
+}
+
+.case-detail__next:hover {
+  opacity: 0.7;
+}
+
+.case-detail__next-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+}
+
+.case-detail__next-name svg {
   color: var(--accent);
 }
 
@@ -2012,6 +2108,67 @@ p {
   border-color: var(--line-strong);
 }
 
+/* ---- Career timeline (officer / MBA / builder) ------------------------------------------ */
+
+.career-timeline-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  border-top: none;
+}
+
+.career-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 28px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.career-timeline__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 20px;
+}
+
+.career-timeline__item::before {
+  position: absolute;
+  top: -1px;
+  inset-inline-start: 0;
+  width: 34px;
+  height: 2px;
+  background: var(--ink);
+  content: "";
+}
+
+.career-timeline__year {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.career-timeline__label {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.career-timeline__org {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 760px) {
+  .career-timeline {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
 /* ---- Scroll marquee (real project data, no fake imagery) ------------------------------- */
 
 .marquee-intro {
@@ -2042,12 +2199,12 @@ p {
   position: relative;
   display: flex;
   width: 156px;
-  height: 156px;
+  height: 172px;
   flex-shrink: 0;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  gap: 2px;
+  gap: 3px;
   overflow: hidden;
   border-radius: 24px;
   border: 1px solid var(--line);
@@ -2078,25 +2235,30 @@ p {
   position: relative;
   z-index: 1;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 /* Fixed light values, not theme variables: this text always sits over the
    project cover images' permanently-dark canvas + scrim, regardless of
    site theme, so it must stay legible in both light and dark mode. */
 .marquee-tile__name {
+  display: -webkit-box;
+  overflow: hidden;
   color: #f2ede2;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 600;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .marquee-tile__category {
+  overflow: hidden;
   color: #cfc9ba;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
+  text-overflow: ellipsis;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .marquee-static {
@@ -2384,4 +2546,54 @@ p {
     justify-content: flex-start;
   }
 
+}
+
+/* ---- Print (case study pages) ------------------------------------------------------------ */
+
+@media print {
+  .topbar,
+  .site-footer,
+  .reading-progress,
+  .case-detail__back,
+  .case-detail__next,
+  .case-detail__related,
+  .marquee,
+  .marquee-intro,
+  .career-timeline-section,
+  .intro,
+  .intro-replay,
+  .command-palette-overlay,
+  .mobile-nav-overlay,
+  .skip-link {
+    display: none !important;
+  }
+
+  * {
+    box-shadow: none !important;
+    background: none !important;
+    color: #000 !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  .case-detail {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .case-detail__banner img,
+  .project-card__visual img,
+  .stack-card__visual img {
+    filter: grayscale(1);
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .case-detail__block {
+    break-inside: avoid;
+  }
 }

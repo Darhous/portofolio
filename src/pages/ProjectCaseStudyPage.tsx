@@ -1,11 +1,13 @@
 import type { CSSProperties } from "react";
 import { Link, Navigate, useOutletContext, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 import { getProjectBySlug, projects } from "../data/projects";
 import { uiCopy } from "../data/content";
 import { getAccent } from "../data/accents";
 import { getProjectImage } from "../data/projectImages";
 import { ExternalLink } from "../components/ExternalLink";
+import { ReadingProgress } from "../components/ReadingProgress";
 import { usePageMeta, injectJsonLd, removeJsonLd, siteOrigin } from "../hooks/usePageMeta";
 import type { OutletContext } from "../layouts/RootLayout";
 
@@ -61,12 +63,15 @@ export function ProjectCaseStudyPage() {
   const related = projects
     .filter((item) => item.id !== project.id && item.category === project.category)
     .slice(0, 3);
+  const currentIndex = projects.findIndex((item) => item.id === project.id);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
     <article
       className="page-section case-detail"
       style={{ "--accent": getAccent(project.category) } as CSSProperties}
     >
+      <ReadingProgress />
       <Link className="case-detail__back" to="/projects">
         &larr; {copy.backToArchive}
       </Link>
@@ -85,6 +90,17 @@ export function ProjectCaseStudyPage() {
         <p className="hero-lede">{project.description[locale]}</p>
         <p className="project-impact">{project.impact[locale]}</p>
 
+        {project.stats && project.stats.length > 0 ? (
+          <div className="stat-chips">
+            {project.stats.map((stat) => (
+              <div key={stat.label[locale]} className="stat-chip">
+                <strong>{stat.value}</strong>
+                <span>{stat.label[locale]}</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
         <div className="case-detail__meta-row">
           <div>
             <span className="section-kicker">{copy.role}</span>
@@ -99,7 +115,9 @@ export function ProjectCaseStudyPage() {
         {project.tech.length > 0 ? (
           <div className="tag-cloud">
             {project.tech.map((tech) => (
-              <span key={tech}>{tech}</span>
+              <Link key={tech} to={`/projects?q=${encodeURIComponent(tech)}`}>
+                {tech}
+              </Link>
             ))}
           </div>
         ) : null}
@@ -172,6 +190,14 @@ export function ProjectCaseStudyPage() {
           </ul>
         </div>
       ) : null}
+
+      <Link className="case-detail__next" to={`/projects/${nextProject.slug}`}>
+        <span className="section-kicker">{copy.nextProject}</span>
+        <span className="case-detail__next-name">
+          {nextProject.name}
+          <ArrowRight aria-hidden="true" size={20} />
+        </span>
+      </Link>
     </article>
   );
 }

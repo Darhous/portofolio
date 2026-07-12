@@ -44,6 +44,8 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     themeToggleToDark: "Switch to dark mode",
     marqueeKicker: "30+ Shipped Projects",
     marqueeTitle: "Not just an officer. An officer who builds.",
+    timelineKicker: "The Two Tracks",
+    timelineTitle: "Officer. MBA candidate. Builder.",
     aboutKicker: "Profile Evidence",
     aboutTitle: "Two careers. One standard of proof.",
     aboutBody:
@@ -106,6 +108,7 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     noProjectsFound: "No projects match your search.",
     relatedProjects: "Related Projects",
     backToArchive: "Back to project archive",
+    nextProject: "Next project",
     notFoundKicker: "404",
     notFoundTitle: "This route does not exist.",
     notFoundBody: "The page you are looking for was moved, renamed, or never existed. Use search or return home.",
@@ -154,6 +157,8 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     themeToggleToDark: "التبديل للوضع الليلي",
     marqueeKicker: "أكثر من 30 مشروعًا تم إطلاقه فعليًا",
     marqueeTitle: "مش مجرد ضابط. ضابط بيبني.",
+    timelineKicker: "المساران",
+    timelineTitle: "ضابط. مرشح ماجستير. باني.",
     aboutKicker: "محتوى موثق",
     aboutTitle: "مسيرتان. معيار إثبات واحد.",
     aboutBody:
@@ -216,6 +221,7 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     noProjectsFound: "لا توجد مشاريع مطابقة لبحثك.",
     relatedProjects: "مشاريع ذات صلة",
     backToArchive: "العودة لأرشيف المشاريع",
+    nextProject: "المشروع التالي",
     notFoundKicker: "404",
     notFoundTitle: "هذا المسار غير موجود.",
     notFoundBody: "الصفحة التي تبحث عنها نُقلت أو أُعيدت تسميتها أو لم توجد أصلًا. استخدم البحث أو عد للصفحة الرئيسية.",

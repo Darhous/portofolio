@@ -36,7 +36,9 @@ export function usePageMeta({ title, description, path }: PageMeta) {
     setMetaTag("property", "og:title", title);
     setMetaTag("property", "og:description", description);
     setMetaTag("property", "og:url", url);
-    setMetaTag("property", "og:image", `${productionOrigin}/ahmed-darhous.png`);
+    setMetaTag("property", "og:image", `${productionOrigin}/social-card.png`);
+    setMetaTag("property", "og:image:width", "1200");
+    setMetaTag("property", "og:image:height", "630");
     setMetaTag("name", "twitter:card", "summary_large_image");
     setMetaTag("name", "twitter:title", title);
     setMetaTag("name", "twitter:description", description);

@@ -39,7 +39,9 @@ export function ProjectCard({ project, locale }: ProjectCardProps) {
       {project.tech.length > 0 ? (
         <div className="tag-cloud tag-cloud--small">
           {project.tech.slice(0, 6).map((tech) => (
-            <span key={tech}>{tech}</span>
+            <Link key={tech} to={`/projects?q=${encodeURIComponent(tech)}`}>
+              {tech}
+            </Link>
           ))}
         </div>
       ) : null}
