@@ -24,7 +24,6 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     switchLanguage: "العربية",
     introSkip: "Skip",
     introReplay: "Replay intro",
-    introEyebrow: "Portfolio",
     menuOpen: "Open menu",
     menuClose: "Close menu",
     commandPaletteHint: "Search",
@@ -55,6 +54,7 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     projectsBody:
       "Public projects link to their repositories or live deployments. Private or CV-sourced systems are identified without inventing public links.",
     viewAllProjects: "View full project archive",
+    moreProjectsKicker: "Continued",
     viewCaseStudy: "View case study",
     caseStudiesKicker: "Case Study Signal",
     caseStudiesTitle: "How the work translates into systems.",
@@ -127,7 +127,6 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     switchLanguage: "English",
     introSkip: "تجاوز",
     introReplay: "إعادة المقدمة",
-    introEyebrow: "بورتفوليو",
     menuOpen: "فتح القائمة",
     menuClose: "إغلاق القائمة",
     commandPaletteHint: "بحث",
@@ -158,6 +157,7 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     projectsBody:
       "المشاريع العامة مرتبطة بمستودعاتها أو نسخها الحية. الأنظمة الخاصة أو المستخرجة من السيرة موضحة دون اختراع روابط عامة.",
     viewAllProjects: "عرض أرشيف المشاريع الكامل",
+    moreProjectsKicker: "تكملة",
     viewCaseStudy: "عرض دراسة الحالة",
     caseStudiesKicker: "إشارة دراسة حالة",
     caseStudiesTitle: "كيف يتحول العمل إلى أنظمة.",

@@ -5,6 +5,7 @@ import { profile } from "../data/profile";
 import { uiCopy } from "../data/content";
 import { ExternalLink } from "./ExternalLink";
 import { SectionHeader } from "./SectionHeader";
+import { AnimatedText } from "./motion/AnimatedText";
 
 type CVSectionProps = {
   locale: Locale;
@@ -17,7 +18,7 @@ export function CVSection({ locale }: CVSectionProps) {
     <section className="page-section cv-section" id="cv" aria-labelledby="cv-title">
       <SectionHeader kicker={copy.cvKicker} title={copy.cvTitle} body={copy.cvBody} />
 
-      <p className="cv-summary">{profile.summary[locale]}</p>
+      <AnimatedText className="cv-summary" text={profile.summary[locale]} />
 
       <div className="cv-panel">
         <div className="cv-icon" aria-hidden="true">

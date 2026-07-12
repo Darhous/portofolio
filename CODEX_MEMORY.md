@@ -112,3 +112,32 @@ All footer and contact social links must be displayed in this exact order:
 - Hero intentionally has no stat counters (years/personnel/project-count) —
   this was in an earlier version and was explicitly removed per Ahmed's
   "no unnecessary statistics" instruction. Don't re-add them.
+
+## 2026-07-12 Update (motion/interaction layer, phase 3)
+
+- Ahmed sent a much heavier redesign brief (Kanit font, metallic-gradient
+  headings, glowing purple/magenta CTA, full-screen cinematic hero) that
+  directly contradicted the calm editorial system above. He chose the
+  "structural ideas only, same calm colors" option: framer-motion-based
+  marquee/sticky-stack/magnetic-portrait/scroll-reveal-text, but no
+  Tailwind migration, no Kanit, no gradients, no glow. **Do not introduce
+  Kanit, metallic gradients, or glowing buttons unless he explicitly
+  reverses this decision.**
+- `framer-motion` is now a real dependency. All motion components live in
+  `src/components/motion/` and must each have a `prefers-reduced-motion`
+  fallback; the two heaviest (`ScrollMarquee`, `StickyProjectStack`) also
+  fall back to static markup below a 640px viewport via
+  `useNarrowViewport()`.
+- Gotcha for future lazy-loaded sections: don't co-locate a plain
+  constant with a framer-motion component in the same file if anything
+  else needs to statically import that constant — Rollup will drag the
+  whole component (and framer-motion) into the main chunk regardless of
+  `React.lazy`. Keep shared constants in their own file
+  (`src/data/flagship.ts` is the existing example).
+- `useHashScroll` now retries via `MutationObserver` for up to 2s — needed
+  once `#projects`/`#cv` moved into lazy-loaded chunks that may not have
+  mounted yet when the hash changes.
+- Still open, unresolved from earlier sessions: whether to merge this
+  branch to `main`, and what to do about Guardian-Nexus's description
+  still reflecting the old CV's AI/OSINT framing instead of the new CV's
+  Ministry of Interior framing. Don't silently resolve either — ask.

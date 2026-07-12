@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { profile } from "../data/profile";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
 
@@ -15,7 +16,7 @@ export function Intro({ locale }: IntroProps) {
 
   useEffect(() => {
     if (!visible) return;
-    const timer = window.setTimeout(() => setVisible(false), 2000);
+    const timer = window.setTimeout(() => setVisible(false), 3200);
     return () => window.clearTimeout(timer);
   }, [visible]);
 
@@ -33,8 +34,8 @@ export function Intro({ locale }: IntroProps) {
         {copy.introSkip}
       </button>
       <div className="intro-wordmark">
-        <span>{copy.introEyebrow}</span>
-        <strong>Ahmed Darhous</strong>
+        <strong>{profile.name}</strong>
+        <span dir="ltr">Security. Strategy. Discipline.</span>
       </div>
     </div>
   );

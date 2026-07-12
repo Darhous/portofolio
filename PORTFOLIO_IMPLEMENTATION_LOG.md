@@ -233,3 +233,90 @@ glassmorphism, hacker aesthetics, or stat-counter hero clutter).
   triggers on pushes to `main`) has not run for this work, and
   `https://darhous.github.io/portofolio/` still serves the 2026-07-09
   build. Merging or opening a PR is the next decision for Ahmed.
+
+## Phase 3 — Motion & Interaction (2026-07-12)
+
+### Context
+
+A follow-up brief asked for a much more elaborate, Kanit/metallic-gradient/
+glowing-CTA redesign (magnetic hero portrait, full-screen cinematic
+typography, a scroll marquee, sticky-stacking project cards,
+character-reveal text, decorative floating elements). That brief directly
+contradicted the calm, gradient-free, glow-free editorial system just
+finished in phases 1-2. Flagged the conflict back to Ahmed with three
+options; he chose to take the structural interaction ideas only, and keep
+them inside the existing monochrome-plus-single-accent token system — no
+Tailwind migration, no Kanit, no metallic gradients, no glowing button.
+
+### Completed Work
+
+- Added `framer-motion` as a real dependency and built four reusable
+  primitives under `src/components/motion/`: `FadeIn` (entrance wrapper),
+  `MagneticElement` (pure-DOM pointer-following effect, no framer-motion
+  import needed for this one), `AnimatedText` (scroll-linked word-reveal),
+  and `ScrollMarquee` / `StickyProjectStack` (the two content-bearing
+  pieces).
+- `ScrollMarquee`: a two-row, opposite-direction scrolling strip built
+  from the **real** `Project[]` data (monogram + name + category tiles,
+  colored by each project's existing accent) rather than fabricated
+  screenshots, since no real product imagery exists for most projects.
+- `StickyProjectStack`: the top `FLAGSHIP_COUNT` (4) featured projects now
+  present as a sticky-scaling stack (`useScroll`/`useTransform`) instead
+  of plain cards, replacing the previous "editorial spread" for just
+  those four; the remaining featured projects still render as the
+  phase-2 spread below it.
+- Magnetic hover added to the hero portrait via `MagneticElement`.
+- CV summary paragraph now renders through `AnimatedText` for a
+  scroll-linked word reveal instead of a static paragraph.
+- Every new motion primitive has a `prefers-reduced-motion` fallback and,
+  for the two heaviest (`ScrollMarquee`, `StickyProjectStack`), a narrow-
+  viewport (`useNarrowViewport`, ≤640px) fallback that renders static
+  markup instead of the animated version.
+- `HomePage.tsx`, `FlagshipProjects.tsx`, and `CVSection.tsx` are now
+  code-split with `React.lazy`/`Suspense` so framer-motion's weight stays
+  out of the initial bundle.
+
+### Bugs Fixed During This Pass
+
+- Accessibility: `ScrollMarquee` originally wrapped each tile in a
+  focusable `<Link>` inside an `aria-hidden="true"` row — hidden from
+  screen readers but still keyboard-focusable, a real WCAG violation.
+  Replaced with plain non-interactive `<div>` tiles (the marquee is
+  decorative; every project is already reachable via the stack, spread,
+  and archive).
+- Bundle-splitting leak: moved the home page's flagship section
+  (`id="projects"`) into `FlagshipProjects.tsx`, which was correctly
+  lazy-loaded — but `HomePage.tsx` also statically
+  imported a small constant (`FLAGSHIP_COUNT`) from that same file,
+  which forced Rollup to bundle the whole component, and framer-motion
+  with it, into the main chunk anyway (508KB vs. a 372KB baseline,
+  tripping Rollup's 500kB warning). Fixed by moving the constant into
+  its own minimal file, `src/data/flagship.ts`.
+- Hash-anchor navigation to lazy-loaded sections: rewrote
+  `useHashScroll` to retry via `MutationObserver` (up to 2s) instead of a
+  single `getElementById` call, since `#projects`/`#cv` may not exist in
+  the DOM yet if their chunk hasn't finished loading.
+
+### Verification
+
+- `npm run typecheck`, `npm test`, `npm run build` all pass; main chunk
+  372KB / 115KB gzip (framer-motion isolated into a separate
+  `use-transform` chunk, 133KB / 44KB gzip, loaded only when a motion
+  component actually mounts).
+- A dedicated Playwright pass against a mock GitHub Pages server (real
+  404 handling, not `vite preview`'s SPA fallback) covered: marquee tile
+  rendering, direct hash navigation to the lazy `#projects` and `#cv`
+  sections, sticky-stack card count and scroll scaling, featured-project
+  count still 4+6=10, `prefers-reduced-motion` fallbacks (marquee, stack,
+  intro), magnetic-portrait pointer response, touch-device stability, and
+  a 5-width overflow sweep — all passed with zero console errors and zero
+  horizontal overflow.
+
+### Next Action
+
+- Committed and pushed to `claude/darhous-portfolio-rebuild-sxmb3n` (still
+  not merged to `main`). Two items remain open from earlier in this
+  session and haven't been resolved: whether Ahmed wants this branch
+  merged, and what to do about the Guardian-Nexus project's description,
+  which still reflects the old CV's AI/OSINT framing rather than the new
+  CV's Ministry of Interior framing.
