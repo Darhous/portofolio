@@ -7,7 +7,7 @@ import { getAccent } from "../../data/accents";
 import type { Project } from "../../data/projects";
 import type { Locale } from "../../data/profile";
 import { uiCopy } from "../../data/content";
-import { useNarrowViewport, useReducedMotion } from "../../hooks/useReducedMotion";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 type StickyProjectStackProps = {
   projects: Project[];
@@ -84,9 +84,8 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
 
 export function StickyProjectStack({ projects, locale }: StickyProjectStackProps) {
   const reducedMotion = useReducedMotion();
-  const narrowViewport = useNarrowViewport();
 
-  if (reducedMotion || narrowViewport) {
+  if (reducedMotion) {
     return (
       <div className="stack-static">
         {projects.map((project, index) => (

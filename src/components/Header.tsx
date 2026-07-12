@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, Search, X } from "lucide-react";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 import { navHref, navItems, uiCopy } from "../data/content";
 import type { Locale } from "../data/profile";
+
+const DRAWER_TRANSITION_MS = 320;
 
 type HeaderProps = {
   locale: Locale;
@@ -15,19 +17,36 @@ type HeaderProps = {
 export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
   const copy = uiCopy[locale];
   const location = useLocation();
+  const [drawerMounted, setDrawerMounted] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawerRef = useFocusTrap<HTMLDivElement>(drawerOpen, () => setDrawerOpen(false));
+  const closeTimeoutRef = useRef<number | undefined>(undefined);
+  const drawerRef = useFocusTrap<HTMLDivElement>(drawerOpen, () => closeDrawer());
+
+  function openDrawer() {
+    window.clearTimeout(closeTimeoutRef.current);
+    setDrawerMounted(true);
+    requestAnimationFrame(() => requestAnimationFrame(() => setDrawerOpen(true)));
+  }
+
+  function closeDrawer() {
+    setDrawerOpen(false);
+    closeTimeoutRef.current = window.setTimeout(() => setDrawerMounted(false), DRAWER_TRANSITION_MS);
+  }
 
   useEffect(() => {
     setDrawerOpen(false);
+    setDrawerMounted(false);
+    window.clearTimeout(closeTimeoutRef.current);
   }, [location.pathname, location.hash]);
 
   useEffect(() => {
-    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    document.body.style.overflow = drawerMounted ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [drawerOpen]);
+  }, [drawerMounted]);
+
+  useEffect(() => () => window.clearTimeout(closeTimeoutRef.current), []);
 
   return (
     <>
@@ -63,7 +82,7 @@ export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
             type="button"
             aria-expanded={drawerOpen}
             aria-controls="mobile-nav"
-            onClick={() => setDrawerOpen((current) => !current)}
+            onClick={() => (drawerOpen ? closeDrawer() : openDrawer())}
             aria-label={drawerOpen ? copy.menuClose : copy.menuOpen}
           >
             {drawerOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
@@ -71,9 +90,14 @@ export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
         </div>
       </header>
 
-      {drawerOpen
+      {drawerMounted
         ? createPortal(
-            <div className="mobile-nav-overlay" onMouseDown={() => setDrawerOpen(false)}>
+            <div
+              className={`mobile-nav-overlay${drawerOpen ? " is-open" : ""}`}
+              dir={locale === "ar" ? "rtl" : "ltr"}
+              onMouseDown={closeDrawer}
+              inert={!drawerOpen}
+            >
               <div
                 id="mobile-nav"
                 className="mobile-nav"
@@ -83,9 +107,12 @@ export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
                 ref={drawerRef}
                 onMouseDown={(event) => event.stopPropagation()}
               >
+                <button type="button" className="mobile-nav__close" onClick={closeDrawer} aria-label={copy.menuClose}>
+                  <X aria-hidden="true" />
+                </button>
                 <nav aria-label="Mobile navigation">
                   {navItems.map((item) => (
-                    <Link key={navHref(item)} to={navHref(item)} onClick={() => setDrawerOpen(false)}>
+                    <Link key={navHref(item)} to={navHref(item)} onClick={closeDrawer}>
                       {item.label[locale]}
                     </Link>
                   ))}
@@ -94,7 +121,7 @@ export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
                   type="button"
                   className="mobile-nav__palette"
                   onClick={() => {
-                    setDrawerOpen(false);
+                    closeDrawer();
                     onOpenPalette();
                   }}
                 >

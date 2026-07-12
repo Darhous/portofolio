@@ -967,6 +967,7 @@ p {
 .feature-list {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
 .feature-row {
@@ -975,13 +976,14 @@ p {
   grid-template-columns: minmax(220px, 0.36fr) minmax(0, 1fr);
   gap: clamp(32px, 5vw, 72px);
   align-items: center;
-  padding: clamp(40px, 6vw, 72px) 0;
-  border-top: 1px solid var(--line);
+  padding: clamp(32px, 5vw, 56px);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  transition: border-color 320ms var(--ease-standard);
 }
 
-.feature-list .feature-row:first-child {
-  border-top: none;
-  padding-top: 0;
+.feature-row:hover {
+  border-color: var(--line-strong);
 }
 
 .feature-row:nth-of-type(even) {
@@ -1681,11 +1683,22 @@ p {
 /* ---- Mobile navigation drawer ---------------------------------------------------------- */
 
 .mobile-nav-overlay {
+  --drawer-closed-x: 100%;
   position: fixed;
   inset: 0;
   z-index: 90;
   background: rgba(6, 6, 5, 0.7);
   backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 280ms var(--ease-standard);
+}
+
+.mobile-nav-overlay[dir="rtl"] {
+  --drawer-closed-x: -100%;
+}
+
+.mobile-nav-overlay.is-open {
+  opacity: 1;
 }
 
 .mobile-nav {
@@ -1700,6 +1713,19 @@ p {
   border-inline-start: 1px solid var(--line-strong);
   background: var(--panel-strong);
   box-shadow: var(--shadow-lift);
+  transform: translateX(var(--drawer-closed-x));
+  transition: transform 320ms var(--ease-premium);
+}
+
+.mobile-nav-overlay.is-open .mobile-nav {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-overlay,
+  .mobile-nav {
+    transition-duration: 0.01ms;
+  }
 }
 
 .mobile-nav nav {
@@ -1731,6 +1757,26 @@ p {
   color: var(--muted);
   background: transparent;
   cursor: pointer;
+}
+
+.mobile-nav__close {
+  position: absolute;
+  top: 26px;
+  inset-inline-end: 26px;
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 220ms var(--ease-standard);
+}
+
+.mobile-nav__close:hover {
+  border-color: var(--line-strong);
 }
 
 /* ---- Scroll marquee (real project data, no fake imagery) ------------------------------- */
