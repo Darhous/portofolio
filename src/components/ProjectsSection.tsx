@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 import { ExternalLink } from "./ExternalLink";
-import { featuredProjects } from "../data/projects";
+import { featuredProjects, type Project } from "../data/projects";
 import { getAccent } from "../data/accents";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
 
 type ProjectsSectionProps = {
   locale: Locale;
+  projects?: Project[];
+  startIndex?: number;
+  showHeader?: boolean;
 };
 
 function monogram(name: string): string {
@@ -18,26 +21,39 @@ function monogram(name: string): string {
   return `${words[0][0]}${words[1][0]}`.toUpperCase();
 }
 
-export function ProjectsSection({ locale }: ProjectsSectionProps) {
+export function ProjectsSection({ locale, projects = featuredProjects, startIndex = 0, showHeader = true }: ProjectsSectionProps) {
   const copy = uiCopy[locale];
 
   return (
-    <section className="page-section projects-section" id="projects" aria-labelledby="projects-title">
-      <SectionHeader kicker={copy.projectsKicker} title={copy.projectsTitle} body={copy.projectsBody}>
-        <Link className="secondary-action section-header__cta" to="/projects">
-          {copy.viewAllProjects}
-        </Link>
-      </SectionHeader>
+    <section
+      className="page-section projects-section"
+      id={showHeader ? "projects" : undefined}
+      aria-labelledby={showHeader ? "projects-title" : undefined}
+    >
+      {showHeader ? (
+        <SectionHeader kicker={copy.projectsKicker} title={copy.projectsTitle} body={copy.projectsBody}>
+          <Link className="secondary-action section-header__cta" to="/projects">
+            {copy.viewAllProjects}
+          </Link>
+        </SectionHeader>
+      ) : (
+        <div className="section-header section-header--minimal">
+          <p className="section-kicker">{copy.moreProjectsKicker}</p>
+          <Link className="secondary-action section-header__cta" to="/projects">
+            {copy.viewAllProjects}
+          </Link>
+        </div>
+      )}
 
       <div className="feature-list">
-        {featuredProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <article
             className="feature-row"
             key={project.id}
             style={{ "--accent": getAccent(project.category) } as CSSProperties}
           >
             <div className="feature-row__visual" aria-hidden="true">
-              <span className="feature-row__index">{String(index + 1).padStart(2, "0")}</span>
+              <span className="feature-row__index">{String(startIndex + index + 1).padStart(2, "0")}</span>
               <span className="feature-row__monogram">{monogram(project.name)}</span>
             </div>
 

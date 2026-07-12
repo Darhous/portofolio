@@ -35,7 +35,7 @@ export function Intro({ locale }: IntroProps) {
       </button>
       <div className="intro-wordmark">
         <strong>{profile.name}</strong>
-        <span>{profile.principle[locale]}</span>
+        <span dir="ltr">Security. Strategy. Discipline.</span>
       </div>
     </div>
   );

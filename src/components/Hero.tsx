@@ -4,6 +4,7 @@ import { siteConfig } from "../config/site";
 import { profile } from "../data/profile";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
+import { MagneticElement } from "./motion/MagneticElement";
 
 type HeroProps = {
   locale: Locale;
@@ -29,7 +30,7 @@ export function Hero({ locale }: HeroProps) {
         </div>
       </div>
       <div className="hero-visual">
-        <div className="portrait-lockup" aria-label="Ahmed Darhous portrait">
+        <MagneticElement className="portrait-lockup" padding={70} strength={14}>
           <picture>
             <source
               type="image/webp"
@@ -46,7 +47,7 @@ export function Hero({ locale }: HeroProps) {
               fetchPriority="high"
             />
           </picture>
-        </div>
+        </MagneticElement>
         <div className="portrait-caption">
           <span>{profile.name}</span>
           <small>{profile.location[locale]}</small>

@@ -127,3 +127,32 @@ it.
   mirrors correctly instead of via duplicated `[dir="rtl"]` overrides.
 - RTL/LTR is toggled at the app-shell level; verified visually in both
   directions after this rebuild.
+
+## Motion & interaction layer (2026-07-12, phase 3)
+
+A follow-up brief pushed for a much more dramatic motion system
+(cinematic hero, metallic gradients, glowing CTA, Kanit). The gradient/
+glow/Kanit parts were explicitly declined in favor of keeping this
+token system unchanged — only the *structural* interaction ideas were
+adopted, built with `framer-motion` and layered on top of the existing
+palette:
+
+- **`ScrollMarquee`** (`src/components/motion/ScrollMarquee.tsx`) — a
+  two-row strip scrolling in opposite directions, built from real
+  `Project[]` data. Each tile reuses the same monogram-plus-accent
+  language as the feature-row visual panels above, rather than
+  introducing a new decorative motif.
+- **`StickyProjectStack`** (`src/components/motion/StickyProjectStack.tsx`)
+  — the top 4 featured projects (`FLAGSHIP_COUNT` in
+  `src/data/flagship.ts`) present as a sticky, scroll-scaling stack
+  instead of the phase-2 alternating spread; the remaining featured
+  projects still use the phase-2 spread below it.
+- **`MagneticElement`** — a small pointer-following effect on the hero
+  portrait only; inert on touch and under `prefers-reduced-motion`.
+- **`AnimatedText`** — word-by-word scroll-linked reveal, used once, on
+  the CV summary paragraph.
+- No new colors, gradients, or fonts were introduced. Accent usage rule
+  is unchanged: one color per project, small details only.
+- Every motion component has a `prefers-reduced-motion` fallback; the
+  marquee and stack also fall back to static markup under 640px
+  (`useNarrowViewport`, `src/hooks/useReducedMotion.ts`).
