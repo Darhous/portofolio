@@ -290,3 +290,22 @@ All footer and contact social links must be displayed in this exact order:
   toggle in the header, always visible (not hidden on mobile like the
   ⌘K button is). Also added as a command-palette action
   ("Switch to light/dark mode").
+
+## 2026-07-12 Update, Part 6 (marquee text invisible in light mode)
+
+- User reported the scroll marquee's project names/categories were not
+  visible at all. Root cause: `.marquee-tile__name`/`.marquee-tile__category`
+  used `var(--ink)`/`var(--ink-dim)` (theme-aware), but that text always
+  renders over the project cover images (`public/projects/*.webp`), which
+  are permanently dark by design (plus the `.marquee-tile::before` dark
+  scrim). In light mode `--ink` flips dark, so the text became dark-on-dark
+  and disappeared.
+- Fix: hardcoded fixed light values instead — `color: #f2ede2` for the name,
+  `color: #cfc9ba` for the category — same as the scrim and the two modal
+  backdrops, which are intentionally theme-invariant "always dark" surfaces.
+  **Any text/UI drawn on top of the marquee tile images must use fixed
+  colors, never `--ink`/`--ink-dim`/other theme variables.**
+- This is the third instance of the same bug class this session (after the
+  `.topbar` blur background). When adding a light theme, audit every
+  hardcoded-dark surface AND every element layered on top of an
+  intentionally-dark surface (images, scrims) — both directions can break.
