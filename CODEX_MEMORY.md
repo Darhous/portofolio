@@ -389,3 +389,79 @@ or 404 (only on `/`), tag click correctly lands on `/projects?q=<tag>` with
 the search box pre-filled, no horizontal overflow on mobile (390px), stat
 chips / progress bar / next-project link all render correctly in both
 themes. Build is TypeScript-clean.
+
+## 2026-07-12 Update, Part 8 (two-tone colors, mobile-first pass, heavier motion)
+
+Big feature push: color system rework, a full mobile-ergonomics pass (user
+said "90% of traffic is mobile"), and 10 new motion effects layered on top
+of the existing framer-motion primitives.
+
+**Color system**: `src/data/accents.ts` no longer hand-picks ~15 near-random
+hues per category. Two curated arrays (`OFFICER` = magenta/violet,
+`BUILDER` = teal/cyan) get cycled across two category lists. New root
+tokens `--identity-officer` (#b600a8) / `--identity-builder` (#2dd4bf) /
+`--identity-hue`. `--identity-hue` is registered via `@property` (syntax
+`<color>`) specifically so it's *animatable* — a plain custom property
+can't be transitioned. `useIdentityShift` (IntersectionObserver over
+`[data-identity="officer"|"builder"]` wrapper divs in `HomePage.tsx`) eases
+it between the two colors as you scroll; the body's ambient background
+blob reads it via `color-mix(in srgb, var(--identity-hue) 22%, transparent)`.
+**If new home-page sections get added, wrap them in a `data-identity` div
+too, or the scroll color-shift will just hold at whatever zone it last saw.**
+
+**Mobile**: `useNarrowViewport()` (640px, already existed in
+`useReducedMotion.ts`) now drives real value changes instead of an
+on/off toggle — `StickyProjectStack`'s `vhPerCard` (90→58), `ScrollMarquee`'s
+drift range (8%→3%), `AnimatedText`'s scroll offset window (tighter on
+mobile since the same paragraph wraps into way more lines on a narrow
+column). New `MobileTabBar.tsx` (fixed bottom, Home/Projects/CV/Contact +
+an elevated WhatsApp FAB in brand WhatsApp green `#25d366` — deliberately
+*not* a site accent color, users need to recognize it instantly) — only
+rendered/shown via CSS `@media (max-width:640px)`, and `.app-shell` gets
+matching `padding-bottom` in that same query so the footer doesn't get
+hidden behind it. `index.html` viewport meta now has `viewport-fit=cover`;
+safe-area-inset-bottom is applied to the tabbar's padding.
+`useSwipeNavigation` (plain touchstart/touchend, no library) drives
+next/prev-project swipes on case study pages.
+
+**Motion** (all new hooks are plain JS/CSS, no framer-motion, to keep
+Hero and other above-the-fold pieces off the animation-library bundle —
+same discipline as the rest of the site):
+- `useSpotlight` — pointermove-driven `--spotlight-x/y` behind the hero,
+  gated by `useFinePointer` + `useReducedMotion`.
+- `useTilt` — pointer-driven 3D tilt + moving highlight on project cards,
+  same gating.
+- Hero heading is split into per-word `.kinetic-word` spans with a
+  staggered blur-to-focus keyframe (replaced the old single `fade-up-in`
+  on `.hero-copy h1` — don't re-add that, it would double-animate).
+- `StatChip.tsx` — count-up + SVG progress ring, triggered by the
+  existing `useInView` hook, respects reduced motion (jumps straight to
+  final value).
+- Primary CTA button (`.primary-action`) has an animated conic-gradient
+  border via a registered `@property --border-angle` + `::before` pseudo.
+- **View Transitions**: `src/lib/viewTransition.ts` (`withViewTransition`)
+  + `src/hooks/useViewTransitionName.ts` wire the native
+  `document.startViewTransition()` API into project card → case-study
+  navigation, so the cover image morphs instead of hard-cutting. Feature-
+  detected (`"startViewTransition" in document`) and reduced-motion-gated;
+  no-ops to a plain `navigate()` everywhere it's unsupported. **Every Link
+  that navigates between two project-bearing views (card → case study,
+  case study → next/prev/related) needs both the `viewTransitionName`
+  wired on its cover image AND an `onClick` that calls `withViewTransition`
+  — currently wired in `ProjectCard`, `StickyProjectStack`'s `StackCard`,
+  and `ProjectCaseStudyPage`'s next/related links. `StackCardStatic` (the
+  reduced-motion fallback) was deliberately left unwired — `withViewTransition`
+  is a no-op under reduced motion anyway.**
+- Career timeline: per-item spring pop-in (`useInView` + overshoot
+  cubic-bezier) and a small pulse dot that travels along the connector
+  line, position driven by a plain rAF-throttled scroll listener (not
+  framer-motion — this component was already light, kept it that way).
+- Marquee tiles: dock-style hover using CSS `:has()`
+  (`.marquee-row__track:has(.marquee-tile:hover) .marquee-tile:not(:hover)`)
+  — no JS needed for the "neighbors compress" illusion.
+
+Verified via Playwright: identity-hue actually changes color
+(`rgb(182,0,168)` → `rgb(46,211,191)`) when scrolling from an officer to a
+builder zone; tilt/dock-hover/stat-chip count-up all produce the expected
+computed transform/text values; mobile has no horizontal overflow; TS
+build is clean.
