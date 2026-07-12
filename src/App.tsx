@@ -6,18 +6,27 @@ import { ProjectsArchivePage } from "./pages/ProjectsArchivePage";
 import { ProjectCaseStudyPage } from "./pages/ProjectCaseStudyPage";
 import { ContactPage } from "./pages/ContactPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { useTheme } from "./hooks/useTheme";
 import type { Locale } from "./data/profile";
 import "./fonts.css";
 import "./styles.css";
 
 function App() {
   const [locale, setLocale] = useState<Locale>("en");
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route
-          element={<RootLayout locale={locale} onToggleLocale={() => setLocale((current) => (current === "en" ? "ar" : "en"))} />}
+          element={
+            <RootLayout
+              locale={locale}
+              onToggleLocale={() => setLocale((current) => (current === "en" ? "ar" : "en"))}
+              theme={theme}
+              onToggleTheme={toggleTheme}
+            />
+          }
         >
           <Route index element={<HomePage />} />
           <Route path="projects" element={<ProjectsArchivePage />} />

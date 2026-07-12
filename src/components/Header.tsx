@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 import { navHref, navItems, uiCopy } from "../data/content";
 import type { Locale } from "../data/profile";
+import type { Theme } from "../hooks/useTheme";
 
 const DRAWER_TRANSITION_MS = 320;
 
@@ -12,9 +13,11 @@ type HeaderProps = {
   locale: Locale;
   onToggleLocale: () => void;
   onOpenPalette: () => void;
+  theme: Theme;
+  onToggleTheme: () => void;
 };
 
-export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
+export function Header({ locale, onToggleLocale, onOpenPalette, theme, onToggleTheme }: HeaderProps) {
   const copy = uiCopy[locale];
   const location = useLocation();
   const [drawerMounted, setDrawerMounted] = useState(false);
@@ -73,6 +76,15 @@ export function Header({ locale, onToggleLocale, onOpenPalette }: HeaderProps) {
           >
             <Search aria-hidden="true" size={17} />
             <kbd>⌘K</kbd>
+          </button>
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={theme === "dark" ? copy.themeToggleToLight : copy.themeToggleToDark}
+            title={theme === "dark" ? copy.themeToggleToLight : copy.themeToggleToDark}
+          >
+            {theme === "dark" ? <Sun aria-hidden="true" size={17} /> : <Moon aria-hidden="true" size={17} />}
           </button>
           <button className="language-toggle" type="button" onClick={onToggleLocale}>
             {copy.switchLanguage}

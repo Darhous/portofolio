@@ -251,3 +251,42 @@ All footer and contact social links must be displayed in this exact order:
   "Not just an officer. An officer who builds." — this is the first
   thing visitors see after the hero now, addressing "programming needs
   to be visible right under the hero, everywhere."
+
+## 2026-07-12 Update, Part 5 (light/dark theme toggle)
+
+- Added a full light theme, not just a color inversion afterthought.
+  `src/hooks/useTheme.ts` manages a `"dark" | "light"` state, persisted
+  to `localStorage["theme"]`, applied via `data-theme` on
+  `<html>`/`:root`. `index.html` has an inline script (before any other
+  script tag) that reads the stored value (or `prefers-color-scheme` if
+  none) and sets `data-theme` before first paint — no flash of the
+  wrong theme.
+- All theme colors are CSS custom properties; `:root[data-theme="light"]`
+  overrides them (see `styles.css` near the top). Light palette: near-white
+  `#f4f3ef` background, near-black `#14181b` text, white cards, and a
+  **darker** metallic gradient for headings (`#14181b → #5b6570`, since
+  the dark-mode gradient `#646973 → #bbccd7` is illegible on a light
+  background). The gradient CTA button, per-project accents, and the
+  always-white `ExpertiseSection` panel didn't need any change — they
+  already worked on both.
+- **Real bug found and fixed while QA'ing this**: `.topbar`'s
+  translucent blur background was hardcoded to `rgba(10, 10, 9, 0.82)`
+  instead of a theme variable, so the sticky header stayed black in
+  light mode even though everything else flipped correctly. Fixed by
+  introducing `--surface-blur` (dark/light variants) and using it there.
+  **If a future change adds another `backdrop-filter` surface, give it
+  a theme-aware background variable, not a hardcoded rgba — this is the
+  second time a hardcoded dark rgba has been missed** (the marquee-tile
+  image scrim and the two modal backdrops are the *intentional*
+  exceptions — those stay dark in both themes on purpose, since they're
+  scrims over always-dark images or modal-dimming overlays, not page
+  chrome).
+- The project cover images (`public/projects/*.webp`) are baked with a
+  permanently dark canvas regardless of site theme — this is
+  intentional (like album art), not a bug; don't try to make those
+  theme-aware.
+- Toggle UI: a square icon button (sun icon when dark → click for
+  light; moon icon when light → click for dark) next to the language
+  toggle in the header, always visible (not hidden on mobile like the
+  ⌘K button is). Also added as a command-palette action
+  ("Switch to light/dark mode").

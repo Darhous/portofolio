@@ -6,12 +6,15 @@ import { navHref, navItems, uiCopy } from "../data/content";
 import { projects } from "../data/projects";
 import { siteConfig } from "../config/site";
 import type { Locale } from "../data/profile";
+import type { Theme } from "../hooks/useTheme";
 
 type CommandPaletteProps = {
   locale: Locale;
   open: boolean;
   onClose: () => void;
   onToggleLocale: () => void;
+  theme: Theme;
+  onToggleTheme: () => void;
 };
 
 type PaletteItem = {
@@ -22,7 +25,7 @@ type PaletteItem = {
   action: () => void;
 };
 
-export function CommandPalette({ locale, open, onClose, onToggleLocale }: CommandPaletteProps) {
+export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, onToggleTheme }: CommandPaletteProps) {
   const copy = uiCopy[locale];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
@@ -83,6 +86,12 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale }: Comman
         action: onToggleLocale,
       },
       {
+        id: "action-theme",
+        group: copy.commandPaletteSectionActions,
+        label: theme === "dark" ? copy.themeToggleToLight : copy.themeToggleToDark,
+        action: onToggleTheme,
+      },
+      {
         id: "action-top",
         group: copy.commandPaletteSectionActions,
         label: copy.actionBackToTop,
@@ -94,7 +103,7 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale }: Comman
     ];
 
     return [...navigation, ...projectItems, ...actions];
-  }, [locale, copy, navigate, onToggleLocale]);
+  }, [locale, copy, navigate, onToggleLocale, theme, onToggleTheme]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
