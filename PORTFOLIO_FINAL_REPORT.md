@@ -2,13 +2,14 @@
 
 Status: Multi-page rebuild completed and pushed on 2026-07-10, followed the
 same day by a full 33-item project inventory pass (catalog grown from 16 to
-**30 projects**, second GitHub account `darhous2023` discovered) and then a
-complete premium-editorial visual rebrand built around a new CV and portrait.
-Latest commit on the branch: `20b0c87`. **Not yet merged to `main`**, so
-`https://darhous.github.io/portofolio/` still serves the pre-2026-07-10
-build until this branch is merged (GitHub Pages deploys only from `main`;
-this session's branch instructions require staying on the feature branch
-and not opening a PR unless asked).
+**30 projects**, second GitHub account `darhous2023` discovered), then a
+complete premium-editorial visual rebrand built around a new CV and portrait,
+then a motion/interaction layer (marquee, sticky project stack, magnetic
+portrait). **Merged into `main` on 2026-07-12** (commit `aae6b3a`) per
+Ahmed's request, followed the same day by a builder-story content pass
+(commit `99487ee`). Development now happens directly on `main` — no more
+feature-branch/PR workflow. `https://darhous.github.io/portofolio/` deploys
+automatically from `main` via GitHub Actions.
 
 ## Update: Premium Editorial Visual Rebrand (2026-07-10, part 3)
 
@@ -202,12 +203,9 @@ document.body)`. Verified fixed with before/after screenshots.
 
 ## Known, Honestly-Tracked Limitations
 
-- **Not yet on production.** This branch has not been merged to `main`, per
-  this session's explicit instruction to stay on
-  `claude/darhous-portfolio-rebuild-sxmb3n` and not open a pull request
-  unless asked. `https://darhous.github.io/portofolio/` still serves the
-  2026-07-09 build. Merging (or opening a PR) is the next decision for
-  Ahmed to make.
+- **On production as of 2026-07-12.** Merged to `main` and pushed directly
+  per Ahmed's request; `https://darhous.github.io/portofolio/` deploys
+  automatically from `main` via GitHub Actions on every push now.
 - No Lighthouse CI run was performed in this environment (no Lighthouse
   runner was available); the Playwright checks above cover the functional
   equivalents but not a numeric Lighthouse score.
