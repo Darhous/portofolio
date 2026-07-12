@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Hero } from "../components/Hero";
+import { SectionHeader } from "../components/SectionHeader";
 import { AboutSection } from "../components/AboutSection";
 import { TechStackSection } from "../components/TechStackSection";
 import { ExperienceSection } from "../components/ExperienceSection";
@@ -10,6 +11,7 @@ import { ContactSection } from "../components/ContactSection";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { featuredProjects, projects } from "../data/projects";
 import { FLAGSHIP_COUNT } from "../data/flagship";
+import { uiCopy } from "../data/content";
 import type { OutletContext } from "../layouts/RootLayout";
 
 // Code-split framer-motion-dependent sections: none of them are needed for
@@ -35,6 +37,7 @@ const META = {
 
 export function HomePage() {
   const { locale } = useOutletContext<OutletContext>();
+  const copy = uiCopy[locale];
   usePageMeta({ ...META[locale], path: "/" });
 
   const remainingFeatured = featuredProjects.slice(FLAGSHIP_COUNT);
@@ -42,6 +45,9 @@ export function HomePage() {
   return (
     <>
       <Hero locale={locale} />
+      <div className="page-section marquee-intro">
+        <SectionHeader kicker={copy.marqueeKicker} title={copy.marqueeTitle} />
+      </div>
       <Suspense fallback={null}>
         <ScrollMarquee projects={projects} />
       </Suspense>

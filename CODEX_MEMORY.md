@@ -211,3 +211,43 @@ All footer and contact social links must be displayed in this exact order:
   page) and `Footer` (global, renders right after it) both rendered
   `<SocialLinks />` — removed it from `ContactSection` since `Footer`
   already shows it on every page.
+
+## 2026-07-12 Update, Part 4 ("content station" pass — real project images)
+
+- Ahmed liked the design but flagged three content gaps: not every
+  project card animated, the builder/programming identity needed to
+  show up right under the Hero (not just buried in About/Expertise),
+  and every project needed a real image — with an explicit instruction
+  to make one for any project that doesn't have a real photo.
+- **This sandbox's network policy blocks general internet access**
+  (confirmed via `$HTTPS_PROXY/__agentproxy/status` — `darhous.github.io`
+  and `opengraph.githubassets.com` both get `403 policy denial`), so
+  fetching real screenshots or GitHub's repo social-preview images was
+  not possible. Rather than fabricate fake product screenshots (which
+  this whole project has consistently refused to do), generated a
+  **designed cover card** per project instead — clearly a branded
+  cover, not a fake UI screenshot. Built with an HTML/CSS template
+  (`Fraunces`/`Inter` from the site's actual local font files, the
+  project's real accent color, category, and name) rendered via
+  Playwright and converted to WebP with Python Pillow. All 30 live in
+  `public/projects/{slug}.webp` (~25KB each), referenced via
+  `getProjectImage(slug)` in `src/data/projectImages.ts`. **If Ahmed
+  ever supplies real screenshots for any project, replace the file at
+  that path — nothing else needs to change.**
+- These images now render in every project surface that previously had
+  none or used a live-CSS monogram: `StickyProjectStack`, `ProjectsSection`
+  (feature rows), `ScrollMarquee` tiles, `ProjectCard` (archive grid —
+  this one had **no visual at all** before), and a new banner on
+  `ProjectCaseStudyPage` (which also had none before).
+- Added `src/hooks/useInView.ts` (plain `IntersectionObserver`, no
+  framer-motion) so `.feature-row` and `.project-card` — the two
+  project-card surfaces that weren't already framer-motion components —
+  get a staggered scroll-reveal fade-up without adding to the bundle.
+  This is why "not every card animated": the sticky stack and marquee
+  already had motion, but the feature-row spread and the archive grid
+  did not.
+- Added a plain-text (no motion dependency) statement directly under
+  the Hero, before the marquee: kicker "30+ Shipped Projects", title
+  "Not just an officer. An officer who builds." — this is the first
+  thing visitors see after the hero now, addressing "programming needs
+  to be visible right under the hero, everywhere."

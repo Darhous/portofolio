@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getProjectBySlug, projects } from "../data/projects";
 import { uiCopy } from "../data/content";
 import { getAccent } from "../data/accents";
+import { getProjectImage } from "../data/projectImages";
 import { ExternalLink } from "../components/ExternalLink";
 import { usePageMeta, injectJsonLd, removeJsonLd, siteOrigin } from "../hooks/usePageMeta";
 import type { OutletContext } from "../layouts/RootLayout";
@@ -69,6 +70,10 @@ export function ProjectCaseStudyPage() {
       <Link className="case-detail__back" to="/projects">
         &larr; {copy.backToArchive}
       </Link>
+
+      <div className="case-detail__banner">
+        <img src={getProjectImage(project.slug)} alt="" loading="eager" width="1200" height="1500" />
+      </div>
 
       <header className="case-detail__header">
         <div className="project-card__meta">

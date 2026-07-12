@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { ExternalLink } from "../ExternalLink";
 import { getAccent } from "../../data/accents";
+import { getProjectImage } from "../../data/projectImages";
 import type { Project } from "../../data/projects";
 import type { Locale } from "../../data/profile";
 import { uiCopy } from "../../data/content";
@@ -13,12 +14,6 @@ type StickyProjectStackProps = {
   projects: Project[];
   locale: Locale;
 };
-
-function monogram(name: string): string {
-  const words = name.split(/\s+/).filter(Boolean);
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-  return `${words[0][0]}${words[1][0]}`.toUpperCase();
-}
 
 function StackCard({ project, index, total, locale }: { project: Project; index: number; total: number; locale: Locale }) {
   const copy = uiCopy[locale];
@@ -39,8 +34,8 @@ function StackCard({ project, index, total, locale }: { project: Project; index:
         <div className="stack-card__index" aria-hidden="true">
           {String(index + 1).padStart(2, "0")}
         </div>
-        <div className="stack-card__visual" aria-hidden="true">
-          <span>{monogram(project.name)}</span>
+        <div className="stack-card__visual">
+          <img src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
         </div>
         <div className="stack-card__body">
           <div className="feature-row__meta">
@@ -111,8 +106,8 @@ function StackCardStatic({ project, index, locale }: { project: Project; index: 
       <div className="stack-card__index" aria-hidden="true">
         {String(index + 1).padStart(2, "0")}
       </div>
-      <div className="stack-card__visual" aria-hidden="true">
-        <span>{monogram(project.name)}</span>
+      <div className="stack-card__visual">
+        <img src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
       </div>
       <div className="stack-card__body">
         <div className="feature-row__meta">

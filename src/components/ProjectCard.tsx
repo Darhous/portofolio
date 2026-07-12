@@ -5,6 +5,8 @@ import type { Project } from "../data/projects";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
 import { getAccent } from "../data/accents";
+import { getProjectImage } from "../data/projectImages";
+import { useInView } from "../hooks/useInView";
 
 type ProjectCardProps = {
   project: Project;
@@ -13,9 +15,17 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project, locale }: ProjectCardProps) {
   const copy = uiCopy[locale];
+  const { ref, inView } = useInView<HTMLElement>();
 
   return (
-    <article className="project-card" style={{ "--accent": getAccent(project.category) } as CSSProperties}>
+    <article
+      className={`project-card${inView ? " is-visible" : ""}`}
+      ref={ref}
+      style={{ "--accent": getAccent(project.category) } as CSSProperties}
+    >
+      <div className="project-card__visual" aria-hidden="true">
+        <img src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
+      </div>
       <div className="project-card__meta">
         <span>{project.category}</span>
         <span>{project.status}</span>

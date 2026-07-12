@@ -1,6 +1,7 @@
 import { useRef, type CSSProperties } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { getAccent } from "../../data/accents";
+import { getProjectImage } from "../../data/projectImages";
 import type { Project } from "../../data/projects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
@@ -32,7 +33,7 @@ function MarqueeRow({ projects, direction }: { projects: Project[]; direction: 1
             className="marquee-tile"
             style={{ "--accent": getAccent(project.category) } as CSSProperties}
           >
-            <span className="marquee-tile__monogram">{monogram(project.name)}</span>
+            <img src={getProjectImage(project.slug)} alt="" loading="lazy" width="1200" height="1500" />
             <span className="marquee-tile__name">{project.name}</span>
             <span className="marquee-tile__category">{project.category}</span>
           </div>

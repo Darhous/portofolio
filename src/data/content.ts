@@ -40,6 +40,8 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     actionWhatsapp: "Message on WhatsApp",
     actionBackToTop: "Back to top",
     actionToggleLanguage: "Switch to Arabic",
+    marqueeKicker: "30+ Shipped Projects",
+    marqueeTitle: "Not just an officer. An officer who builds.",
     aboutKicker: "Profile Evidence",
     aboutTitle: "Two careers. One standard of proof.",
     aboutBody:
@@ -146,6 +148,8 @@ export const uiCopy: Record<Locale, Record<string, string>> = {
     actionWhatsapp: "مراسلة عبر واتساب",
     actionBackToTop: "العودة للأعلى",
     actionToggleLanguage: "التبديل إلى الإنجليزية",
+    marqueeKicker: "أكثر من 30 مشروعًا تم إطلاقه فعليًا",
+    marqueeTitle: "مش مجرد ضابط. ضابط بيبني.",
     aboutKicker: "محتوى موثق",
     aboutTitle: "مسيرتان. معيار إثبات واحد.",
     aboutBody:
