@@ -704,6 +704,47 @@ p {
   font-size: 0.76rem;
 }
 
+.tech-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tech-stack-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line-strong);
+  padding: 10px 16px;
+  background: var(--panel);
+  transition: border-color 220ms var(--ease-standard);
+}
+
+.tech-stack-item:hover {
+  border-color: var(--accent);
+}
+
+.tech-stack-item__name {
+  color: var(--ink-dim);
+  font-size: 0.86rem;
+}
+
+.tech-stack-item__count {
+  display: inline-flex;
+  min-width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
 .competency-group {
   margin-top: 18px;
 }
@@ -752,7 +793,7 @@ p {
 }
 
 .expertise-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .expertise-item {

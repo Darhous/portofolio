@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { Hero } from "../components/Hero";
 import { AboutSection } from "../components/AboutSection";
 import { ExpertiseSection } from "../components/ExpertiseSection";
+import { TechStackSection } from "../components/TechStackSection";
 import { ExperienceSection } from "../components/ExperienceSection";
 import { ProjectsSection } from "../components/ProjectsSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
@@ -46,6 +47,7 @@ export function HomePage() {
       </Suspense>
       <AboutSection locale={locale} />
       <ExpertiseSection locale={locale} />
+      <TechStackSection locale={locale} />
       <ExperienceSection locale={locale} />
       <Suspense fallback={null}>
         <FlagshipProjects locale={locale} />

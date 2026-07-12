@@ -15,12 +15,12 @@ export const profile = {
     ar: "مدير عمليات أمنية، أخصائي إدارة أزمات، ومرشح ماجستير إدارة أعمال.",
   },
   shortTitle: {
-    en: "Security Operations, Crisis Management & Strategic Leadership",
-    ar: "العمليات الأمنية، إدارة الأزمات، والقيادة الاستراتيجية",
+    en: "Security Operations, Crisis Management & Applied Engineering",
+    ar: "العمليات الأمنية، إدارة الأزمات، والهندسة التطبيقية",
   },
   summary: {
-    en: "Ahmed Darhous is a strategic operations and security professional with 8+ years of leadership experience in law enforcement, crisis management, and logistics. He is currently pursuing an MBA at The American University in Cairo, pairing a legal and security background with business acumen and hands-on automation skills. His work spans complex field operations, stakeholder relations, and personnel administration, with a consistent focus on risk mitigation and operational efficiency.",
-    ar: "أحمد درهوس محترف عمليات وأمن استراتيجي يمتلك خبرة قيادية تتجاوز 8 سنوات في إنفاذ القانون وإدارة الأزمات واللوجستيات. يواصل حاليًا دراسة الماجستير في إدارة الأعمال بالجامعة الأمريكية بالقاهرة، جامعًا بين خلفية قانونية وأمنية وحس تجاري ومهارات عملية في الأتمتة. يمتد عمله ليشمل العمليات الميدانية المعقدة وعلاقات أصحاب المصلحة وإدارة شؤون الأفراد، مع تركيز ثابت على تخفيف المخاطر وكفاءة التشغيل.",
+    en: "Ahmed Darhous runs two careers in parallel. As a Ministry of Interior officer, he has spent 8+ years commanding field deployments, leading criminal investigations, and coordinating crisis response — a record he is now sharpening with an MBA in progress at The American University in Cairo. Off duty, entirely self-taught, he has designed and shipped thirty-plus software projects: AI-assisted legal research tools, automation platforms, learning systems, and applied security engineering — built with the same discipline that runs a field operation. He is not just an officer. He is an officer who builds.",
+    ar: "يدير أحمد درهوس مسارين في آنٍ واحد. فعلى الصعيد الرسمي، هو ضابط بوزارة الداخلية بخبرة تتجاوز 8 سنوات في قيادة الانتشار الميداني وإدارة التحقيقات الجنائية وتنسيق الاستجابة للأزمات، يصقلها الآن بدراسة ماجستير إدارة الأعمال بالجامعة الأمريكية بالقاهرة. وفي وقته الخاص، وبمجهود ذاتي بالكامل، صمّم وأطلق أكثر من ثلاثين مشروعًا برمجيًا: أدوات بحث قانوني مدعومة بالذكاء الاصطناعي، ومنصات أتمتة، وأنظمة تعليمية، وتطبيقات هندسة أمنية — بنفس الانضباط الذي يدير به عملية ميدانية. فهو ليس مجرد ضابط، بل ضابط مبدع يبني.",
   },
   tagline: {
     en: "Leading security operations and crisis response with law-enforcement discipline and an MBA-level strategic lens.",
@@ -70,6 +70,13 @@ export const expertise = [
     body: {
       en: "MBA studies at AUC combined with hands-on scripting and automation for administrative reporting and data analysis.",
       ar: "دراسة ماجستير إدارة الأعمال في الجامعة الأمريكية بالقاهرة، مقترنة بخبرة عملية في البرمجة النصية وأتمتة التقارير الإدارية وتحليل البيانات.",
+    },
+  },
+  {
+    title: { en: "Applied Software Engineering & Automation", ar: "الهندسة البرمجية التطبيقية والأتمتة" },
+    body: {
+      en: "Self-taught, Udemy-certified in VB, HTML, and Java, and grown far past that baseline: Python, React, TypeScript, and applied AI/LLM tooling, proven across thirty-plus shipped projects rather than a single line on a resume.",
+      ar: "تعلّم ذاتي بدأ بشهادات Udemy في VB وHTML وJava، وتجاوزها بمراحل: بايثون وReact وTypeScript وأدوات الذكاء الاصطناعي التطبيقية، مثبتة عبر أكثر من ثلاثين مشروعًا تم إطلاقه فعليًا لا مجرد سطر في السيرة الذاتية.",
     },
   },
 ] as const;
@@ -264,7 +271,14 @@ export const competencyGroups: CompetencyGroup[] = [
   },
   {
     title: { en: "Technical & Automation", ar: "التقنية والأتمتة" },
-    items: ["Visual Basic (VB)", "HTML", "Java", "Process Scripting", "Data Analysis"],
+    items: [
+      "Visual Basic (VB)",
+      "HTML",
+      "Java",
+      "Operating Systems & Software Lifecycle",
+      "Process Scripting",
+      "Data Analysis",
+    ],
   },
   {
     title: { en: "Leadership", ar: "القيادة" },
