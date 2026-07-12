@@ -309,3 +309,83 @@ All footer and contact social links must be displayed in this exact order:
   `.topbar` blur background). When adding a light theme, audit every
   hardcoded-dark surface AND every element layered on top of an
   intentionally-dark surface (images, scrims) — both directions can break.
+
+## 2026-07-12 Update, Part 7 (full audit + 10-feature ship)
+
+Ran a full visual + code audit (screenshots across every page, both themes,
+desktop/mobile). Found and fixed the most impactful bug this session:
+
+- **Intro splash was global, not home-only.** `RootLayout` unconditionally
+  mounted `<Intro>` on every route with no persistence, so a direct link to
+  any case study, `/contact`, or even the `/404` page showed a 3.2s full-name
+  splash before real content — worst possible first impression on exactly
+  the links most likely to be shared (case studies, recruiter links).
+  Fixed: `Intro` now takes an `isHome` prop (`RootLayout` passes
+  `location.pathname === "/"`) and only auto-plays there, once per session
+  via `sessionStorage["introSeen"]`. The floating "Replay intro" button still
+  works from any route (user-initiated, so it's fine there).
+- Marquee tile names were truncating mid-word with `white-space: nowrap` +
+  ellipsis on a 156px tile. Switched `.marquee-tile__name` to a 2-line
+  `-webkit-line-clamp`, bumped tile height 156→172px. Category line stays
+  single-line ellipsis (short enough).
+
+Then shipped the user's 10 requested enhancements + a portrait redesign in
+one pass:
+
+- **Portrait**: replaced the hard-edged framed-photo look (`box-shadow` +
+  offset hairline rectangle) with `.portrait-lockup::before` = a blurred
+  `var(--gradient-cta)` bloom behind the image (`filter: blur(64px)`), and
+  a `mask-image: linear-gradient(180deg, #000 80%, transparent 100%)` on the
+  img itself so the bottom edge fades into the page instead of hard-cutting
+  into the caption. Reads as part of the page, not a pasted-in box. If this
+  needs revisiting, the CTA-gradient glow is the brand tie-in — don't lose it.
+- **Tag click-to-filter**: tech tags in `ProjectCard`, `StickyProjectStack`,
+  and `ProjectCaseStudyPage` are now `<Link to="/projects?q=<tag>">`.
+  `ProjectsArchivePage` reads `?q=` via `useSearchParams` as the initial
+  search value (reuses the *existing* search-across-tech-array logic — no
+  new filter mechanism needed, the search bar already matched on `tech`).
+- **Case study pages**: `ReadingProgress` (new component, plain scroll
+  listener + rAF, no framer-motion) as a fixed 3px bar at the very top;
+  sourced `stat` chips (`Project.stats?: ProjectStat[]`) populated **only**
+  for the 2 flagship projects with real numbers already present in their
+  existing copy (arabic-legal-research-skill: 233 tests/96.12%/95%;
+  nexalearn: 325+ commits/144+ releases/7 portals/8 tools) — do not add stats
+  to other projects without a real sourced number, this is a "no invented
+  numbers" site; a "Next project" link at the bottom (sequential over the
+  full `projects` array, wraps around — distinct from "Related Projects"
+  which is same-category).
+- **CareerTimeline** (new component `src/components/CareerTimeline.tsx`,
+  home page, right under Hero): 4 hardcoded milestones (2017 Bachelor of
+  Law, 2018 Criminal Investigation Officer, 2024 MBA in progress, 2025 30+
+  projects shipped) — all sourced from `profile.ts`/`education`. If more
+  milestones get added to the CV later, update this array too; it's a
+  curated subset, not derived automatically from `experience`/`education`.
+- **OG social card**: `public/social-card.png`, a real 1200×630 branded
+  image (name, tagline, portrait with the same mask/glow treatment as the
+  live site, small URL tag) generated via the established
+  Playwright-HTML-template + Pillow pipeline (template lives in the scratch
+  dir only, not committed — regenerate from scratch if the portrait or
+  brand colors change). Replaces the old raw `ahmed-darhous.png` og:image
+  (an 820×1025 portrait crop with no title text — bad aspect ratio for link
+  previews). Wired into both `index.html` (static, for crawlers that don't
+  run JS — this is the one that actually matters for GH Pages SPA) and
+  `usePageMeta.ts` (client-side, cosmetic parity). **If WhatsApp/Facebook
+  still show an old cached preview after this ships, that's their crawler
+  cache, not a bug here** — there's no reliable way to force-bust it from
+  our side.
+- **Print stylesheet** (`@media print` at the end of `styles.css`): hides
+  chrome (topbar, footer, progress bar, intro, overlays), forces black-on-
+  white, grayscales cover images, avoids breaking `.case-detail__block`
+  across pages.
+- **Analytics scaffold** (`src/lib/analytics.ts` + a pageview call in
+  `RootLayout` on route change): completely inert unless
+  `VITE_ANALYTICS_ENDPOINT` (and optionally `VITE_ANALYTICS_SITE_ID`) is set
+  at build time. No script tag, no request, zero third-party tracking by
+  default. Do not wire a live analytics endpoint without the user providing
+  one — this was intentionally left as a scaffold, not a working integration.
+
+Verified via Playwright: intro does NOT auto-show on deep-linked case study
+or 404 (only on `/`), tag click correctly lands on `/projects?q=<tag>` with
+the search box pre-filled, no horizontal overflow on mobile (390px), stat
+chips / progress bar / next-project link all render correctly in both
+themes. Build is TypeScript-clean.
