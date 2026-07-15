@@ -465,3 +465,88 @@ Verified via Playwright: identity-hue actually changes color
 builder zone; tilt/dock-hover/stat-chip count-up all produce the expected
 computed transform/text values; mobile has no horizontal overflow; TS
 build is clean.
+
+## 2026-07-15 Update (full home-page rebuild: cinematic identity narrative)
+
+User asked for a full rebuild, not a proposal — a complete reorder of the
+home page around a single narrative: "Ahmed Darhous combines discipline,
+evidence, strategy, and technical execution." This actually shipped, not
+just planned. Key structural decisions for future sessions to know about:
+
+- **Removed `ExpertiseSection` and `CaseStudiesSection` entirely.** Both
+  had gone redundant: Expertise's "five domains" content is now covered by
+  `OperatingSystem`'s four pillars, and CaseStudiesSection's mini problem/
+  approach/result cards duplicated what `FlagshipProjects` already shows in
+  full for the same 3-4 projects. **Don't re-add either without checking
+  whether the new sections already cover the same ground** — the whole
+  point of removing them was eliminating the same facts being told twice
+  on one page.
+- **`AboutSection.tsx` → `EducationSection.tsx`** (renamed, not layered).
+  Dropped the old "personal statement" bio panel (now redundant with Hero
+  + `PersonalStory`); kept education/certs/languages/skills panels. New id
+  is `#education`, not `#about`.
+- **`ExperienceSection` renamed to "Professional Journey"**, id changed
+  `#experience` → `#journey`. Added a connected vertical line (border-
+  inline-start + dot markers) and a highlighted "Current" badge on
+  whichever role's period string contains "present" — don't hardcode a
+  role name, that detection is intentionally dynamic.
+- **New home-page order** (HomePage.tsx): Hero → PersonalStory →
+  OperatingSystem → EvidenceNumbers → FlagshipProjects → marquee → 
+  ProjectsSection (remaining) → ExperienceSection → EducationSection →
+  TechStackSection → CVSection → ContactSection. Flagship projects now
+  come *before* the marquee, not after — deliberate: prove the strongest
+  work first, then let people browse the full breadth.
+- **`navItems` in content.ts changed** to match: Story/System/Stack/
+  Journey/Projects/CV/Contact (was About/Expertise/Stack/Experience/...).
+  If you add a new home-page section with its own id, remember the header
+  nav is a separate array that doesn't auto-derive from the page — it has
+  to be updated by hand.
+- **Three-color identity system**: added `--identity-discipline` (deep
+  crimson `#9b1c3f`) and `--identity-strategy` (amber/bronze `#c9922f`)
+  alongside the existing `--identity-officer` (magenta) and
+  `--identity-builder` (teal). These four map 1:1 to the four pillars in
+  both `PersonalStory` (per-stage) and `OperatingSystem` (per-card) via a
+  shared `pillar` key (`"evidence" | "discipline" | "strategy" |
+  "execution"`) defined once in `src/data/personalStory.ts` and reused by
+  `src/data/operatingSystem.ts`. Project category accents (`accents.ts`)
+  are a *separate*, unrelated two-tone system (officer/builder only) —
+  don't try to unify these two color systems, they answer different
+  questions (site narrative structure vs. project category).
+- **`PersonalStory`** is a sticky-scroll narrative (5 real dated
+  milestones, 2017→2025) using a plain rAF-throttled scroll listener (no
+  framer-motion) to compute which stage is active, then cross-fades
+  between absolutely-positioned stage panels via CSS. Shortened multiplier
+  on mobile (62vh/stage vs 100vh) via `useNarrowViewport`. Reduced-motion
+  gets a fully static stacked-card list (`.story-static`), no sticky/pin
+  at all.
+- **Marquee tiles are real `<Link>`s now**, not decorative
+  `aria-hidden` divs — this was a real accessibility/functionality gap
+  (huge project-discovery surface that did nothing on click). The row is
+  rendered doubled for the seamless scroll loop; only the *first* copy is
+  tabbable/announced (`tabIndex={-1}` + `aria-hidden` on the duplicate
+  half) so keyboard/screen-reader users don't hit every project twice.
+- **Tech stack section is now proportional usage bars**, not a tag
+  cloud — bar width is `count / maxCount`, gradient magenta→teal, each row
+  links to `/projects?q=<tech>` (reuses the existing archive search-by-tech
+  filter, no new filtering logic needed). Real counts only, from
+  `techStack.ts`'s frequency count over `projects.ts` — never hardcode a
+  usage number.
+- **Real bug found via QA and fixed**: `StatChip` assumed every stat value
+  contained a digit (used for the count-up animation). A non-numeric value
+  like `"MBA"` rendered as `"0MBA"` because the fallback path still
+  prepended a `"0"`. Fixed by adding an `isNumeric` flag — non-numeric
+  values now display as-is immediately (ring still fills to 100% on
+  view-enter, just no digit count-up). **If a future stat item might not
+  contain a number, this is already handled — don't reintroduce the
+  no-digit assumption.**
+- Confirmed via Playwright: RTL/Arabic renders correctly across every new
+  section (mirrored grid order, `border-inline-start` flips correctly,
+  pillar order reverses in the Operating System row) — no manual RTL
+  overrides were needed anywhere, the existing logical-property discipline
+  from earlier in the project just held up.
+
+**Not done this pass** (deferred, not forgotten): command palette entrance
+animation + recent-items, project archive sort control, case-study reading
+time/table-of-contents/share-link, and a 404-page project search. These are
+polish-tier per the spec's own priority ordering — the core narrative
+rebuild took priority. Flag if the user asks for "the rest of it."
