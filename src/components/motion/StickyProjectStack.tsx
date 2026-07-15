@@ -94,7 +94,15 @@ export function StickyProjectStack({ projects, locale }: StickyProjectStackProps
   const reducedMotion = useReducedMotion();
   const narrow = useNarrowViewport();
 
-  if (reducedMotion) {
+  // On narrow viewports the pin-and-scale sticky effect is unreliable: iOS
+  // Safari's dynamic address-bar resize (constantly changing viewport
+  // height) desyncs each card's independently-computed scroll progress from
+  // its sibling's, so multiple cards (and sometimes the section after the
+  // stack) end up "stuck" and visibly overlapping at once instead of
+  // cleanly handing off one at a time. There is no reliable fix for that
+  // race on a real device from here, so mobile gets the same simple,
+  // always-correct static list as the reduced-motion fallback.
+  if (reducedMotion || narrow) {
     return (
       <div className="stack-static">
         {projects.map((project, index) => (
@@ -104,11 +112,7 @@ export function StickyProjectStack({ projects, locale }: StickyProjectStackProps
     );
   }
 
-  // Pin-and-scale scroll effects cost more scroll distance per card than a
-  // phone screen can spare (and iOS Safari's address-bar resize makes long
-  // pinned sections feel unstable) — keep the effect but shorten it a lot
-  // on narrow viewports instead of dropping it entirely.
-  const vhPerCard = narrow ? 58 : 90;
+  const vhPerCard = 90;
 
   return (
     <div className="stack-container" style={{ height: `${projects.length * vhPerCard}vh` }}>

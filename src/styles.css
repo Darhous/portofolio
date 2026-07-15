@@ -2984,10 +2984,6 @@ p {
     max-width: 220px;
     aspect-ratio: 1;
   }
-
-  .stack-card-wrapper {
-    top: 5.5rem !important;
-  }
 }
 
 /* ---- Not found ------------------------------------------------------------------------- */
