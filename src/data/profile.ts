@@ -11,8 +11,8 @@ export const profile = {
     ar: "القاهرة، مصر",
   },
   headline: {
-    en: "Security Operations Manager, Crisis Management Specialist, and MBA Candidate.",
-    ar: "مدير عمليات أمنية، أخصائي إدارة أزمات، ومرشح ماجستير إدارة أعمال.",
+    en: "Officer, Legal Professional, and MBA Candidate — Software and AI Systems Builder.",
+    ar: "ضابط، قانوني، ومرشح ماجستير إدارة أعمال — باني أنظمة برمجية وذكاء اصطناعي.",
   },
   positioning: {
     en: "Officer. Legal professional. MBA candidate. Software and AI systems builder.",
@@ -24,7 +24,7 @@ export const profile = {
   },
   systemsStatement: {
     en: "Ahmed treats every product as an operational system, not just a software interface — one that has to hold up under real constraints: security, accountability, maintainability, and the specific problem it exists to solve.",
-    ar: "يتعامل أحمد مع كل منتج كنظام تشغيلي، لا مجرد واجهة برمجية — نظام لازم يتحمل قيود العمل الحقيقية: الأمان، والمساءلة، وقابلية الصيانة، والمشكلة الفعلية التي وُجد من أجلها.",
+    ar: "يتعامل أحمد مع كل منتج كنظام تشغيلي، لا مجرد واجهة برمجية — نظام يجب أن يتحمل القيود الحقيقية: الأمان، والمساءلة، وقابلية الصيانة، والمشكلة الفعلية التي وُجد من أجلها.",
   },
   identityDimensions: [
     { en: "Officer", ar: "ضابط" },
@@ -32,21 +32,9 @@ export const profile = {
     { en: "Strategist", ar: "استراتيجي" },
     { en: "Builder", ar: "بانٍ" },
   ] as Localized<string>[],
-  shortTitle: {
-    en: "Security Operations, Crisis Management & Applied Engineering",
-    ar: "العمليات الأمنية، إدارة الأزمات، والهندسة التطبيقية",
-  },
   summary: {
     en: "Ahmed Darhous runs two careers in parallel. As a Ministry of Interior officer, he has spent 8+ years commanding field deployments, leading criminal investigations, and coordinating crisis response — a record he is now sharpening with an MBA in progress at The American University in Cairo. Off duty, entirely self-taught, he has designed and shipped thirty-plus software projects: AI-assisted legal research tools, automation platforms, learning systems, and applied security engineering — built with the same discipline that runs a field operation. He is not just an officer. He is an officer who builds.",
     ar: "يدير أحمد درهوس مسارين في آنٍ واحد. فعلى الصعيد الرسمي، هو ضابط بوزارة الداخلية بخبرة تتجاوز 8 سنوات في قيادة الانتشار الميداني وإدارة التحقيقات الجنائية وتنسيق الاستجابة للأزمات، يصقلها الآن بدراسة ماجستير إدارة الأعمال بالجامعة الأمريكية بالقاهرة. وفي وقته الخاص، وبمجهود ذاتي بالكامل، صمّم وأطلق أكثر من ثلاثين مشروعًا برمجيًا: أدوات بحث قانوني مدعومة بالذكاء الاصطناعي، ومنصات أتمتة، وأنظمة تعليمية، وتطبيقات هندسة أمنية — بنفس الانضباط الذي يدير به عملية ميدانية. فهو ليس مجرد ضابط، بل ضابط مبدع يبني.",
-  },
-  tagline: {
-    en: "Leading security operations and crisis response with law-enforcement discipline and an MBA-level strategic lens.",
-    ar: "قيادة العمليات الأمنية والاستجابة للأزمات بانضباط إنفاذ القانون ورؤية استراتيجية على مستوى الماجستير في إدارة الأعمال.",
-  },
-  principle: {
-    en: "Discipline under pressure is a strategic advantage, not a job description.",
-    ar: "الانضباط تحت الضغط ميزة استراتيجية، لا مجرد وصف وظيفي.",
   },
   cta: {
     primary: {
@@ -64,44 +52,6 @@ export const profile = {
   },
   contacts: siteConfig.contact,
 } as const;
-
-export const expertise = [
-  {
-    title: { en: "Security Operations & Field Leadership", ar: "العمليات الأمنية والقيادة الميدانية" },
-    body: {
-      en: "Deployment planning, resource allocation, and field-readiness for personnel operating under mission-critical pressure.",
-      ar: "تخطيط الانتشار، توزيع الموارد، وجاهزية الفرق الميدانية العاملة تحت ضغط المهام الحرجة.",
-    },
-  },
-  {
-    title: { en: "Crisis & Risk Management", ar: "إدارة الأزمات والمخاطر" },
-    body: {
-      en: "NEBOSH-certified risk assessment, incident command, and emergency response, developed through structured HSE and crisis-management training.",
-      ar: "تقييم مخاطر معتمد من NEBOSH، وقيادة الحوادث، والاستجابة للطوارئ، مبنية على تدريب منظم في الصحة والسلامة المهنية وإدارة الأزمات.",
-    },
-  },
-  {
-    title: { en: "Legal & Investigative Foundation", ar: "الأساس القانوني والتحقيقي" },
-    body: {
-      en: "A Bachelor of Law and Police Sciences plus a postgraduate diploma in general law, applied through years of criminal investigation and legal reporting.",
-      ar: "ليسانس الحقوق وعلوم الشرطة إلى جانب دبلوم دراسات عليا في القانون العام، مطبقة عبر سنوات من التحقيق الجنائي والتقارير القانونية.",
-    },
-  },
-  {
-    title: { en: "Strategic Business & Operations", ar: "الأعمال الاستراتيجية والعمليات" },
-    body: {
-      en: "MBA studies at AUC combined with hands-on scripting and automation for administrative reporting and data analysis.",
-      ar: "دراسة ماجستير إدارة الأعمال في الجامعة الأمريكية بالقاهرة، مقترنة بخبرة عملية في البرمجة النصية وأتمتة التقارير الإدارية وتحليل البيانات.",
-    },
-  },
-  {
-    title: { en: "Applied Software Engineering & Automation", ar: "الهندسة البرمجية التطبيقية والأتمتة" },
-    body: {
-      en: "Self-taught, Udemy-certified in VB, HTML, and Java, and grown far past that baseline: Python, React, TypeScript, and applied AI/LLM tooling, proven across thirty-plus shipped projects rather than a single line on a resume.",
-      ar: "تعلّم ذاتي بدأ بشهادات Udemy في VB وHTML وJava، وتجاوزها بمراحل: بايثون وReact وTypeScript وأدوات الذكاء الاصطناعي التطبيقية، مثبتة عبر أكثر من ثلاثين مشروعًا تم إطلاقه فعليًا لا مجرد سطر في السيرة الذاتية.",
-    },
-  },
-] as const;
 
 export const experience = [
   {

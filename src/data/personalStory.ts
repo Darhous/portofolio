@@ -42,7 +42,7 @@ export const personalStory: StoryStage[] = [
     },
     lesson: {
       en: "Investigation taught evidence-based reasoning: conclusions have to be traceable back to something verifiable, not assumed.",
-      ar: "علّمه التحقيق التفكير المبني على الأدلة: أي استنتاج لازم يتتبع لحاجة قابلة للتحقق، مش مجرد افتراض.",
+      ar: "علّمه التحقيق التفكير المبني على الأدلة: أي استنتاج لا بد أن يكون قابلاً للتتبع إلى ما يمكن التحقق منه، لا مجرد افتراض.",
     },
   },
   {
@@ -56,7 +56,7 @@ export const personalStory: StoryStage[] = [
     },
     lesson: {
       en: "Coordinating live operations at scale taught discipline and accountability: systems fail at the handoffs, not the happy path.",
-      ar: "تنسيق عمليات حية على نطاق واسع علّمه الانضباط والمساءلة: الأنظمة بتفشل عند نقاط التسليم، مش في المسار المثالي.",
+      ar: "تنسيق عمليات حية على نطاق واسع علّمه الانضباط والمساءلة: تفشل الأنظمة عند نقاط التسليم، لا في المسار المثالي.",
     },
   },
   {
@@ -76,7 +76,7 @@ export const personalStory: StoryStage[] = [
   {
     year: "2025",
     pillar: "execution",
-    title: { en: "Senior Liaison & Officer Who Builds", ar: "ضابط أول اتصال — وضابط بيبني" },
+    title: { en: "Senior Liaison & Officer Who Builds", ar: "ضابط أول اتصال — وضابط يبني" },
     org: { en: "Ministry of Interior · 30+ shipped projects off duty", ar: "وزارة الداخلية · أكثر من 30 مشروعًا خارج أوقات العمل" },
     summary: {
       en: "Primary coordination focal point for the Ministry, while independently designing and shipping thirty-plus software projects — legal-tech, automation, learning systems, and applied security engineering.",
@@ -84,7 +84,7 @@ export const personalStory: StoryStage[] = [
     },
     lesson: {
       en: "Execution is where the other three disciplines get tested: a system that isn't shipped, secured, and maintained hasn't proven anything yet.",
-      ar: "التنفيذ هو الاختبار الحقيقي للمبادئ التلاتة التانية: النظام اللي متطلقش ومتأمنش ومتصانش لسه معملش الفرق المطلوب.",
+      ar: "التنفيذ هو الاختبار الحقيقي للمبادئ الثلاثة الأخرى: النظام الذي لم يُطلق ولم يُؤمَّن ولم تُجرَ صيانته لم يُثبت شيئًا بعد.",
     },
   },
 ];

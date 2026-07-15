@@ -550,3 +550,109 @@ animation + recent-items, project archive sort control, case-study reading
 time/table-of-contents/share-link, and a 404-page project search. These are
 polish-tier per the spec's own priority ordering — the core narrative
 rebuild took priority. Flag if the user asks for "the rest of it."
+
+## 2026-07-15 — Final production closure pass
+
+A full manual + automated audit (build run locally, Playwright walkthrough
+across EN/AR × desktop/mobile/tablet × normal/reduced motion) surfaced and
+fixed several real defects, then completed all of the previously-deferred
+polish items.
+
+**Real bugs found and fixed:**
+
+- **Hero name (`<h1>Ahmed Darhous</h1>`) went invisible on mobile viewports
+  in both EN and AR** — the site's single most important element. Root
+  cause: the `.kinetic-word` entrance animation (`opacity`+`filter:blur`,
+  later narrowed to just `opacity`+`transform`) left the element in a
+  painted-but-invisible compositor state after finishing, reproducible at
+  390×844 regardless of locale, and did not self-heal on resize or long
+  waits — only disabling the animation entirely fixed it. Given this is the
+  page's most load-bearing text and the failure mode is silent (computed
+  style reports `opacity: 1`), the entrance animation was removed from
+  `.kinetic-word` rather than "fixed" — the name is now a plain, always-
+  painted element. **Do not re-add an opacity/filter entrance animation to
+  the Hero name** without verifying it survives a real mobile-viewport
+  render, not just a computed-style check.
+- **Command palette Escape/Tab-trap/focus-restoration silently did
+  nothing** — introduced while adding the entrance/exit animation this same
+  pass, then caught by this pass's own QA. Two compounding bugs: (1) the
+  new `mounted` state was set inside a `useEffect`, one render behind
+  `open` flipping true, so `useFocusTrap`'s own effect ran before the
+  container ref existed and silently found nothing to attach listeners to
+  — fixed by flipping `mounted` synchronously during render
+  (`if (open && !mounted) setMounted(true)`, the React-endorsed
+  adjust-state-during-render pattern) instead of via an effect; (2) the
+  search input's native `autoFocus` attribute raced ahead of
+  `useFocusTrap`'s own `document.activeElement` capture, so the hook
+  captured the search input itself as "previously focused" instead of the
+  button that opened the palette — closing then focused the (soon to be
+  removed) input instead of restoring focus, and once the input unmounted
+  focus fell through to `<body>`. Fixed by removing `autoFocus` and letting
+  `useFocusTrap`'s own `focusable[0]?.focus()` (which runs *after* it
+  captures `previouslyFocused`) handle initial focus instead.
+- **Locale had zero persistence** — `useState<Locale>("en")` in `App.tsx`,
+  no storage, no `<html lang>`/`dir` sync. Any hard reload, direct URL
+  load, or shared/bookmarked Arabic link silently reset the whole site back
+  to English, and the root `<html lang="en">` never updated when the user
+  switched to Arabic in-session (screen readers would apply English
+  pronunciation rules to Arabic text). Fixed with a new `useLocale` hook
+  (mirrors the existing `useTheme` hook exactly) that persists to
+  `localStorage`, falls back to `navigator.language`, and syncs
+  `document.documentElement`'s `lang`/`dir` on every change.
+- **Static `index.html` and `profile.headline` still had the pre-rebuild
+  job title** ("Security Operations Manager, Crisis Management Specialist,
+  and MBA Candidate") in the `<title>`, meta description, Open Graph tags,
+  JSON-LD `jobTitle`, and the CV Center's "Source artifact:" line. Since
+  `usePageMeta` only patches tags client-side after React mounts, every
+  crawler or link-preview bot that doesn't execute JS was seeing the old
+  title — this is exactly what search engines and social shares actually
+  index. Updated both to the current "Officer, Legal Professional, MBA
+  Candidate — Software and AI Systems Builder" framing.
+- Informal/colloquial Egyptian Arabic (مش، إزاي، ليه، دلوقتي، بيبني، بيشتغل،
+  لازم, etc.) had leaked into the newest content — `personalStory.ts`,
+  `operatingSystem.ts`, `content.ts`'s new section kickers/titles, and one
+  line in `profile.ts`'s `systemsStatement`. All rewritten to formal Modern
+  Standard Arabic; technical terms and established English product/tech
+  names were left as-is per the site's existing convention.
+
+**Dead code removed:** `profile.ts`'s `shortTitle`, `expertise` (5-entry
+array), and `tagline` exports were fully unused (superseded by
+`OperatingSystem`/`personalStory.ts` earlier this cycle) and two of them
+still carried the old job-title framing — removed along with their ~90
+lines of matching dead CSS (`.expertise-panel`, `.expertise-list`,
+`.expertise-row*`, `.statement-panel`). Also fixed a stale
+`.career-timeline-section` selector left in the print stylesheet's hide-list
+from the `CareerTimeline` → `PersonalStory` rename earlier — it never
+matched anything, so print output was leaking the story section; now
+targets `.story-section`.
+
+**Deferred items completed this pass:**
+
+- Command palette: scale+fade entrance/exit (mount/unmount lifecycle,
+  `prefers-reduced-motion`-aware), a "Recent" group (max 3,
+  `sessionStorage`, de-duplicated, promoted on every selection), and
+  match-substring `<mark>` highlighting.
+- Project archive: a sort control (Featured / Newest / A–Z — "Newest"
+  parses the leading year already present in every project's real `year`
+  field, never invented), three additional toggle filters (Live / Has
+  repository / Has case study), a live result count, a "Clear all" action,
+  and full URL query-state persistence (`q`, `category`, `sort`, `live`,
+  `repo`, `case`) so filtered views survive reload/back-navigation/sharing.
+- Case study pages: reading time (word-count estimate across every
+  populated case-study field, ~200 wpm), a sticky "On this page" table of
+  contents built only from sections that actually exist for that project
+  (scroll-spy via `IntersectionObserver`, collapses to a horizontal
+  wrapped list under 900px), and a copy-link action (`navigator.clipboard`,
+  with a `navigator.share` button shown only where the browser supports
+  it).
+- 404 page: a live project search (same matching logic as the archive) plus
+  a "Flagship projects" suggestion list when the search is empty, so the
+  page is never a dead end.
+
+**Verification:** `tsc --noEmit`, `npm run build`, and `npm test` all clean.
+Full Playwright sweep across all 30 project routes, `/`, `/projects`,
+`/contact`, `/404`, EN+AR, 1440×900/820×1180/390×844,
+normal+reduced-motion — zero console errors, zero failed requests, zero
+horizontal overflow, footer social-link order/attributes/mailto all
+correct, header stays pinned during scroll, tech-stack→archive filter
+link-through works.

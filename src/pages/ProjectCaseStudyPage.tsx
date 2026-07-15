@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { Link, Navigate, useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { useCallback, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { ArrowRight, Check, Link2, Share2 } from "lucide-react";
 import { getProjectBySlug, projects } from "../data/projects";
 import { uiCopy } from "../data/content";
 import { getAccent } from "../data/accents";
@@ -9,22 +9,63 @@ import { getProjectImage } from "../data/projectImages";
 import { ExternalLink } from "../components/ExternalLink";
 import { ReadingProgress } from "../components/ReadingProgress";
 import { StatChip } from "../components/StatChip";
+import { CaseStudyToc } from "../components/CaseStudyToc";
+import type { TocEntry } from "../components/CaseStudyToc";
+import { estimateReadingMinutes } from "../lib/readingTime";
 import { usePageMeta, injectJsonLd, removeJsonLd, siteOrigin } from "../hooks/usePageMeta";
 import { useSwipeNavigation } from "../hooks/useSwipeNavigation";
 import { useViewTransitionName } from "../hooks/useViewTransitionName";
 import { withViewTransition } from "../lib/viewTransition";
 import type { OutletContext } from "../layouts/RootLayout";
 
-function CaseStudyList({ title, items }: { title: string; items?: string[] }) {
+function CaseStudyList({ id, title, items }: { id: string; title: string; items?: string[] }) {
   if (!items || items.length === 0) return null;
   return (
-    <div className="case-detail__block">
+    <div className="case-detail__block" id={id}>
       <h3>{title}</h3>
       <ul className="clean-list clean-list--single">
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function CopyLinkButton({ label, copiedLabel, shareLabel }: { label: string; copiedLabel: string; shareLabel: string }) {
+  const [copied, setCopied] = useState(false);
+  const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API unavailable: silently no-op rather than fake a success state.
+    }
+  }
+
+  async function share() {
+    try {
+      await navigator.share({ url: window.location.href, title: document.title });
+    } catch {
+      // User cancelled the share sheet or it failed: no action needed.
+    }
+  }
+
+  return (
+    <div className="case-detail__link-actions">
+      <button type="button" className="case-detail__link-action" onClick={copyLink}>
+        {copied ? <Check aria-hidden="true" size={15} /> : <Link2 aria-hidden="true" size={15} />}
+        <span>{copied ? copiedLabel : label}</span>
+      </button>
+      {canShare ? (
+        <button type="button" className="case-detail__link-action" onClick={share}>
+          <Share2 aria-hidden="true" size={15} />
+          <span>{shareLabel}</span>
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -86,15 +127,50 @@ export function ProjectCaseStudyPage() {
   // Guaranteed defined here: currentIndex >= 0 whenever `project` resolved.
   const nextProjectSafe = nextProject!;
 
+  const readingMinutes = estimateReadingMinutes(
+    project.description[locale],
+    project.impact[locale],
+    project.role[locale],
+    cs?.context?.[locale],
+    cs?.problem?.[locale],
+    cs?.constraints?.[locale],
+    cs?.approach?.[locale],
+    cs?.features?.[locale],
+    cs?.challenges?.[locale],
+    cs?.solutions?.[locale],
+    cs?.results?.[locale],
+    cs?.result?.[locale],
+    cs?.currentStatus?.[locale],
+    cs?.lessons?.[locale],
+  );
+
+  const tocEntries: TocEntry[] = cs
+    ? [
+        cs.context ? { id: "case-context", label: copy.context } : null,
+        { id: "case-problem", label: copy.problem },
+        cs.constraints ? { id: "case-constraints", label: copy.constraints } : null,
+        { id: "case-approach", label: copy.approach },
+        cs.features ? { id: "case-features", label: copy.features } : null,
+        cs.challenges ? { id: "case-challenges", label: copy.challenges } : null,
+        cs.solutions ? { id: "case-solutions", label: copy.solutions } : null,
+        cs.results || cs.result ? { id: "case-results", label: copy.results } : null,
+        cs.currentStatus ? { id: "case-current-status", label: copy.currentStatus } : null,
+        cs.lessons ? { id: "case-lessons", label: copy.lessons } : null,
+      ].filter((entry): entry is TocEntry => entry !== null)
+    : [];
+
   return (
     <article
       className="page-section case-detail"
       style={{ "--accent": getAccent(project.category) } as CSSProperties}
     >
       <ReadingProgress />
-      <Link className="case-detail__back" to="/projects">
-        &larr; {copy.backToArchive}
-      </Link>
+      <div className="case-detail__topline">
+        <Link className="case-detail__back" to="/projects">
+          &larr; {copy.backToArchive}
+        </Link>
+        <CopyLinkButton label={copy.copyLink} copiedLabel={copy.linkCopied} shareLabel={copy.shareLabel} />
+      </div>
 
       <div className="case-detail__banner">
         <img ref={bannerRef} src={getProjectImage(project.slug)} alt="" loading="eager" width="1200" height="1500" />
@@ -105,6 +181,7 @@ export function ProjectCaseStudyPage() {
           <span>{project.category}</span>
           <span>{project.status}</span>
           <span>{project.year}</span>
+          <span>{copy.readingTime.replace("{minutes}", String(readingMinutes))}</span>
         </div>
         <h1>{project.name}</h1>
         <p className="hero-lede">{project.description[locale]}</p>
@@ -147,48 +224,52 @@ export function ProjectCaseStudyPage() {
       </header>
 
       {cs ? (
-        <div className="case-detail__body">
-          {cs.context ? (
-            <div className="case-detail__block">
-              <h3>{copy.context}</h3>
-              <p>{cs.context[locale]}</p>
+        <div className="case-detail__layout">
+          <CaseStudyToc entries={tocEntries} title={copy.tocTitle} />
+          <div className="case-detail__body">
+            {cs.context ? (
+              <div className="case-detail__block" id="case-context">
+                <h3>{copy.context}</h3>
+                <p>{cs.context[locale]}</p>
+              </div>
+            ) : null}
+            <div className="case-detail__block" id="case-problem">
+              <h3>{copy.problem}</h3>
+              <p>{cs.problem[locale]}</p>
             </div>
-          ) : null}
-          <div className="case-detail__block">
-            <h3>{copy.problem}</h3>
-            <p>{cs.problem[locale]}</p>
+            {cs.constraints ? (
+              <div className="case-detail__block" id="case-constraints">
+                <h3>{copy.constraints}</h3>
+                <p>{cs.constraints[locale]}</p>
+              </div>
+            ) : null}
+            <div className="case-detail__block" id="case-approach">
+              <h3>{copy.approach}</h3>
+              <p>{cs.approach[locale]}</p>
+            </div>
+            <CaseStudyList id="case-features" title={copy.features} items={cs.features?.[locale]} />
+            <div className="case-detail__grid">
+              <CaseStudyList id="case-challenges" title={copy.challenges} items={cs.challenges?.[locale]} />
+              <CaseStudyList id="case-solutions" title={copy.solutions} items={cs.solutions?.[locale]} />
+            </div>
+            <CaseStudyList
+              id="case-results"
+              title={copy.results}
+              items={cs.results?.[locale] ?? (cs.result ? [cs.result[locale]] : undefined)}
+            />
+            {cs.currentStatus ? (
+              <div className="case-detail__block" id="case-current-status">
+                <h3>{copy.currentStatus}</h3>
+                <p>{cs.currentStatus[locale]}</p>
+              </div>
+            ) : null}
+            {cs.lessons ? (
+              <div className="case-detail__block" id="case-lessons">
+                <h3>{copy.lessons}</h3>
+                <p>{cs.lessons[locale]}</p>
+              </div>
+            ) : null}
           </div>
-          {cs.constraints ? (
-            <div className="case-detail__block">
-              <h3>{copy.constraints}</h3>
-              <p>{cs.constraints[locale]}</p>
-            </div>
-          ) : null}
-          <div className="case-detail__block">
-            <h3>{copy.approach}</h3>
-            <p>{cs.approach[locale]}</p>
-          </div>
-          <CaseStudyList title={copy.features} items={cs.features?.[locale]} />
-          <div className="case-detail__grid">
-            <CaseStudyList title={copy.challenges} items={cs.challenges?.[locale]} />
-            <CaseStudyList title={copy.solutions} items={cs.solutions?.[locale]} />
-          </div>
-          <CaseStudyList
-            title={copy.results}
-            items={cs.results?.[locale] ?? (cs.result ? [cs.result[locale]] : undefined)}
-          />
-          {cs.currentStatus ? (
-            <div className="case-detail__block">
-              <h3>{copy.currentStatus}</h3>
-              <p>{cs.currentStatus[locale]}</p>
-            </div>
-          ) : null}
-          {cs.lessons ? (
-            <div className="case-detail__block">
-              <h3>{copy.lessons}</h3>
-              <p>{cs.lessons[locale]}</p>
-            </div>
-          ) : null}
         </div>
       ) : null}
 

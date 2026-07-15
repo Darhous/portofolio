@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { RootLayout } from "./layouts/RootLayout";
 import { HomePage } from "./pages/HomePage";
@@ -7,26 +6,19 @@ import { ProjectCaseStudyPage } from "./pages/ProjectCaseStudyPage";
 import { ContactPage } from "./pages/ContactPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { useTheme } from "./hooks/useTheme";
-import type { Locale } from "./data/profile";
+import { useLocale } from "./hooks/useLocale";
 import "./fonts.css";
 import "./styles.css";
 
 function App() {
-  const [locale, setLocale] = useState<Locale>("en");
+  const { locale, toggleLocale } = useLocale();
   const { theme, toggleTheme } = useTheme();
 
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route
-          element={
-            <RootLayout
-              locale={locale}
-              onToggleLocale={() => setLocale((current) => (current === "en" ? "ar" : "en"))}
-              theme={theme}
-              onToggleTheme={toggleTheme}
-            />
-          }
+          element={<RootLayout locale={locale} onToggleLocale={toggleLocale} theme={theme} onToggleTheme={toggleTheme} />}
         >
           <Route index element={<HomePage />} />
           <Route path="projects" element={<ProjectsArchivePage />} />

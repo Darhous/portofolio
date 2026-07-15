@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { useFocusTrap } from "../hooks/useFocusTrap";
@@ -25,18 +25,76 @@ type PaletteItem = {
   action: () => void;
 };
 
+const RECENT_KEY = "commandPaletteRecent";
+const MAX_RECENT = 3;
+const CLOSE_TRANSITION_MS = 180;
+
+function readRecent(): string[] {
+  try {
+    const raw = window.sessionStorage.getItem(RECENT_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((id) => typeof id === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeRecent(ids: string[]) {
+  try {
+    window.sessionStorage.setItem(RECENT_KEY, JSON.stringify(ids.slice(0, MAX_RECENT)));
+  } catch {
+    // Private browsing / storage disabled: recent items just won't persist.
+  }
+}
+
+function HighlightedLabel({ text, query }: { text: string; query: string }) {
+  if (!query) return <span>{text}</span>;
+  const index = text.toLowerCase().indexOf(query.toLowerCase());
+  if (index === -1) return <span>{text}</span>;
+  const before = text.slice(0, index);
+  const match = text.slice(index, index + query.length);
+  const after = text.slice(index + query.length);
+  return (
+    <span>
+      {before}
+      <mark>{match}</mark>
+      {after}
+    </span>
+  );
+}
+
 export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, onToggleTheme }: CommandPaletteProps) {
   const copy = uiCopy[locale];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [recentIds, setRecentIds] = useState<string[]>(() => readRecent());
+  const [mounted, setMounted] = useState(open);
+  const [visible, setVisible] = useState(false);
+  const closeTimeoutRef = useRef<number | undefined>(undefined);
   const containerRef = useFocusTrap<HTMLDivElement>(open, onClose);
 
+  // Mount synchronously within the same render that `open` flips true (rather
+  // than one render later via the effect below) so the container ref already
+  // exists in the DOM by the time useFocusTrap's own effect runs and looks
+  // for it — otherwise its Escape/Tab listeners silently never attach.
+  if (open && !mounted) {
+    setMounted(true);
+  }
+
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      window.clearTimeout(closeTimeoutRef.current);
+      setRecentIds(readRecent());
+      requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
+    } else {
+      setVisible(false);
       setQuery("");
       setActiveIndex(0);
+      closeTimeoutRef.current = window.setTimeout(() => setMounted(false), CLOSE_TRANSITION_MS);
     }
+    return () => window.clearTimeout(closeTimeoutRef.current);
   }, [open]);
 
   const items = useMemo<PaletteItem[]>(() => {
@@ -105,6 +163,8 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
     return [...navigation, ...projectItems, ...actions];
   }, [locale, copy, navigate, onToggleLocale, theme, onToggleTheme]);
 
+  const itemsById = useMemo(() => new Map(items.map((item) => [item.id, item])), [items]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return items;
@@ -116,13 +176,30 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
     );
   }, [items, query]);
 
+  const recentItems = useMemo(() => {
+    if (query.trim()) return [];
+    return recentIds.map((id) => itemsById.get(id)).filter((item): item is PaletteItem => Boolean(item));
+  }, [recentIds, itemsById, query]);
+
+  const displayList = useMemo(() => {
+    if (recentItems.length === 0) return filtered;
+    const recentSet = new Set(recentItems.map((item) => item.id));
+    return [
+      ...recentItems.map((item) => ({ ...item, group: copy.commandPaletteSectionRecent })),
+      ...filtered.filter((item) => !recentSet.has(item.id)),
+    ];
+  }, [recentItems, filtered, copy.commandPaletteSectionRecent]);
+
   useEffect(() => {
     setActiveIndex(0);
   }, [query]);
 
-  if (!open) return null;
+  if (!mounted) return null;
 
   function activate(item: PaletteItem) {
+    const next = [item.id, ...recentIds.filter((id) => id !== item.id)].slice(0, MAX_RECENT);
+    writeRecent(next);
+    setRecentIds(next);
     item.action();
     onClose();
   }
@@ -130,13 +207,13 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      setActiveIndex((current) => Math.min(current + 1, filtered.length - 1));
+      setActiveIndex((current) => Math.min(current + 1, displayList.length - 1));
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setActiveIndex((current) => Math.max(current - 1, 0));
     } else if (event.key === "Enter") {
       event.preventDefault();
-      const item = filtered[activeIndex];
+      const item = displayList[activeIndex];
       if (item) activate(item);
     }
   }
@@ -144,7 +221,10 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
   let lastGroup = "";
 
   return (
-    <div className="command-palette-overlay" onMouseDown={onClose}>
+    <div
+      className={`command-palette-overlay${visible ? " is-visible" : ""}`}
+      onMouseDown={onClose}
+    >
       <div
         className="command-palette"
         role="dialog"
@@ -157,7 +237,6 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
           <Search aria-hidden="true" size={18} />
           <input
             type="text"
-            autoFocus
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={handleKeyDown}
@@ -167,12 +246,12 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
           <span className="command-palette__hint">{copy.commandPaletteHintKeys}</span>
         </div>
         <div className="command-palette__results" role="listbox">
-          {filtered.length === 0 ? <p className="command-palette__empty">{copy.commandPaletteEmpty}</p> : null}
-          {filtered.map((item, index) => {
+          {displayList.length === 0 ? <p className="command-palette__empty">{copy.commandPaletteEmpty}</p> : null}
+          {displayList.map((item, index) => {
             const showGroup = item.group !== lastGroup;
             lastGroup = item.group;
             return (
-              <div key={item.id}>
+              <div key={`${item.group}-${item.id}`}>
                 {showGroup ? <p className="command-palette__group">{item.group}</p> : null}
                 <button
                   type="button"
@@ -182,7 +261,9 @@ export function CommandPalette({ locale, open, onClose, onToggleLocale, theme, o
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => activate(item)}
                 >
-                  <span>{item.label}</span>
+                  <span>
+                    <HighlightedLabel text={item.label} query={query.trim()} />
+                  </span>
                   {item.hint ? <small>{item.hint}</small> : null}
                 </button>
               </div>
