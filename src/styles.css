@@ -1516,6 +1516,16 @@ p {
   line-height: 1.55;
 }
 
+.animated-word {
+  display: inline-block;
+  opacity: 0.2;
+  transition: opacity 500ms var(--ease-standard);
+}
+
+.animated-word.is-visible {
+  opacity: 1;
+}
+
 .cv-panel {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -2969,6 +2979,19 @@ p {
 
 .stack-card--static {
   position: static;
+}
+
+.stack-card--reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 650ms var(--ease-premium),
+    transform 500ms var(--ease-premium);
+}
+
+.stack-card--reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (max-width: 820px) {
