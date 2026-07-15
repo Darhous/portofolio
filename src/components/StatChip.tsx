@@ -7,12 +7,14 @@ type StatChipProps = {
   label: string;
 };
 
-function parseNumeric(value: string): { number: number; prefix: string; suffix: string; decimals: number } {
+type ParsedStat = { isNumeric: boolean; number: number; prefix: string; suffix: string; decimals: number };
+
+function parseNumeric(value: string): ParsedStat {
   const match = value.match(/^([^\d.]*)([\d.]+)(.*)$/);
-  if (!match) return { number: 0, prefix: "", suffix: value, decimals: 0 };
+  if (!match) return { isNumeric: false, number: 0, prefix: "", suffix: value, decimals: 0 };
   const [, prefix, numeric, suffix] = match;
   const decimals = numeric.includes(".") ? numeric.split(".")[1].length : 0;
-  return { number: parseFloat(numeric), prefix, suffix, decimals };
+  return { isNumeric: true, number: parseFloat(numeric), prefix, suffix, decimals };
 }
 
 const RADIUS = 20;
@@ -21,8 +23,8 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 export function StatChip({ value, label }: StatChipProps) {
   const { ref, inView } = useInView<HTMLDivElement>();
   const reducedMotion = useReducedMotion();
-  const { number, prefix, suffix, decimals } = parseNumeric(value);
-  const [display, setDisplay] = useState(reducedMotion ? value : `${prefix}0${suffix}`);
+  const { isNumeric, number, prefix, suffix, decimals } = parseNumeric(value);
+  const [display, setDisplay] = useState(reducedMotion || !isNumeric ? value : `${prefix}0${suffix}`);
   const [ringProgress, setRingProgress] = useState(reducedMotion ? 1 : 0);
 
   useEffect(() => {
@@ -32,6 +34,12 @@ export function StatChip({ value, label }: StatChipProps) {
       return;
     }
     if (!inView) return;
+
+    if (!isNumeric) {
+      setDisplay(value);
+      setRingProgress(1);
+      return;
+    }
 
     const duration = 1200;
     const start = performance.now();
@@ -49,7 +57,7 @@ export function StatChip({ value, label }: StatChipProps) {
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [inView, reducedMotion, number, prefix, suffix, decimals, value]);
+  }, [inView, reducedMotion, isNumeric, number, prefix, suffix, decimals, value]);
 
   return (
     <div className="stat-chip" ref={ref}>

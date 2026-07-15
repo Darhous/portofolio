@@ -14,7 +14,7 @@ export function FlagshipProjects({ locale }: FlagshipProjectsProps) {
   const flagship = featuredProjects.slice(0, FLAGSHIP_COUNT);
 
   return (
-    <section className="page-section flagship-section" id="projects" aria-labelledby="projects-title">
+    <section className="page-section flagship-section" id="flagship" aria-labelledby="projects-title">
       <SectionHeader kicker={copy.projectsKicker} title={copy.projectsTitle} body={copy.projectsBody} />
       <StickyProjectStack projects={flagship} locale={locale} />
     </section>

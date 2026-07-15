@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { techStack, techStackProjectCount } from "../data/techStack";
 import type { Locale } from "../data/profile";
 import { uiCopy } from "../data/content";
@@ -12,6 +13,7 @@ type TechStackSectionProps = {
 export function TechStackSection({ locale }: TechStackSectionProps) {
   const copy = uiCopy[locale];
   const top = techStack.slice(0, DISPLAY_COUNT);
+  const maxCount = top[0]?.count ?? 1;
   const body = copy.stackBody.replace("{count}", String(techStackProjectCount));
 
   return (
@@ -20,8 +22,16 @@ export function TechStackSection({ locale }: TechStackSectionProps) {
       <ul className="tech-stack-list">
         {top.map((entry) => (
           <li className="tech-stack-item" key={entry.name}>
-            <span className="tech-stack-item__name">{entry.name}</span>
-            <span className="tech-stack-item__count">{entry.count}</span>
+            <Link className="tech-stack-item__link" to={`/projects?q=${encodeURIComponent(entry.name)}`}>
+              <span className="tech-stack-item__name">{entry.name}</span>
+              <span className="tech-stack-item__bar-track" aria-hidden="true">
+                <span
+                  className="tech-stack-item__bar-fill"
+                  style={{ width: `${Math.max(6, (entry.count / maxCount) * 100)}%` }}
+                />
+              </span>
+              <span className="tech-stack-item__count">{entry.count}</span>
+            </Link>
           </li>
         ))}
       </ul>

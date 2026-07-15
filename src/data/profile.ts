@@ -14,6 +14,24 @@ export const profile = {
     en: "Security Operations Manager, Crisis Management Specialist, and MBA Candidate.",
     ar: "مدير عمليات أمنية، أخصائي إدارة أزمات، ومرشح ماجستير إدارة أعمال.",
   },
+  positioning: {
+    en: "Officer. Legal professional. MBA candidate. Software and AI systems builder.",
+    ar: "ضابط. قانوني. مرشح ماجستير إدارة أعمال. باني أنظمة برمجية وذكاء اصطناعي.",
+  },
+  coreStatement: {
+    en: "I combine operational discipline, legal analysis, strategic thinking, and technical execution to build secure, practical digital systems.",
+    ar: "أجمع بين الانضباط التشغيلي والتحليل القانوني والتفكير الاستراتيجي والتنفيذ التقني لبناء أنظمة رقمية آمنة وعملية.",
+  },
+  systemsStatement: {
+    en: "Ahmed treats every product as an operational system, not just a software interface — one that has to hold up under real constraints: security, accountability, maintainability, and the specific problem it exists to solve.",
+    ar: "يتعامل أحمد مع كل منتج كنظام تشغيلي، لا مجرد واجهة برمجية — نظام لازم يتحمل قيود العمل الحقيقية: الأمان، والمساءلة، وقابلية الصيانة، والمشكلة الفعلية التي وُجد من أجلها.",
+  },
+  identityDimensions: [
+    { en: "Officer", ar: "ضابط" },
+    { en: "Investigator", ar: "محقق" },
+    { en: "Strategist", ar: "استراتيجي" },
+    { en: "Builder", ar: "بانٍ" },
+  ] as Localized<string>[],
   shortTitle: {
     en: "Security Operations, Crisis Management & Applied Engineering",
     ar: "العمليات الأمنية، إدارة الأزمات، والهندسة التطبيقية",
@@ -32,10 +50,14 @@ export const profile = {
   },
   cta: {
     primary: {
+      en: "Explore the Flagship Work",
+      ar: "استعرض الأعمال الرئيسية",
+    },
+    secondary: {
       en: "Download CV",
       ar: "تحميل السيرة الذاتية",
     },
-    secondary: {
+    contact: {
       en: "Get in Touch",
       ar: "تواصل معي",
     },
