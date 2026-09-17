@@ -136,28 +136,52 @@ export const experience = [
 
 export const education = [
   {
-    school: "The American University in Cairo (AUC)",
-    credential: {
-      en: "Master of Business Administration (MBA) - Strategic Management & Business Operations",
-      ar: "ماجستير إدارة الأعمال (MBA) - التركيز: الإدارة الاستراتيجية وعمليات الأعمال",
-    },
-    period: "2024 - Present",
-  },
-  {
-    school: "Police Academy",
-    credential: {
-      en: "Postgraduate Diploma in General Law",
-      ar: "دبلوم دراسات عليا في القانون العام",
-    },
-    period: "2022",
-  },
-  {
     school: "Police Academy",
     credential: {
       en: "Bachelor of Law & Police Sciences",
       ar: "ليسانس الحقوق وعلوم الشرطة",
     },
-    period: "2017",
+    period: "2015",
+  },
+  {
+    school: "L'Institut français d'Égypte",
+    credential: {
+      en: "Diploma in French Administrative Law (French Cultural Center Mission, Cairo)",
+      ar: "دبلوم القانون الإداري الفرنسي (بعثة المركز الثقافي الفرنسي بالقاهرة)",
+    },
+    period: "2016",
+  },
+  {
+    school: "Banha University",
+    credential: {
+      en: "Diploma in Public Law",
+      ar: "دبلوم القانون العام",
+    },
+    period: "2023",
+  },
+  {
+    school: "The American University in Cairo (AUC)",
+    credential: {
+      en: "Master of Business Administration (MBA) - Strategic Management & Business Operations",
+      ar: "ماجستير إدارة الأعمال (MBA) - التركيز: الإدارة الاستراتيجية وعمليات الأعمال",
+    },
+    period: "2024 - Present (Expected 2027)",
+  },
+  {
+    school: "South Valley University",
+    credential: {
+      en: "Diploma in Private Law",
+      ar: "دبلوم القانون الخاص",
+    },
+    period: "2026",
+  },
+  {
+    school: "South Valley University",
+    credential: {
+      en: "Master of Public Law (Thesis: The Use of Cryptocurrencies in Financing Terrorism Crimes)",
+      ar: "ماجستير في القانون العام (رسالة: استخدام العملات المشفرة في تمويل جرائم الإرهاب)",
+    },
+    period: "2026",
   },
 ] as const;
 

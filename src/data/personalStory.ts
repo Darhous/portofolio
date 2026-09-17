@@ -18,7 +18,7 @@ export type StoryStage = {
  */
 export const personalStory: StoryStage[] = [
   {
-    year: "2017",
+    year: "2015",
     pillar: "evidence",
     title: { en: "Bachelor of Law & Police Sciences", ar: "ليسانس الحقوق وعلوم الشرطة" },
     org: { en: "Police Academy", ar: "أكاديمية الشرطة" },
