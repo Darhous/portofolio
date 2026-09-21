@@ -3,3 +3,10 @@ dist/
 tmp/
 .codex-*.log
 .DS_Store
+
+# rooyai-image-client (Python package)
+rooyai-image-client/.venv/
+rooyai-image-client/**/__pycache__/
+rooyai-image-client/*.egg-info/
+rooyai-image-client/.pytest_cache/
+.env

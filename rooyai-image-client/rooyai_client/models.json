@@ -1,0 +1,50 @@
+{
+  "_notes": "أسماء الموديلات وأسعارها هنا للاستدلال فقط وليست ثابتة في الكود. القائمة الكاملة غير معلنة من مزوّد الخدمة، فالعميل يقبل أي اسم موديل يُمرَّر إليه حتى إن لم يكن في هذه القائمة. حدّث هذا الملف عند تغيّر التوثيق أو ظهور موديلات جديدة.",
+  "default_model": "ultra",
+  "default_edit_model": "vertex-gemini-edit",
+  "default_base_url": "https://rooyai.com/api/v1/images",
+  "models": [
+    {
+      "name": "ultra",
+      "category": "generate",
+      "price_credits": null,
+      "notes": "الموديل الافتراضي للتوليد. لم يُؤكَّد سعره بالكريدت من التوثيق المتاح."
+    },
+    {
+      "name": "standard",
+      "category": "generate",
+      "price_credits": null,
+      "notes": "السعر متضارب في التوثيق (5 أو 1 كريدت) — لا تفترض قيمة ثابتة، تحقّق من لوحة التحكم أو استجابة الفوترة قبل الاعتماد عليه."
+    },
+    {
+      "name": "z-image-turbo",
+      "category": "generate",
+      "price_credits": null,
+      "notes": ""
+    },
+    {
+      "name": "qwen1",
+      "category": "generate",
+      "price_credits": null,
+      "notes": "يدعم باراميتر size بالقيم: 1024x1024 | 1792x1024 | 1024x1792."
+    },
+    {
+      "name": "qwen2",
+      "category": "generate",
+      "price_credits": null,
+      "notes": "يدعم باراميتر aspect بالقيم: square | landscape | portrait. يدعم اللغة العربية في prompt."
+    },
+    {
+      "name": "vertex-imagen4",
+      "category": "generate",
+      "price_credits": null,
+      "notes": "يدعم vertexAspect (مثل 3:4) و vertexResolution (مثل 2K)."
+    },
+    {
+      "name": "vertex-gemini-edit",
+      "category": "edit",
+      "price_credits": null,
+      "notes": "موديل التعديل الافتراضي، يدعم اللغة العربية. صورة واحدة كحد أقصى في images. ذُكر أيضاً باسم flux2-klein-9b في مصدر توثيقي آخر — الاسمان غير مؤكَّدين معاً، تحقق من لوحة التحكم قبل الاعتماد على أحدهما."
+    }
+  ]
+}
